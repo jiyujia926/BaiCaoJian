@@ -9,6 +9,7 @@ import urllib.error  # 制定url 获取网页数据
 def main():
     baseurl1 = 'http://www.zhongyoo.com/name/page_'
     baseurl2 = '.html'
+    print("get start")
     result = getdata(baseurl1, baseurl2)
     # print(result[0])
     # print(len(result))

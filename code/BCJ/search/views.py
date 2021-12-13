@@ -1,16 +1,17 @@
 from django.shortcuts import render
 from .models import Herbs
-from herbspide import main
+from .herbspide import main
 from django.http import HttpResponse
 # Create your views here.
 def addherbs(request):
     result = main()
-    i=0
+    i=1
     for herb in result:
-        oneherb = Herbs(Detail_page=herb[0],
+        oneherb = Herbs(Herb_id = i,
+                        Detail_page=herb[0],
                         Picture_url=herb[1],
                         Name=herb[2],
-                        SubName=herb[3],
+                        Subname=herb[3],
                         English_name=herb[4],
                         Medical_part=herb[5],
                         Plant_pose=herb[6],

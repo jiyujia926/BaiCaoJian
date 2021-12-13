@@ -12,7 +12,7 @@ const server = "http://127.0.0.1:8000";
 const Home = () => {
   const classes = useStyles();
   const handleClick = () => {
-    // alert("hello!");
+    alert("hello!");
     add()
   };
   async function add() {
