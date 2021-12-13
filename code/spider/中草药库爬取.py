@@ -27,14 +27,14 @@ finddetailcontent = re.compile(r'[\u4e00-\u9fa5]</strong>】(.*?)</p>')
 def getdata(baseurl1, baseurl2):
     titlelist = []
     datalist = []
-    for i in range(0, 1):    # 控制页面 这里只显示第一页 要爬取全部修改为range(0, 44)
+    for i in range(16, 17):    # 控制页面 这里只显示第一页 要爬取全部修改为range(0, 44)
         url = baseurl1 + str(i + 1) + baseurl2
         html = askURL(url)
         # print(html)
 
         soup = BeautifulSoup(html, "html.parser")
         allcontent = soup.find_all(class_="sp")
-        for item in allcontent[0:1]:   # 这个是示例 只显示每页的第一个中草药的情况 要爬取全部要修改此处为 allcontent
+        for item in allcontent[0:10]:   # 这个是示例 只显示每页的第一个中草药的情况 要爬取全部要修改此处为 allcontent
             # print(item)
             data = []
             title = []
@@ -53,7 +53,7 @@ def getdata(baseurl1, baseurl2):
             appendtitle = ['详情页面', '图像链接']
             appendtitle.extend(title)
             title = appendtitle
-            print(title)    # 这两行可以边爬取边看结果 爬的好像有点慢...
+            # print(title)    # 这两行可以边爬取边看结果 爬的好像有点慢...
             print(data)
 
             datalist.append(data)
@@ -93,7 +93,7 @@ def askURL(url):
     }
     request = urllib.request.Request(url=url, headers=head)
     response = urllib.request.urlopen(request)
-    html = response.read().decode("gbk")
+    html = response.read().decode("gbk",errors='ignore')
     # print(html)
     return html
 
