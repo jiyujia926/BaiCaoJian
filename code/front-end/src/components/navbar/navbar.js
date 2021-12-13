@@ -1,9 +1,397 @@
 import React from "react";
 
+// @material-ui/core components
+import Button from '@material-ui/core/Button';
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Poppers from "@material-ui/core/Popper";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import useStyles from "./styles";
+
 const Navbar = () => {
+  const classes = useStyles(); 
+  const [op, setOp] = React.useState("login");
+  const [account, setAccount] = React.useState({
+    email: "",
+    username: "",
+  });
+  const [openProfile, setOpenProfile] = React.useState(null);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const initialFormState = {
+    email: "",
+    password: "",
+    username: "",
+    email_check: "",
+    password_check: "",
+    username_check: "",
+  };
+  const [formData, setFormData] = React.useState(initialFormState);
+  const handleClickButton = (event) => {
+    if (account.username === "") {
+      handleClickDialog();
+    } else {
+      handleClickProfile(event);
+    }
+  };
+  const handleClickProfile = (event) => {
+    if (openProfile && openProfile.contains(event.target)) {
+      setOpenProfile(null);
+    } else {
+      setOpenProfile(event.currentTarget);
+    }
+  };
+  const handleCloseProfile = () => {
+    setOpenProfile(null);
+  };
+  const handleClickDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setOp("login");
+    setFormData(initialFormState);
+  };
+  const handleInputChange = (event) => {
+    let { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const handleLogout = () => {
+    handleCloseProfile();
+    setAccount({ email: "", username: "" });
+  };
+  const handleSubmitLogin = () => {
+    let ec = "";
+    let pc = "";
+    if (formData.email === "") {
+      ec = "邮箱不能为空。";
+    } else if (
+      !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(
+        formData.email
+      )
+    ) {
+      ec = "邮箱格式错误。";
+    }
+    if (formData.password === "") {
+      pc = "密码不能为空。";
+    }
+    setFormData({ ...formData, email_check: ec, password_check: pc });
+    //初步验证完成，连接后端，尝试登录
+    if (ec === "" && pc === "") {
+      alert("try login");
+      //login();
+    }
+  };
+  async function login() {
+    /* let ec = "";
+    let pc = "";
+    let data = {
+      Password: formData.password,
+      Email: formData.email,
+    };
+    let res = await axios.post(`${server}/login/`, data);
+    if (res.data === "密码正确") {
+      setAccount({ email: formData.email, username: formData.username });
+      handleCloseDialog();
+    } else {
+      if (res.data === "密码错误") {
+        pc = "密码错误。";
+      } else {
+        ec = "该邮箱未注册。";
+      }
+      setFormData({
+        ...formData,
+        email_check: ec,
+        password_check: pc,
+      });
+    } */
+  }
+  const handleSubmitRegister = () => {
+    let ec = "正确。";
+    let uc = "正确。";
+    let pc = "正确。";
+    if (formData.email === "") {
+      ec = "邮箱不能为空。";
+    } else if (
+      !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(
+        formData.email
+      )
+    ) {
+      ec = "邮箱格式错误。";
+    }
+    if (formData.username === "") {
+      uc = "用户名不能为空。";
+    }
+    if (formData.password === "") {
+      pc = "密码不能为空。";
+    } else if (
+      !/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(formData.password)
+    ) {
+      pc = "密码格式错误。";
+    }
+    setFormData({
+      ...formData,
+      email_check: ec,
+      password_check: pc,
+      username_check: uc,
+    });
+    //初步验证完成，连接后端，尝试注册
+    if (ec === "正确。" && pc === "正确。" && uc === "正确。") {
+      alert("try register");
+      //register();
+    }
+  };
+  async function register() {
+    /* let ec = "";
+    let data = {
+      Name: formData.username,
+      Password: formData.password,
+      Email: formData.email,
+      Github: "ababa",
+    };
+    console.log(data);
+    let res = await axios.post(`${server}/register/`, data);
+    if (res.data === "注册成功！") {
+      alert("注册成功，请进行登录");
+      handleChangeOp();
+    } else {
+      ec = "该邮箱已被注册。";
+      setFormData({
+        ...formData,
+        email_check: ec,
+      });
+    } */
+  }
+  const handleChangeOp = () => {
+    setFormData(initialFormState);
+    if (op === "register") {
+      setOp("login");
+    } else {
+      setOp("register");
+    }
+  };
+
   return (
-    <div>
-      Welcome to navbar!
+    <div className={classes.navbar}>
+      <div className={classes.emptydiv} />
+      <div className={classes.manager}>
+        <Button
+          color="primary"
+          variant="outlined"
+          startIcon={<AccountCircle />}
+          aria-owns={openProfile ? "profile-menu-list-grow" : null}
+          aria-haspopup="true"
+          onClick={handleClickButton}
+        >
+          {account.username === "" ? "登录" : account.username}
+        </Button>
+        <Poppers
+          open={Boolean(openProfile)}
+          anchorEl={openProfile}
+          transition
+          disablePortal
+          className={classes.poppers}
+        >
+          {({ TransitionProps }) => (
+            <Grow
+              {...TransitionProps}
+              id="profile-menu-list-grow"
+              style={{ transformOrigin: "center top" }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleCloseProfile}>
+                  {account.email && (
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={handleLogout}
+                        className={classes.dropdownItem}
+                      >
+                        我的主页
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleLogout}
+                        className={classes.dropdownItem}
+                      >
+                        登出
+                      </MenuItem>
+                    </MenuList>
+                  )}
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Poppers>
+      </div>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="form-dialog-title"
+      >
+        {op === "login" ? (
+          <div>
+            <DialogTitle id="form-dialog-title" className={classes.form_head}>
+              <Typography component="h1" variant="h5">
+                登录
+              </Typography>
+            </DialogTitle>
+            <DialogContent className={classes.form_content}>
+              <TextField
+                error={formData.email_check !== ""}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="邮箱"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={formData.email}
+                helperText={formData.email_check}
+                onChange={handleInputChange}
+              />
+              <TextField
+                error={formData.password_check !== ""}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="密码"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={formData.password}
+                helperText={formData.password_check}
+                onChange={handleInputChange}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="记住密码"
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.form_button}
+                onClick={handleSubmitLogin}
+              >
+                确定
+              </Button>
+              <Grid container className={classes.form_option}>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    忘记密码？
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link onClick={handleChangeOp} variant="body2">
+                    注册账号
+                  </Link>
+                </Grid>
+              </Grid>
+            </DialogContent>
+          </div>
+        ) : (
+          <div>
+            <DialogTitle id="form-dialog-title" className={classes.form_head}>
+              <Typography component="h1" variant="h5">
+                注册
+              </Typography>
+            </DialogTitle>
+            <DialogContent className={classes.form_content}>
+              <TextField
+                error={
+                  formData.email_check !== "" &&
+                  formData.email_check !== "正确。"
+                }
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="邮箱"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={formData.email}
+                helperText={formData.email_check}
+                onChange={handleInputChange}
+              />
+              <TextField
+                error={
+                  formData.username_check !== "" &&
+                  formData.username_check !== "正确。"
+                }
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="用户名"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={formData.username}
+                helperText={formData.username_check}
+                onChange={handleInputChange}
+              />
+              <TextField
+                error={
+                  formData.password_check !== "" &&
+                  formData.password_check !== "正确。"
+                }
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="密码"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={formData.password}
+                helperText={
+                  formData.password_check === "正确。"
+                    ? "正确。"
+                    : formData.password_check +
+                      "密码必须包含6~20个字符，有且仅由数字与字母构成。"
+                }
+                onChange={handleInputChange}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.form_button}
+                onClick={handleSubmitRegister}
+              >
+                确定
+              </Button>
+              <Grid container className={classes.form_option}>
+                <Grid item>
+                  <Link onClick={handleChangeOp} variant="body2">
+                    已有账号？登录
+                  </Link>
+                </Grid>
+              </Grid>
+            </DialogContent>
+          </div>
+        )}
+      </Dialog>
     </div>
   );
 }
