@@ -9,7 +9,6 @@ const Footer = () => {
     <BottomNavigation className={classes.footer}>
       <span>Copyright@BaiCaoJian Developer Team 2021</span>
     </BottomNavigation>
-
   );
 };
 
