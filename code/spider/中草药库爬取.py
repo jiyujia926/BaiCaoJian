@@ -31,7 +31,8 @@ finddetailcontent = re.compile(r'【<strong>.*</strong>】(.*?)</p>')
 def getData(baseurl1, baseurl2):
     titlelist = []
     datalist = []
-    for i in range(15, 17):  # 控制页面 这里只显示第一页 要爬取全部修改为range(0, 44)
+    dictlist = []
+    for i in range(0, 5):  # 控制页面 这里只显示第一页 要爬取全部修改为range(0, 44)
         url = baseurl1 + str(i + 1) + baseurl2
         html = askURL(url)
         # print(html)
@@ -42,6 +43,7 @@ def getData(baseurl1, baseurl2):
             # print(item)
             data = []
             title = []
+            dict = {}
             item = str(item)
 
             detaillink = re.findall(finddetaillink, item)[0]
@@ -58,9 +60,8 @@ def getData(baseurl1, baseurl2):
             appendtitle.extend(title)
             title = appendtitle
             if operator.eq(title, standardtitle) and len(title) == 16 and len(data) == 16:
-                print(title)  # 这两行可以边爬取边看结果 爬的好像有点慢...
-                print(data)
-
+                # print(title)  # 这两行可以边爬取边看结果 爬的好像有点慢...
+                # print(data)
                 datalist.append(data)
                 titlelist.append(title)
 
