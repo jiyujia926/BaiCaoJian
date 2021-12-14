@@ -19,6 +19,7 @@ def login(request):
     logininguser = list(models.User.objects.values('Password').filter(Email=data['Email']))
     if logininguser:
         if logininguser[0]['Password'] == data['Password']:
+
             return HttpResponse("密码正确")
         else:
             return HttpResponse("密码错误")
@@ -26,7 +27,7 @@ def login(request):
         return HttpResponse("未注册")
 def getusername(request):
     data = json.loads(request.body)
-    loginuser = list(models.User.objects.values('Name')).filter(Email = data['Email'])
+    loginuser = list(models.User.objects.values('Name').filter(Email = data['Email']))
     if loginuser:
         return HttpResponse(loginuser[0]['Name'])
     else:
