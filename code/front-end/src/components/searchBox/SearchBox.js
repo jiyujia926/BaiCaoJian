@@ -16,7 +16,7 @@ const SearchForm = () => {
   const onSubmit = (data)=> {
     console.log(data["keyword"]);
     // http request
-    axios.post(`${server}/add/`).then(
+    axios.post(`${server}/search/`).then(
       res => {
         console.log("get res: ", res);
       }, error => {

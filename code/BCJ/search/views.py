@@ -3,6 +3,9 @@ from .models import Herbs
 from .herbspide import main
 from django.http import HttpResponse
 # Create your views here.
+def search_test(keyword):
+    return "success: "+keyword
+
 def addherbs(request):
     result = main()
     i=1
