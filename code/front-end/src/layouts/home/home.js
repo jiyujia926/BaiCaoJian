@@ -1,6 +1,10 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
+import Footer from "../../components/footer/Footer";
+import SearchForm from "../../components/searchBox/SearchBox";
+import LogoImg from "../../images/logo.svg";
+
 import useStyles from "./styles";
 
 import axios from "axios";
@@ -21,21 +25,16 @@ const Home = () => {
   }
   return (
     <div className={classes.root}>
-      <div>
-          home
-      </div>
       <Button variant="contained" color="primary" onClick={handleClick}>
         button for jaja
       </Button>
-      <Button variant="contained" color="secondary" href="/search">
-        to search
-      </Button>
-      <Button variant="contained" color="secondary" href="/detail">
-        to detail
-      </Button>
-      <Button variant="contained" color="secondary" href="/user">
-        to user
-      </Button>
+      <div className={classes.img}>
+        <img src={LogoImg} alt="Logo"></img>
+      </div> 
+      <div className={classes.searchform}>
+        <SearchForm />
+      </div>
+      <Footer />
     </div>
   );
 }
