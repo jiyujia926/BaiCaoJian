@@ -7,4 +7,3 @@ class User(models.Model):
     Name = models.CharField(max_length=10, blank=False)
     Password = models.CharField(max_length=20, blank=False)
     Email = models.EmailField(max_length=30)
-    Github = models.CharField(max_length=30)
