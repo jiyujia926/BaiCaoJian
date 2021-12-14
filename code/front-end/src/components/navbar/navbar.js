@@ -1,4 +1,6 @@
 import React from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
 
 // @material-ui/core components
 import Button from '@material-ui/core/Button';
@@ -22,26 +24,38 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import useStyles from "./styles";
 
+import axios from "axios";
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post["Content-Type"] = "application/json";
+//const server = "http://122.51.228.166:8000";
+const server = "http://127.0.0.1:8000";
+
 const Navbar = () => {
   const classes = useStyles(); 
+  const navigate = useNavigate();
   const [op, setOp] = React.useState("login");
   const [account, setAccount] = React.useState({
-    email: "",
-    username: "",
+    email: cookie.load("username") ? cookie.load("account") : "",
+    username: cookie.load("username") ? cookie.load("username") : "",
   });
-  const [openProfile, setOpenProfile] = React.useState(null);
+  const [openProfile, setOpenProfile] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [remember, setRemember] = React.useState(cookie.load("remember"));
   const initialFormState = {
-    email: "",
-    password: "",
+    email: cookie.load("account") ? cookie.load("account") : "",
+    password:
+      remember && cookie.load("password") ? cookie.load("password") : "",
     username: "",
     email_check: "",
     password_check: "",
     username_check: "",
+    oldpassword: "",
+    newpassword: "",
+    newpassword_check: "",
   };
   const [formData, setFormData] = React.useState(initialFormState);
   const handleClickButton = (event) => {
-    if (account.username === "") {
+    if (account.email === "") {
       handleClickDialog();
     } else {
       handleClickProfile(event);
@@ -49,13 +63,13 @@ const Navbar = () => {
   };
   const handleClickProfile = (event) => {
     if (openProfile && openProfile.contains(event.target)) {
-      setOpenProfile(null);
+      setOpenProfile(false);
     } else {
       setOpenProfile(event.currentTarget);
     }
   };
   const handleCloseProfile = () => {
-    setOpenProfile(null);
+    setOpenProfile(false);
   };
   const handleClickDialog = () => {
     setOpenDialog(true);
@@ -71,7 +85,8 @@ const Navbar = () => {
   };
   const handleLogout = () => {
     handleCloseProfile();
-    setAccount({ email: "", username: "" });
+    setAccount({ ...account, email: "", username: "" });
+    cookie.remove("username");
   };
   const handleSubmitLogin = () => {
     let ec = "";
@@ -91,12 +106,12 @@ const Navbar = () => {
     setFormData({ ...formData, email_check: ec, password_check: pc });
     //初步验证完成，连接后端，尝试登录
     if (ec === "" && pc === "") {
-      alert("try login");
-      //login();
+      //alert("try login");
+      login();
     }
   };
   async function login() {
-    /* let ec = "";
+    let ec = "";
     let pc = "";
     let data = {
       Password: formData.password,
@@ -104,8 +119,16 @@ const Navbar = () => {
     };
     let res = await axios.post(`${server}/login/`, data);
     if (res.data === "密码正确") {
-      setAccount({ email: formData.email, username: formData.username });
+      let name = await axios.post(`${server}/getusername/`, data);
+      setAccount({ email: formData.email, username: name.data });
       handleCloseDialog();
+      cookie.save("account", formData.email);
+      cookie.save("username", name.data);
+      if (remember) {
+        cookie.save("password", formData.password);
+      } else {
+        cookie.remove("password");
+      }
     } else {
       if (res.data === "密码错误") {
         pc = "密码错误。";
@@ -117,7 +140,7 @@ const Navbar = () => {
         email_check: ec,
         password_check: pc,
       });
-    } */
+    }
   }
   const handleSubmitRegister = () => {
     let ec = "正确。";
@@ -150,12 +173,12 @@ const Navbar = () => {
     });
     //初步验证完成，连接后端，尝试注册
     if (ec === "正确。" && pc === "正确。" && uc === "正确。") {
-      alert("try register");
-      //register();
+      //alert("try register");
+      register();
     }
   };
   async function register() {
-    /* let ec = "";
+    let ec = "";
     let data = {
       Name: formData.username,
       Password: formData.password,
@@ -166,24 +189,103 @@ const Navbar = () => {
     let res = await axios.post(`${server}/register/`, data);
     if (res.data === "注册成功！") {
       alert("注册成功，请进行登录");
-      handleChangeOp();
+      handleToLogin();
     } else {
       ec = "该邮箱已被注册。";
       setFormData({
         ...formData,
         email_check: ec,
       });
-    } */
+    }
   }
-  const handleChangeOp = () => {
-    setFormData(initialFormState);
-    if (op === "register") {
-      setOp("login");
-    } else {
-      setOp("register");
+  const handleSubmitChangePassword = () => {
+    let ec = "";
+    let pc = "";
+    let npc = "";
+    if (formData.email === "") {
+      ec = "邮箱不能为空。";
+    } else if (
+      !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(
+        formData.email
+      )
+    ) {
+      ec = "邮箱格式错误。";
+    }
+    if (formData.oldpassword === "") {
+      pc = "旧密码不能为空。";
+    }
+    if (formData.newpassword === "") {
+      npc = "新密码不能为空。";
+    } else if (
+      !/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(formData.newpassword)
+    ) {
+      npc = "新密码格式错误。密码必须包含6~20个字符，有且仅由数字与字母构成。";
+    }
+    setFormData({
+      ...formData,
+      email_check: ec,
+      password_check: pc,
+      newpassword_check: npc,
+    });
+    //初步验证完成，连接后端，尝试修改密码
+    if (ec === "" && pc === "" && npc === "") {
+      change();
     }
   };
-
+  async function change() {
+    let ec = "";
+    let pc = "";
+    let data = {
+      Email: formData.email,
+      Password: formData.oldpassword,
+      Newpassword: formData.newpassword
+    };
+    console.log(data);
+    let res = { data: "密码错误" };
+    //let res = await axios.post(`${server}/register/`, data);
+    if (res.data === "修改成功") {
+      alert("注册成功，请重新进行登录");
+      handleToLogin();//???
+    } else {
+      if (res.data === "密码错误") {
+        pc = "密码错误。";
+      } else {
+        ec = "该邮箱未注册。";
+      }
+      setFormData({
+        ...formData,
+        email_check: ec,
+        password_check: pc,
+        newpassword_check: "",
+      });
+    }
+  }
+  const handleRemember = (e) => {
+    let tmp = e.target.checked;
+    setRemember(tmp);
+    cookie.save("remember", tmp);
+    if (!tmp && cookie.load("password")) {
+      cookie.remove("password");
+    }
+  };
+  const handleToLogin = () => {
+    setFormData(initialFormState);
+    setOp("login");
+  };
+  const handleToRegister = () => {
+    setFormData(initialFormState);
+    setFormData({ ...formData, email: "", password: "" });
+    setOp("register");
+  };
+  const handleToForgetPassword = () => {
+    setOp("forgetpassword");
+    
+  };
+  const handleToChangePassword = () => {
+    setFormData(initialFormState);
+    setOp("changepassword");
+    setOpenDialog(true);
+  };
   return (
     <div className={classes.navbar}>
       <div className={classes.emptydiv} />
@@ -196,30 +298,38 @@ const Navbar = () => {
           aria-haspopup="true"
           onClick={handleClickButton}
         >
-          {account.username === "" ? "登录" : account.username}
+          {account.email === "" ? "登录" : account.username}
         </Button>
-        <Poppers
-          open={Boolean(openProfile)}
-          anchorEl={openProfile}
-          transition
-          disablePortal
-          className={classes.poppers}
-        >
-          {({ TransitionProps }) => (
-            <Grow
-              {...TransitionProps}
-              id="profile-menu-list-grow"
-              style={{ transformOrigin: "center top" }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleCloseProfile}>
-                  {account.email && (
+        {account.email && (
+          <Poppers
+            open={openProfile}
+            anchorEl={openProfile}
+            transition
+            disablePortal
+            className={classes.poppers}
+          >
+            {({ TransitionProps }) => (
+              <Grow
+                {...TransitionProps}
+                id="profile-menu-list-grow"
+                style={{ transformOrigin: "center top" }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseProfile}>  
                     <MenuList role="menu">
                       <MenuItem
-                        onClick={handleLogout}
+                        onClick={() => {
+                          navigate('user');
+                        }}
                         className={classes.dropdownItem}
                       >
                         我的主页
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleToChangePassword}
+                        className={classes.dropdownItem}
+                      >
+                        修改密码
                       </MenuItem>
                       <MenuItem
                         onClick={handleLogout}
@@ -227,20 +337,20 @@ const Navbar = () => {
                       >
                         登出
                       </MenuItem>
-                    </MenuList>
-                  )}
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Poppers>
+                    </MenuList>          
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        )}
       </div>
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
         aria-labelledby="form-dialog-title"
       >
-        {op === "login" ? (
+        {op === "login" && (
           <div>
             <DialogTitle id="form-dialog-title" className={classes.form_head}>
               <Typography component="h1" variant="h5">
@@ -279,7 +389,14 @@ const Navbar = () => {
                 onChange={handleInputChange}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={
+                  <Checkbox 
+                    name="remember" 
+                    color="primary"
+                    checked={remember}
+                    onChange={handleRemember} 
+                    />
+                  }
                 label="记住密码"
               />
               <Button
@@ -293,19 +410,20 @@ const Navbar = () => {
               </Button>
               <Grid container className={classes.form_option}>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link onClick={handleToForgetPassword} variant="body2">
                     忘记密码？
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link onClick={handleChangeOp} variant="body2">
+                  <Link onClick={handleToRegister} variant="body2">
                     注册账号
                   </Link>
                 </Grid>
               </Grid>
             </DialogContent>
           </div>
-        ) : (
+        )}
+        {op === "register" && (
           <div>
             <DialogTitle id="form-dialog-title" className={classes.form_head}>
               <Typography component="h1" variant="h5">
@@ -383,10 +501,78 @@ const Navbar = () => {
               </Button>
               <Grid container className={classes.form_option}>
                 <Grid item>
-                  <Link onClick={handleChangeOp} variant="body2">
+                  <Link onClick={handleToLogin} variant="body2">
                     已有账号？登录
                   </Link>
                 </Grid>
+              </Grid>
+            </DialogContent>
+          </div>
+        )}
+        {op === "changepassword" && (
+          <div>
+            <DialogTitle id="form-dialog-title" className={classes.form_head}>
+              <Typography component="h1" variant="h5">
+                修改密码
+              </Typography>
+            </DialogTitle>
+            <DialogContent className={classes.form_content}>
+              <TextField
+                error={ formData.email_check !== "" }
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="邮箱"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={formData.email}
+                helperText={formData.email_check}
+                onChange={handleInputChange}
+              />
+              <TextField
+                error={ formData.password_check !== "" }
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="oldpassword"
+                label="旧密码"
+                type="password"
+                name="oldpassword"
+                autoComplete="oldpassword"
+                autoFocus
+                value={formData.oldpassword}
+                helperText={formData.password_check}
+                onChange={handleInputChange}
+              />
+              <TextField
+                error={ formData.newpassword_check !== "" }
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="newpassword"
+                label="新密码"
+                type="password"
+                id="newpassword"
+                autoComplete="newpassword"
+                value={formData.newpassword}
+                helperText={ formData.newpassword_check }
+                onChange={handleInputChange}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.form_button}
+                onClick={handleSubmitChangePassword}
+              >
+                确定
+              </Button>
+              <Grid container className={classes.form_option}>
               </Grid>
             </DialogContent>
           </div>

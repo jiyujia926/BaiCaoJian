@@ -17,8 +17,8 @@ import User from "./layouts/user/user.js";
 const Admin = () => {
   return (
     <div>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>     
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
