@@ -245,7 +245,7 @@ const Navbar = () => {
     };
     console.log(data);
     let res = { data: "密码错误" };
-    //let res = await axios.post(`${server}/register/`, data);
+    let res = await axios.post(`${server}/register/`, data);
     if (res.data === "修改成功") {
       handleToLogin();
       setFormData({ ...formData, email: "", password: "" });

@@ -160,3 +160,10 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-width',
 )
+
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.163.com' 
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'baicaojian666@163.com' # 帐号
+EMAIL_HOST_PASSWORD = 'HZQMNSCTYXGOHMYX' # 密码:!@#Rty789 || 成功开启IMAP/SMTP服务，在第三方客户端登录时, 登录密码输入以下授权密码:HZQMNSCTYXGOHMYX
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
