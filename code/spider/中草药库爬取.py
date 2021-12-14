@@ -43,7 +43,6 @@ def getData(baseurl1, baseurl2):
             # print(item)
             data = []
             title = []
-            dict = {}
             item = str(item)
 
             detaillink = re.findall(finddetaillink, item)[0]
@@ -53,19 +52,22 @@ def getData(baseurl1, baseurl2):
             data.append(jpg)
 
             detailcontent = getDetail(detaillink)
-            data.extend(detailcontent[0])
-            title.extend(detailcontent[1])
+            if detailcontent != '':
+                data.extend(detailcontent[0])
+                title.extend(detailcontent[1])
 
-            appendtitle = ['详情页面', '图像链接']
-            appendtitle.extend(title)
-            title = appendtitle
-            if operator.eq(title, standardtitle) and len(title) == 16 and len(data) == 16:
-                # print(title)  # 这两行可以边爬取边看结果 爬的好像有点慢...
-                # print(data)
-                datalist.append(data)
-                titlelist.append(title)
+                appendtitle = ['详情页面', '图像链接']
+                appendtitle.extend(title)
+                title = appendtitle
+                if operator.eq(title, standardtitle) and len(title) == 16 and len(data) == 16:
+                    # print(title)  # 这两行可以边爬取边看结果 爬的好像有点慢...
+                    # print(data)
+                    print(dict(zip(standardtitle, data)))
+                    dictlist.append(dict(zip(standardtitle, data)))
+                    datalist.append(data)
+                    titlelist.append(title)
 
-    return titlelist, datalist
+    return dictlist
 
 
 def getDetail(detaillink):
@@ -79,6 +81,8 @@ def getDetail(detaillink):
 
     detailcontentlist = re.findall(finddetailcontent, detailitem)  # 从名字到药方一共15项 取前14项
     length = len(detailcontentlist)
+    if length <= 13:
+        return ''
 
     for i in range(0, length - 1):
         eachitem = detailcontentlist[i]
