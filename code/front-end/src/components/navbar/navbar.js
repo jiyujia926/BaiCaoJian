@@ -185,8 +185,7 @@ const Navbar = () => {
     let data = {
       Name: formData.username,
       Password: formData.password,
-      Email: formData.email,
-      Github: "ababa",
+      Email: formData.email
     };
     console.log(data);
     let res = await axios.post(`${server}/register/`, data);
