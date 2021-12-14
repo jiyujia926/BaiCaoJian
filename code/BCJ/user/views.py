@@ -45,3 +45,13 @@ def modifyPassword(request):
             return HttpResponse("密码错误")
     else:
         return HttpResponse("该邮箱未注册")
+
+#随机生成验证码
+# def random_str(randomlength=8):
+#     str = ''
+#     chars = 'abcdefghijklmnopqrstuvwsyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+#     length = len(chars) - 1
+#     random = Random()
+#     for i in range(randomlength):
+#     str += chars[random.randint(0, length)]
+#     return str
