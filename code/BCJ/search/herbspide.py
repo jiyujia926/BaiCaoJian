@@ -20,13 +20,14 @@ def main():
 findjpg = re.compile(r'src="(.*?)"')
 finddetaillink = re.compile(r'<strong><a class="title" href="(.*?)"')
 
-findtitle = re.compile(r'<strong>(.*?)</strong>')
+findtitle = re.compile(r'<strong>【(.*?)】<strong>')
 finddetailcontent = re.compile(r'[\u4e00-\u9fa5]</strong>】(.*?)</p>')
 
 
 def getdata(baseurl1, baseurl2):
     titlelist = []
     datalist = []
+    dictlist = []
     for i in range(0, 45):    # 控制页面 这里只显示第一页 要爬取全部修改为range(0, 44)
         url = baseurl1 + str(i + 1) + baseurl2
         html = askURL(url)
@@ -55,11 +56,14 @@ def getdata(baseurl1, baseurl2):
             title = appendtitle
             # print(title)    # 这两行可以边爬取边看结果 爬的好像有点慢...
             # print(data)
-
-            datalist.append(data)
+            
+            # datalist.append(data)
             # titlelist.append(title)
 
-    return  datalist
+            dic = dict(map(lambda x,y:[x,y],title,data))
+            print(dic)
+            dictlist.append(dic)
+    return  dictlist
 
 
 def detail(detaillink):
