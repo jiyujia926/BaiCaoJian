@@ -20,10 +20,11 @@ from search import views as search_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('add/',search_view.addherbs),
+    # path('add/',search_view.addherbs),
     path('register/',user_view.register),
     path('login/',user_view.login),
     path('getusername/',user_view.getusername),
-    path('search/', search_view.search_test),
+    path('search/', search_view.search),
+    path('modifypassword/',user_view.modifyPassword)
 
 ]

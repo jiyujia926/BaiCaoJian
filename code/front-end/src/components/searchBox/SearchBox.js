@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import searchBoxStyles from "./styles";
 import SearchIcon from '@material-ui/icons/Search';
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
@@ -13,33 +12,38 @@ const server = "http://localhost:8000";
 const SearchForm = () => {
   const classes = searchBoxStyles();
   const { register, handleSubmit } = useForm();
-  const [ kw , setKw ] = useState();
-  const handleOnChange = (event) => {
-    let { name, value } = event.target;
-    console.log(name + ": " + value);
-    setKw(value);
-  }
+  
+  const onSubmit = (data)=> {
+    console.log(data["keyword"]);
+    // http request
+    let key = {
+      Keyword:data["keyword"]
+    }
+    axios.post(`${server}/search/`,key).then(
+      res => {
+        console.log("get res: ", res);
+      }, error => {
+        console.log(error);
+      }
+    );
+  };
 
   return (
-    <form >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         {...register("keyword", {required: true,})}
         className={classes.textField}
-        label="请输入关键词"
-        onChange={handleOnChange}
+        label="Keyword"
       />
       <Button 
         className={classes.searchBtn}
         variant="contained"
         color="secondary"
-        value="Search"
-        type="button"
         startIcon={<SearchIcon/>}
+        value="Search"
+        type="submit"
       >
-        <Link
-          className={classes.textBtn}
-          to={"/search/" + kw}
-        >搜索</Link>
+        Search
       </Button>
     </form>
   );
