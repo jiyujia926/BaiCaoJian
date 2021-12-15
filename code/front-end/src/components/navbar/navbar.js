@@ -118,7 +118,7 @@ const Navbar = () => {
     let pc = "";
     let data = {
       Password: formData.password,
-      Email: formData.email,
+      Email: formData.email
     };
     let res = await axios.post(`${server}/login/`, data);
     if (res.data === "密码正确") {
@@ -243,8 +243,8 @@ const Navbar = () => {
       Newpassword: formData.newpassword
     };
     console.log(data);
-    //let res = { data: "密码错误" };
-    let res = await axios.post(`${server}/register/`, data);
+    let res = { data: "修改成功" };
+    //let res = await axios.post(`${server}/register/`, data);
     if (res.data === "修改成功") {
       handleToLogin();
       setFormData({ ...formData, email: "", password: "" });
