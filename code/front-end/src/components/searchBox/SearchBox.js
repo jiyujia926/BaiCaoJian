@@ -33,7 +33,6 @@ const SearchForm = () => {
         className={classes.searchBtn}
         variant="contained"
         color="secondary"
-        onClick={(data)=>{setKw(data["keyword"])}}
         value="Search"
         type="button"
         startIcon={<SearchIcon/>}

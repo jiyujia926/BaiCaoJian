@@ -20,8 +20,9 @@ const RealSearch = () => {
     console.log(name + ": " + value);
     setKw(value);
   }
-  const handleOnClick = (event) => {
-    
+  const handleOnClick = () => {
+    let searchText = document.getElementById("real-search");
+
   }
 
   useEffect(() => {
@@ -35,9 +36,12 @@ const RealSearch = () => {
       Keyword: kw,
     };
     // TODO: request for search
-    let res = axios.post(`${server}/search/`, data);
-    console.log(res);
+    searchForKeyword(data);
   }, [])
+  async function searchForKeyword(data) {
+    let res = await axios.post(`${server}/search/`, data);
+    console.log(res);
+  }
   return (
     <form >
       <TextField
