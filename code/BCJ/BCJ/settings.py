@@ -134,7 +134,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': '1.15.97.64:9200'
     },
 }
 CORS_ORIGIN_ALLOW_ALL =True

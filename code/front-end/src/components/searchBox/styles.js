@@ -6,7 +6,11 @@ const searchBoxStyles = makeStyles((theme)=>({
     },
     searchBtn: {
       margin: theme.spacing(1),
-    }
+    },
+    textBtn: {
+      color: "#fff",
+      textDecoration: "none",
+    },
 }))
 
 export default searchBoxStyles;

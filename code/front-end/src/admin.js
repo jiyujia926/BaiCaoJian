@@ -21,7 +21,7 @@ const Admin = () => {
         <Navbar />
         <Routes>     
           <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search/:kw" element={<Search />} />
           <Route path="/detail" element={<Detail />} />
           <Route path="/user" element={<User />} />
         </Routes>
