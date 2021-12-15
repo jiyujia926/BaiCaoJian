@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import searchBoxStyles from "./styles";
+import searchBoxStyles from "../searchBox/styles";
 import SearchIcon from '@material-ui/icons/Search';
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useEffect } from "react";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://localhost:8000";
-const SearchForm = () => {
+const RealSearch = () => {
   const classes = searchBoxStyles();
   const { register, handleSubmit } = useForm();
   const [ kw , setKw ] = useState();
@@ -19,10 +20,25 @@ const SearchForm = () => {
     console.log(name + ": " + value);
     setKw(value);
   }
+  const handleOnClick = (event) => {
+    
+  }
 
+  useEffect(() => {
+    // set default value
+    let url = window.location.href;
+    let pos = url.search("search/");
+    let kw = url.substring(pos+7);
+    let searchText = document.getElementById("real-search");
+    searchText.value = decodeURI(kw);
+    // TODO: request for search
+
+
+  }, [])
   return (
     <form >
       <TextField
+        id="real-search"
         {...register("keyword", {required: true,})}
         className={classes.textField}
         label="请输入关键词"
@@ -32,6 +48,7 @@ const SearchForm = () => {
         className={classes.searchBtn}
         variant="contained"
         color="secondary"
+        onClick={handleOnClick}
         value="Search"
         type="button"
         startIcon={<SearchIcon/>}
@@ -45,4 +62,4 @@ const SearchForm = () => {
   );
 }
 
-export default SearchForm;
+export default RealSearch;

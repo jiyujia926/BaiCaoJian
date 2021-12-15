@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import cookie from "react-cookies";
 
 // @material-ui/core components
@@ -41,6 +41,7 @@ const Navbar = () => {
   const [openProfile, setOpenProfile] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [remember, setRemember] = React.useState(cookie.load("remember"));
+  const [ready, setReady] = React.useState(false);
   const initialFormState = {
     email: cookie.load("account") ? cookie.load("account") : "",
     password:
@@ -52,6 +53,8 @@ const Navbar = () => {
     oldpassword: "",
     newpassword: "",
     newpassword_check: "",
+    checksum: "",
+    checksum_check: "",
   };
   const [formData, setFormData] = React.useState(initialFormState);
   const handleClickButton = (event) => {
@@ -182,7 +185,7 @@ const Navbar = () => {
     let data = {
       Name: formData.username,
       Password: formData.password,
-      Email: formData.email,
+      Email: formData.email
     };
     console.log(data);
     let res = await axios.post(`${server}/register/`, data);
@@ -243,8 +246,9 @@ const Navbar = () => {
     
     let res = await axios.post(`${server}/register/`, data);
     if (res.data === "修改成功") {
-      alert("注册成功，请重新进行登录");
-      handleToLogin();//???
+      handleToLogin();
+      setFormData({ ...formData, email: "", password: "" });
+      alert("密码修改成功，请重新进行登录");
     } else {
       if (res.data === "密码错误") {
         pc = "密码错误。";
@@ -258,6 +262,94 @@ const Navbar = () => {
         newpassword_check: "",
       });
     }
+  }
+  const handleSubmitSendEmail = () => {
+    //alert("email");
+    if (formData.email === "") {
+      setFormData({ ...formData, email_check: "邮箱不能为空。" });
+    } else if (
+      !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(
+        formData.email
+      )
+    ) {
+      setFormData({ ...formData, email_check: "邮箱格式错误。" });
+    } else {
+      sendemail();
+    }    
+  };
+  async function sendemail() {
+    let res = {data: "邮箱已注册"};
+    //let res = await axios.post(`${server}//`, { Email: formData.email });
+    if (res.data === "邮箱未注册") {
+      setFormData({ ...formData, email_check: "该邮箱未注册。"});
+    } else {
+      setReady(true);
+      setFormData({ ...formData, email_check: ""});
+      alert("邮件已发送！");
+    }  
+  }
+  const handleSubmitSetPassword = () => {
+    if (ready) {
+      let ec = "";
+      let cc = "";
+      let npc = "";
+      if (formData.email === "") {
+        ec = "邮箱不能为空。";
+      } else if (
+        !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(
+          formData.email
+        )
+      ) {
+        ec = "邮箱格式错误。";
+      }
+      if (formData.checksum === "") {
+        cc = "请输入验证码。";
+      }
+      if (formData.newpassword === "") {
+        npc = "新密码不能为空。";
+      } else if (
+        !/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(formData.newpassword)
+      ) {
+        npc = "新密码格式错误。密码必须包含6~20个字符，有且仅由数字与字母构成。";
+      }
+      setFormData({
+        ...formData,
+        email_check: ec,
+        checksum_check: cc,
+        newpassword_check: npc,
+      });
+      if (ec === "" && cc === "" && npc === "") {
+        setpassword();
+      }
+    } else {
+      alert("请先向邮箱发送验证码。");
+    }
+  };
+  async function setpassword() {
+    let ec = "";
+    let cc = "";
+    let data = {
+      Email: formData.email,
+      Checksum: formData.checksum,
+      Newpassword: formData.newpassword
+    };
+    let res = {data: "设置成功"};
+    //let res = await axios.post(`${server}//`, data);
+    if (res.data === "设置成功") {
+      handleToLogin();
+      setFormData({ ...formData, email: "", password: "" });
+      alert("新密码设置成功，请重新进行登录");
+    } else {
+      if (res.data === "邮箱未注册") {
+        ec = "该邮箱未注册。";
+      } else if (res.data === "邮箱无验证码") {
+        ec = "该邮箱并未可供修改密码的验证码。";
+      } else {
+        cc = "验证码错误。";
+      }
+      setFormData({ ...formData, email_check: ec, checksum_check: cc });
+    }
+    
   }
   const handleRemember = (e) => {
     let tmp = e.target.checked;
@@ -277,8 +369,8 @@ const Navbar = () => {
     setOp("register");
   };
   const handleToForgetPassword = () => {
+    setFormData(initialFormState);
     setOp("forgetpassword");
-    
   };
   const handleToChangePassword = () => {
     setFormData(initialFormState);
@@ -572,6 +664,94 @@ const Navbar = () => {
                 确定
               </Button>
               <Grid container className={classes.form_option}>
+              </Grid>
+            </DialogContent>
+          </div>
+        )}
+        {op === "forgetpassword" && (
+          <div>
+            <DialogTitle id="form-dialog-title" className={classes.form_head}>
+              <Typography component="h1" variant="h5">
+                找回密码
+              </Typography>
+            </DialogTitle>
+            <DialogContent className={classes.form_content}>
+              <div className={classes.form_email}>
+                <TextField
+                  error={formData.email_check !== ""}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="邮箱"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={formData.email}
+                  helperText={formData.email_check}
+                  className={classes.form_email_input}
+                  onChange={handleInputChange}
+                />
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.form_email_button}
+                  onClick={handleSubmitSendEmail}
+                >
+                  发送验证码
+                </Button>
+              </div>
+              <TextField
+                error={formData.checksum_check !== ""}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="checksum"
+                label="验证码"
+                id="checksum"
+                autoComplete="checksum"
+                value={formData.checksum}
+                helperText={formData.checksum_check}
+                onChange={handleInputChange}
+              />
+              <TextField
+                error={formData.newpassword_check !== ""}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="newpassword"
+                label="密码"
+                type="password"
+                id="newpassword"
+                autoComplete="newassword"
+                value={formData.newpassword}
+                helperText={formData.newpassword_check}
+                onChange={handleInputChange}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.form_button}
+                onClick={handleSubmitSetPassword}
+              >
+                确定
+              </Button>
+              <Grid container className={classes.form_option}>
+                <Grid item xs>
+                  <Link onClick={handleToLogin} variant="body2">
+                    登录
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link onClick={handleToRegister} variant="body2">
+                    注册账号
+                  </Link>
+                </Grid>
               </Grid>
             </DialogContent>
           </div>
