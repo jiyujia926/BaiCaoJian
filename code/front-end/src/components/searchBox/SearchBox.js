@@ -17,7 +17,6 @@ const SearchForm = () => {
   const [ kw , setKw ] = useState();
   const handleOnChange = (event) => {
     let { name, value } = event.target;
-    console.log(name + ": " + value);
     setKw(value);
   }
 

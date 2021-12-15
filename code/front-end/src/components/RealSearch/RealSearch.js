@@ -17,12 +17,12 @@ const RealSearch = () => {
   const [ kw , setKw ] = useState();
   const handleOnChange = (event) => {
     let { name, value } = event.target;
-    console.log(name + ": " + value);
     setKw(value);
   }
   const handleOnClick = () => {
     let searchText = document.getElementById("real-search");
-
+    let data = { Keyword: kw };
+    searchForKeyword(data);
   }
 
   useEffect(() => {
