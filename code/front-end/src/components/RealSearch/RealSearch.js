@@ -33,12 +33,13 @@ const RealSearch = () => {
     let searchText = document.getElementById("real-search");
     searchText.value = decodeURI(kw);
     let data = {
-      Keyword: kw,
+      Keyword: decodeURI(kw),
     };
     // TODO: request for search
     searchForKeyword(data);
   }, [])
   async function searchForKeyword(data) {
+    console.log(data)
     let res = await axios.post(`${server}/search/`, data);
     console.log(res);
   }

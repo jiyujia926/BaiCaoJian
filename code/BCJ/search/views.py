@@ -23,7 +23,7 @@ def search(request):
         herbs['abstract']=herb.Herb_info
         # herbs['Medical_function']=herb.Medical_function
         herblist.append(herbs)
-    s = HerbsDocument.search().query("match",Medicalfunction=keyword)
+    s = HerbsDocument.search().query("match",Medical_function=keyword)
     qs = s.to_queryset()
     for herb in qs:
         herbs = {}
