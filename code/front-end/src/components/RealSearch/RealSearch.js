@@ -35,7 +35,7 @@ const RealSearch = () => {
       Keyword: kw,
     };
     // TODO: request for search
-    let res = axios.post(`${server}/serach/`, data);
+    let res = axios.post(`${server}/search/`, data);
     console.log(res);
   }, [])
   return (
