@@ -241,10 +241,11 @@ const Navbar = () => {
     };
     console.log(data);
     
-    let res = await axios.post(`${server}/register/`, data);
+    let res = await axios.post(`${server}/modifypassword/`, data);
     if (res.data === "修改成功") {
-      alert("注册成功，请重新进行登录");
-      handleToLogin();//???
+      alert("修改成功，请重新进行登录");
+      handleLogout();
+      handleToLogin();
     } else {
       if (res.data === "密码错误") {
         pc = "密码错误。";

@@ -25,5 +25,6 @@ urlpatterns = [
     path('login/',user_view.login),
     path('getusername/',user_view.getusername),
     path('search/', search_view.search_test),
+    path('modifypassword/',user_view.modifyPassword)
 
 ]
