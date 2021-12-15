@@ -31,9 +31,12 @@ const RealSearch = () => {
     let kw = url.substring(pos+7);
     let searchText = document.getElementById("real-search");
     searchText.value = decodeURI(kw);
+    let data = {
+      Keyword: kw,
+    };
     // TODO: request for search
-
-
+    let res = axios.post(`${server}/serach/`, data);
+    console.log(res);
   }, [])
   return (
     <form >
