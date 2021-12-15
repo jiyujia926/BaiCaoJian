@@ -1,11 +1,19 @@
 import React from "react";
 import ItemCard from "../../components/itemList/Item";
 import RealSearch from "../../components/RealSearch/RealSearch";
+import { useState } from "react";
+
 const Search = () => {
+  const [ results, setResults ] = useState([]);
+  const getResults = (data) => {
+    setResults(data);
+    console.log(results);
+  }
   return (
     <div>
       search
-      <RealSearch />
+      <RealSearch shResult={getResults}/> 
+      
       <ItemCard
         data={{
           title: "itemcard",

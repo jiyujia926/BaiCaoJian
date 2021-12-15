@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import searchBoxStyles from "../searchBox/styles";
@@ -6,21 +6,27 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://localhost:8000";
-const RealSearch = () => {
+const RealSearch = (props) => {
   const classes = searchBoxStyles();
+  // define states
   const { register, handleSubmit } = useForm();
   const [ kw , setKw ] = useState();
+  // define props
+  const { shResult } = props;
+
+  // handle onchange: update keyword
   const handleOnChange = (event) => {
     let { name, value } = event.target;
     setKw(value);
   }
+  // hanlde onclick: request for search
   const handleOnClick = () => {
-    let searchText = document.getElementById("real-search");
+    // get input and request search
     let data = { Keyword: kw };
     searchForKeyword(data);
   }
@@ -32,16 +38,18 @@ const RealSearch = () => {
     let kw = url.substring(pos+7);
     let searchText = document.getElementById("real-search");
     searchText.value = decodeURI(kw);
+    // request for search
     let data = {
       Keyword: decodeURI(kw),
     };
-    // TODO: request for search
     searchForKeyword(data);
   }, [])
+  // request for search keyword
   async function searchForKeyword(data) {
     console.log(data)
     let res = await axios.post(`${server}/search/`, data);
-    console.log(res);
+    shResult(res["data"]);
+  //  console.log(res);
   }
   return (
     <form >
@@ -68,6 +76,10 @@ const RealSearch = () => {
       </Button>
     </form>
   );
-}
+};
+
+RealSearch.propTypes = {
+  shResult: PropTypes.func,
+};
 
 export default RealSearch;
