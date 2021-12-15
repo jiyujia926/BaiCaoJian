@@ -280,8 +280,8 @@ const Navbar = () => {
     }    
   };
   async function sendemail() {
-    let res = {data: "邮箱已注册"};
-    //let res = await axios.post(`${server}//`, { Email: formData.email });
+    // let res = {data: "邮箱已注册"};
+    let res = await axios.post(`${server}/find_pwd/`, { Email: formData.email });
     if (res.data === "邮箱未注册") {
       setFormData({ ...formData, email_check: "该邮箱未注册。"});
     } else {
@@ -335,8 +335,8 @@ const Navbar = () => {
       Checksum: formData.checksum,
       Newpassword: formData.newpassword
     };
-    let res = {data: "设置成功"};
-    //let res = await axios.post(`${server}//`, data);
+    // let res = {data: "设置成功"};
+    let res = await axios.post(`${server}/verify_code/`, data);
     if (res.data === "设置成功") {
       handleToLogin();
       setFormData({ ...formData, email: "", password: "" });

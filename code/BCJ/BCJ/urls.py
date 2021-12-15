@@ -25,6 +25,7 @@ urlpatterns = [
     path('login/',user_view.login),
     path('getusername/',user_view.getusername),
     path('search/', search_view.search_test),
-    path('modifypassword/',user_view.modifyPassword)
-
+    path('modifypassword/',user_view.modifyPassword),
+    path('find_pwd/', user_view.findPassword),
+    path('verify_code/', user_view.Verifycode)
 ]
