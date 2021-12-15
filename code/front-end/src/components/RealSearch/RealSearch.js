@@ -44,12 +44,12 @@ const RealSearch = (props) => {
     };
     searchForKeyword(data);
   }, [])
+
   // request for search keyword
   async function searchForKeyword(data) {
-    console.log(data)
+    console.log(data);
     let res = await axios.post(`${server}/search/`, data);
-    shResult(res["data"]);
-  //  console.log(res);
+    shResult(res.data);
   }
   return (
     <form >
