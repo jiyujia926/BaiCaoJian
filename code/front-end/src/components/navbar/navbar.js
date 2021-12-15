@@ -247,7 +247,9 @@ const Navbar = () => {
     //let res = await axios.post(`${server}/register/`, data);
     if (res.data === "修改成功") {
       handleToLogin();
-      setFormData({ ...formData, email: "", password: "" });
+      setFormData({ ...formData, password: "" });
+      setAccount({ ...account, email: "", username: "" });
+      cookie.remove("username");
       alert("密码修改成功，请重新进行登录");
     } else {
       if (res.data === "密码错误") {
