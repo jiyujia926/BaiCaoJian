@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { findByLabelText } from "@testing-library/react";
 
 const useStyles = makeStyles((theme)=>({
   root: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme)=>({
     padding: "0 0 0 10px",
   },
   medical_func: {
-    fontSize: 14,
+    fontSize: 15,
     color: "#255d00",
     padding: "0 0 0 10px",
   },

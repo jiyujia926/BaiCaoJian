@@ -22,14 +22,14 @@ const ItemCard = (props) => {
                 variant="body2"
                 component="p"
               >
-                <strong>简介：</strong>{data.abstract}
+                <strong>简介: </strong>{data.abstract}
               </Typography>
               <Typography
                 className={classes.medical_func}
                 variant="body2"
                 component="p"
               >
-                <strong>功效：</strong>{data.Medical_function}
+                <strong>功效: </strong>{data.Medical_function}
               </Typography>
               </div>
             </div>

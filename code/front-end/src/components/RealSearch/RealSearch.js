@@ -12,8 +12,6 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://localhost:8000";
 
-// TODO: style
-// TODO: undefined bug
 // TODO: page
 const RealSearch = (props) => {
   const classes = searchBoxStyles();
@@ -62,6 +60,7 @@ const RealSearch = (props) => {
     let res = await axios.post(`${server}/search/`, data);
     shResult(res.data);
   }
+  
   return (
     <form id="search">
       <TextField
