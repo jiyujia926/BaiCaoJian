@@ -16,7 +16,7 @@ time.sleep(sleep_download_time)  # 这里时间自己设定
 # 爬取以下数据 并返回一个列表嵌套的字典 每个字典代表一本书 要修改爬取的页面数 要在getData函数和dataProcess函数都要改i的值
 standardattr = ['书名', '图片链接', '标签', '简介', '作者', '日期', '出版社']
 
-findname = re.compile(r'title=" (.*?)"><img alt="')
+findname = re.compile(r'title=(.*?)><img alt=')
 findjpg1 = re.compile(r'<img alt=.*?src="(.*?)"')
 findjpg2 = re.compile(r'data-original="(.*?)"')
 findtitle = re.compile(r'title=" (.*?)">')
@@ -72,7 +72,11 @@ def getData(baseurl):
         nameContent = soup.find_all('a', class_="pic")
         # for item in nameContent:
         #     print(item)
+        # print(len(nameContent))
         name = getSpecifyData(nameContent, findname)
+        for i1 in range(0, 60):
+            name[i1] = name[i1][2: len(name[i1])-1]
+            # print(name[i1])
         # print(name)
         # print(len(name))
         jpgContent = soup.find_all('a', class_="pic")
