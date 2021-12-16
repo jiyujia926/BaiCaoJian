@@ -3,6 +3,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 import PropTypes from "prop-types";
 
+// TODO: 点击title链接到详情页
 const ItemCard = (props) => {
     const classes = useStyles();
     const { data } = props;
