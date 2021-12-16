@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const searchBoxStyles = makeStyles((theme)=>({
     textField: {
-      width: "600px",
+      width: "660px",
     },
     searchBtn: {
       margin: theme.spacing(1),
