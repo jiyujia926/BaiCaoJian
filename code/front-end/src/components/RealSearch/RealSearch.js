@@ -31,7 +31,11 @@ const RealSearch = (props) => {
   // hanlde onclick: request for search
   const handleOnClick = () => {
     // get input and request search
-    let data = { Keyword: kw };
+    let { name, value } = document.getElementById("real-search");
+    setKw(value);
+    let data = {
+      Keyword: decodeURI(value),
+    };
     searchForKeyword(data);
   }
 
@@ -40,13 +44,16 @@ const RealSearch = (props) => {
     let url = window.location.href;
     let pos = url.search("search/");
     let kw = url.substring(pos+7);
-    let searchText = document.getElementById("real-search");
-    searchText.value = decodeURI(kw);
-    // request for search
-    let data = {
-      Keyword: decodeURI(kw),
-    };
-    searchForKeyword(data);
+    if (kw != "undefined") {
+      let searchText = document.getElementById("real-search");
+      searchText.value = decodeURI(kw);
+      // request for search
+      let data = {
+        Keyword: decodeURI(kw),
+      };
+      searchForKeyword(data);
+    }
+    
   }, [])
 
   // request for search keyword
@@ -56,7 +63,7 @@ const RealSearch = (props) => {
     shResult(res.data);
   }
   return (
-    <form >
+    <form id="search">
       <TextField
         id="real-search"
         {...register("keyword", {required: true,})}
