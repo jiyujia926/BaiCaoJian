@@ -21,7 +21,7 @@ def search(request):
         herbs['title']=herb.Name
         herbs['url']=herb.Picture_url
         herbs['abstract']=herb.Herb_info
-        # herbs['Medical_function']=herb.Medical_function
+        herbs['Medical_function']=herb.Medical_function
         herblist.append(herbs)
     s = HerbsDocument.search().query("match",Medical_function=keyword)
     qs = s.to_queryset()
@@ -30,7 +30,7 @@ def search(request):
         herbs['title']=herb.Name
         herbs['url']=herb.Picture_url
         herbs['abstract']=herb.Herb_info
-        # herbs['Medical_function']=herb.Medical_function
+        herbs['Medical_function']=herb.Medical_function
         herblist.append(herbs)
     # return HttpResponse(herblist)
     # data = serializers.serialize('python',qs)
