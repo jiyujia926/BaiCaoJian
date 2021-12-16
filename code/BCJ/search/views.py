@@ -13,6 +13,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 def search(request):
     data = json.loads(request.body)
     keyword = data['Keyword']
+    # print(keyword)
     s = HerbsDocument.search().query("match",Name=keyword)
     qs = s.to_queryset()
     herblist = []
@@ -31,7 +32,10 @@ def search(request):
         herbs['url']=herb.Picture_url
         herbs['abstract']=herb.Herb_info
         herbs['Medical_function']=herb.Medical_function
-        herblist.append(herbs)
+        if herbs in herblist:
+            pass
+        else:
+            herblist.append(herbs)
     # return HttpResponse(herblist)
     # data = serializers.serialize('python',qs)
     res = {
