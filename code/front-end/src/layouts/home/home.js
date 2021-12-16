@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 
 import Footer from "../../components/footer/Footer";
 import SearchForm from "../../components/searchBox/SearchBox";
-import LogoImg from "../../images/logo.svg";
+import LogoImg from "../../images/LOGO.png";
 
 import useStyles from "./styles";
 

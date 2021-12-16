@@ -23,8 +23,16 @@ const useStyles = makeStyles((theme)=>({
   },
   abstract: {
     fontSize: 15,
+    display: "box",
+    maxWidth: "100%",
     color: "#255d00",
     padding: "0 0 0 10px",
+    height: 15*1.4*3,
+    lineHight: 1.4,
+    overflow: "hidden",
+    textOverflow: "clip",
+    boxOrient: "vertical", //从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+    lineClamp: 3
   },
   medical_func: {
     fontSize: 15,

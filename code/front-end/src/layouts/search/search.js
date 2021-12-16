@@ -1,31 +1,33 @@
 import React from "react";
-import ItemCard from "../../components/itemList/ItemCard";
 import RealSearch from "../../components/RealSearch/RealSearch";
 import { useState, useEffect } from "react";
 import ItemList from "../../components/itemList/ItemList";
+import useStyles from "./styles";
+import LogoImg from "../../images/LOGO.png";
+
 const Search = () => {
   const [ results, setResults ] = useState([]);
-  
+  const classes = useStyles();
   const getResults = (res) => {
     setResults(res.data);
   }
-  const Items = (() => {
-    console.log(results);
-    return (<div>{results.map(result => <ItemCard data={result} />)}</div>);
-  });
 
   useEffect(()=>{
     console.log(results);
   })
   
   return (
-    <div>
-      <div style={{margin: "0 0 0 25px"}}>
-      <RealSearch shResult={getResults}/>
+    <div className={classes.root}>
+      <img className={classes.logo} src={LogoImg} alt="百草笺 Logo"></img>
+    <div >
+      <div className={classes.searchBox}>
+        <RealSearch shResult={getResults}/>
       </div>
-      
       <ItemList items={results} />
     </div>
+    </div>
+
+
     
   );
 }
