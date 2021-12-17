@@ -17,7 +17,7 @@ const RealSearch = (props) => {
   const classes = searchBoxStyles();
   // define states
   const { register, handleSubmit } = useForm();
-  const [ kw , setKw ] = useState();
+  const [ kw , setKw ] = useState("");
   // define props
   const { shResult } = props;
 

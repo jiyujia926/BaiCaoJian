@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme)=>({
     lineHight: 1.4,
     overflow: "hidden",
     textOverflow: "clip",
-    boxOrient: "vertical", //从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+    boxOrient: "vertical",
     lineClamp: 3
   },
   medical_func: {
