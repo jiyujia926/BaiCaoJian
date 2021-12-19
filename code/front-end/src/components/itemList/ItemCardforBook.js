@@ -2,33 +2,41 @@ import React from "react";
 import { Card, CardContent, CardHeader, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 // TODO: 根据实际数据情况修改style
 const ItemCardforBook = (props) =>{
-  const classes = {useStyles};
+  const classes = useStyles();
   const { data } = props;
-  
+  useEffect(()=>{
+    console.log(data)
+  })
   return (
     <Card>
-      <CardHeader>
-        <p className={classes.title}>{data.title}</p>
-        <Typography>{data.date}</Typography>
-        <Typography>标签: {data.tags}</Typography>
-      </CardHeader>
-      <CardContent>
-        <img className={classes.image} src={data.url} alt={data.title+"图片"}></img>
-        <div className={classes.content}>
-          <Typography>作者: {data.author}</Typography>
-          <Typography>出版社: {data.public}</Typography>
-          <Typography
-            className={classes.abstract}
-            variant="body2"
-            component="p"
-          >
-            <strong>简介: </strong>
-            {data.abstract == "" ? "暂时没有内容噢" : data.abstracy}
-          </Typography>
+      <CardContent className={classes.root}>
+        <div calssName={classes.bookName}>
+          <p className={classes.bookName}>{data.title}</p>
+          <p className={classes.addition}>【{data.publishdate}】 标签: {data.tag}</p>
         </div>
+        <div className={classes.bookBody}>
+          <img className={classes.image} src={data.url} alt={data.title+"图片"}></img>
+          <div className={classes.bookContent}>
+            <Typography
+              className={classes.abstract}
+              variant="body2"
+              component="p"
+            >
+              <strong>简介: </strong>
+              {data.info === "" ? "暂时没有内容噢" : data.info}
+            </Typography>
+            <div className={classes.basicInfo}>
+              <p>作者: {data.author}</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <p>出版社: {data.publish}</p>
+            </div>
+          </div>
+          
+        </div>
+         
       </CardContent>
     </Card>
   )

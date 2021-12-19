@@ -6,6 +6,16 @@ const useStyles = makeStyles((theme)=>({
     margin: theme.spacing(1),
     boxShadow: "0 0px 0px #fff",
   },
+  bookName: {
+    fontSize: 20,
+    color: "#00796b",
+    margin: "0px 0px 0px 0px",
+  },
+  addition: {
+    fontSize: 14,
+    color: "#aaa",
+    margin: "0 0 0 0",
+  },
   title: {
     fontSize: 20,
     color: "#00796b",
@@ -20,6 +30,19 @@ const useStyles = makeStyles((theme)=>({
     display: "flex",
     flexDirection: "row",
     marginTop: "10px",
+  },
+  bookContent: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "10px",
+  },
+  basicInfo: {
+    display: "box",
+    maxWidth: "100%",
+    color: "#aaa",
+    fontSize: 14,
+    padding: "0 0 0 10px",
+    margin: "-10px 0 0 0",
   },
   abstract: {
     fontSize: 15,
@@ -42,6 +65,9 @@ const useStyles = makeStyles((theme)=>({
   image: {
     maxWidth: 100,
     maxHeight: 100,
+  },
+  bookBody: {
+    display: "flex",
   },
 }));
 

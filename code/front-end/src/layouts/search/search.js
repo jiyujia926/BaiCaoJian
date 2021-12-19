@@ -6,7 +6,7 @@ import useStyles from "./styles";
 import LogoImg from "../../images/LOGO.png";
 
 const Search = () => {
-  const [ results, setResults ] = useState([]);
+  const [ results, setResults ] = useState({citiao: [], shuben: []});
   const classes = useStyles();
   const getResults = (res) => {
     setResults(res.data);
@@ -23,12 +23,9 @@ const Search = () => {
       <div className={classes.searchBox}>
         <RealSearch shResult={getResults}/>
       </div>
-      <ItemList items={results} />
+      <ItemList items_citiao={results.citiao} items_shuben={results.shuben} />
     </div>
     </div>
-
-
-    
   );
 }
 
