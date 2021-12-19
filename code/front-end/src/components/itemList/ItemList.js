@@ -4,31 +4,32 @@ import { List, Divider, Box } from "@material-ui/core";
 import PropTypes from "prop-types";
 import ItemCard from "./ItemCard";
 import { Pagination } from '@mui/material';
+import ItemCardforBook from "./ItemCardforBook";
 
 const ItemList = (props) => {
   const classes = useStyles();
   const itemsPerPage = 10;
-  const { items } = props;
+  const { items_citiao, items_shuben } = props;
   const [page, setPage] = useState(1); // init page num
 
   // set default value for page(const)
   const [numOfPage, setNumOfPage] = useState(
-    Math.ceil(items.length / itemsPerPage)
+    Math.ceil((items_citiao.length + items_shuben.length) / itemsPerPage)
   );
 
   const handleChange = (event, value) => {
     setPage(value);
   }
 
-  useEffect(()=>{
-    setNumOfPage(Math.ceil(items.length / itemsPerPage))
-  })
-
   return (
     <div>
       <div>
-        {items
-          .slice((page-1) * itemsPerPage, page * itemsPerPage)
+        {items_shuben
+          .slice((page-1) * 2, page * 2)
+          .map(item => <ItemCardforBook data={item} />)
+        }
+        {items_citiao
+          .slice((page-1) * (itemsPerPage-2), page * (itemsPerPage-2))
           .map(item => <ItemCard data={item} />)
         }
       </div>
@@ -51,7 +52,8 @@ const ItemList = (props) => {
 };
 
 ItemList.propType = {
-  items: PropTypes.array,
+  items_citiao: PropTypes.array,
+  items_shuben: PropTypes.array,
 };
 
 export default ItemList;
