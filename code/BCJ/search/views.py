@@ -7,6 +7,7 @@ from .bookspider import main as bookmain
 from django.http import HttpResponse
 import json
 from .documents import HerbsDocument
+from .documents import BooksDocument
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 # Create your views here.
@@ -15,10 +16,11 @@ from django.core.serializers.json import DjangoJSONEncoder
 def search(request):
     data = json.loads(request.body)
     keyword = data['Keyword']
-    # print(keyword)
+    print(keyword)
     s = HerbsDocument.search().query("match",Name=keyword)
     qs = s.to_queryset()
     herblist = []
+    booklist = []
     for herb in qs:
         herbs = {}
         herbs['title']=herb.Name
@@ -40,10 +42,51 @@ def search(request):
             herblist.append(herbs)
     # return HttpResponse(herblist)
     # data = serializers.serialize('python',qs)
+    s = BooksDocument.search().query("match",Book_name=keyword)
+    qs = s.to_queryset()
+    for book in qs:
+        books = {}
+        books['title']=book.Book_name
+        books['url']=book.Picture_url
+        booktag = str(book.Book_tag)
+        if booktag.find("团购")>=0:
+            startindex = booktag.find("团购")
+            booktag=booktag[:startindex]
+        books['tag']=booktag
+        books['info']=book.Book_info
+        books['author']=book.Book_author
+        books['pubilishdate']=book.Book_publishdate
+        books['publish']=book.Book_publish
+        if books in booklist:
+            pass
+        else:
+            booklist.append(books)
+    s = BooksDocument.search().query("match",Book_tag=keyword)
+    qs = s.to_queryset()
+    for book in qs:
+        books = {}
+        books['title']=book.Book_name
+        books['url']=book.Picture_url
+        booktag = str(book.Book_tag)
+        if booktag.find("团购")>=0:
+            startindex = booktag.find("团购")
+            booktag=booktag[:startindex]
+        books['tag']=booktag
+        books['info']=book.Book_info
+        books['author']=book.Book_author
+        books['pubilishdate']=book.Book_publishdate
+        books['publish']=book.Book_publish
+        if books in booklist:
+            pass
+        else:
+            booklist.append(books)
+    print(len(herblist))
+    print(len(booklist))
     res = {
-        'data': herblist
+        'citiao': herblist,
+        'shuben': booklist
     }
-    return HttpResponse(json.dumps(res,cls=DjangoJSONEncoder),content_type = 'application/json')
+    return HttpResponse(json.dumps(res))
 
 # def addbooks(request):
 #     result = bookmain()
