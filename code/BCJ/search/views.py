@@ -55,7 +55,7 @@ def search(request):
         books['tag']=booktag
         books['info']=book.Book_info
         books['author']=book.Book_author
-        books['pubilishdate']=book.Book_publishdate
+        books['publishdate']=book.Book_publishdate
         books['publish']=book.Book_publish
         if books in booklist:
             pass
@@ -74,7 +74,7 @@ def search(request):
         books['tag']=booktag
         books['info']=book.Book_info
         books['author']=book.Book_author
-        books['pubilishdate']=book.Book_publishdate
+        books['publishdate']=book.Book_publishdate
         books['publish']=book.Book_publish
         if books in booklist:
             pass
