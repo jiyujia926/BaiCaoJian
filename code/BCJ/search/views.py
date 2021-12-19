@@ -1,7 +1,9 @@
+from django.db import models
 from django.shortcuts import render
 from elasticsearch_dsl.search import MultiSearch
-from .models import Herbs
-from .herbspide import main
+from .models import Herbs,Books
+from .herbspide import main as herbmain
+from .bookspider import main as bookmain
 from django.http import HttpResponse
 import json
 from .documents import HerbsDocument
@@ -42,6 +44,16 @@ def search(request):
         'data': herblist
     }
     return HttpResponse(json.dumps(res,cls=DjangoJSONEncoder),content_type = 'application/json')
+
+# def addbooks(request):
+#     result = bookmain()
+#     i=1
+#     for book in result:
+#         book1 = Books(Book_id = i,Book_name=book['书名'],Picture_url=book['图片链接'],Book_tag=book['标签'],Book_info=book['简介'],Book_author=book['作者'],Book_publishdate=book['日期'],Book_publish=book['出版社'])
+#         book1.save()
+#         print(i)
+#         i  = i+1
+#     return HttpResponse("yes!")
 # def addherbs(request):
 #     result = main()
 #     i=1
