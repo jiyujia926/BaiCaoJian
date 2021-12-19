@@ -69,8 +69,12 @@ const DetialInfo = () => {
           </div>
         </div>
         
-        <div style={{backgroundColor:'yellow',border:'3px',width:'15%',margin:'0 auto',float:'right'}}>   侧边栏扩展功能
-
+        <div style={{backgroundColor:'yellow',width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}> 
+        123
+        </div>
+        
+        <div style={{backgroundColor:'yellow',width:'18%',marginTop:'80px',marginLeft:'10px',float:'left'}}> 
+        123123
         </div>
       </div>  
     </div>
