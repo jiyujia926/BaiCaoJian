@@ -8,6 +8,8 @@ import StarIcon from '@mui/icons-material/Star';
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
+import {theme} from "../../style";
+import {ThemeProvider} from "@emotion/react";
 
 const actions = [
   { icon: <StarIcon />, name: '收藏' },
@@ -23,23 +25,25 @@ export default function ControlledOpenSpeedDial() {
 
   return (
     <Box sx={{ height: 300, transform: 'translateZ(0px)', flexGrow: 1 }}>
-      <SpeedDial
-        ariaLabel="SpeedDial uncontrolled open example"
-        sx={{ position: 'absolute', bottom: 2, right: 15}}
-        icon={<SpeedDialIcon />}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        open={open}
-      >
-        {actions.map((action) => (
-          <SpeedDialAction 
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={handleClose}
-          />
-        ))}
-      </SpeedDial>
+      <ThemeProvider theme={theme}>
+        <SpeedDial
+          ariaLabel="SpeedDial uncontrolled open example"
+          sx={{ position: 'absolute', bottom: 2, right: 15}}
+          icon={<SpeedDialIcon/>}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={handleClose}
+            />
+          ))}
+        </SpeedDial>
+      </ThemeProvider>
     </Box>
   );
 }

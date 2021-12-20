@@ -16,4 +16,13 @@ export const theme = createTheme({
       main: "#7f0000",
     },
   },
+  components: {
+    SpeedDial: {
+      styleOverrides: {
+        fab: {
+          backgroundColor: "#004c40",
+        },
+      },
+    },
+  },
 });
