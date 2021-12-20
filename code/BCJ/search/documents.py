@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.db import models
-from django_elasticsearch_dsl import Document
+from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from .models import Herbs
+from .models import Books
 
 @registry.register_document
 class HerbsDocument(Document):
@@ -32,4 +33,24 @@ class HerbsDocument(Document):
             "Medical_search" ,
             "Chemistry_component", 
             "Taboo"
+        ]
+
+@registry.register_document
+class BooksDocument(Document):
+    class Index:
+        name = "books"
+        settings = {'number_of_shards': 1,
+                    'number_of_replicas': 0}
+    class Django:
+        model = Books
+        
+        fields = [
+           'Book_id',
+           'Book_name',
+           'Picture_url',
+           'Book_tag',
+           'Book_info',
+           'Book_author',
+           'Book_publishdate',
+           'Book_publish'
         ]

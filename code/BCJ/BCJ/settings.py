@@ -134,7 +134,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': '1.15.97.64:9200'
     },
 }
 CORS_ORIGIN_ALLOW_ALL =True
@@ -161,9 +161,14 @@ CORS_ALLOW_HEADERS = (
     'x-requested-width',
 )
 
-EMAIL_USE_SSL = True
-EMAIL_HOST = 'smtp.163.com' 
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'baicaojian666@163.com' # 帐号
-EMAIL_HOST_PASSWORD = 'HZQMNSCTYXGOHMYX' # 密码:!@#Rty789 || 成功开启IMAP/SMTP服务，在第三方客户端登录时, 登录密码输入以下授权密码:HZQMNSCTYXGOHMYX
+EMAIL_USE_TLS = True   #是否使用TLS安全传输协议
+EMAIL_HOST = 'smtp.qq.com' 
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '2482892055@qq.com' # 帐号
+EMAIL_HOST_PASSWORD = 'nqkaaqdqqivmeaab' 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+#时区设置
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False

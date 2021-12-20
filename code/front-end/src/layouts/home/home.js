@@ -3,15 +3,15 @@ import Button from "@material-ui/core/Button";
 
 import Footer from "../../components/footer/Footer";
 import SearchForm from "../../components/searchBox/SearchBox";
-import LogoImg from "../../images/logo.svg";
+import LogoImg from "../../images/LOGO.png";
 
 import useStyles from "./styles";
 
 import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-// const server = "http://122.51.228.166:8000";
-const server = "http://127.0.0.1:8000";
+// const server = "http://1.15.97.64:1241/:6636";
+const server = "http://127.0.0.1:6636";
 
 const Home = () => {
   const classes = useStyles();

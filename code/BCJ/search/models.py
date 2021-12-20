@@ -21,3 +21,13 @@ class Herbs(models.Model):
     Medical_search = models.TextField(null=True)
     Chemistry_component = models.TextField(null=True)
     Taboo = models.TextField(null=True)
+    
+class Books(models.Model):
+    Book_id = models.IntegerField(primary_key=True)
+    Book_name = models.TextField(null=True)
+    Picture_url = models.TextField(null=True)
+    Book_tag = models.TextField(null=True)
+    Book_info = models.TextField(null=True)
+    Book_author = models.TextField(null=True)
+    Book_publishdate = models.TextField(null=True)
+    Book_publish = models.TextField(null=True)
