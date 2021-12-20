@@ -35,8 +35,11 @@ const rows = [
   createData('使用禁忌', "阴虚、月经过多及孕妇禁服。"),
 ];
 
+const DetailImg = 'http://www.zhongyoo.com/uploads/allimg/140122/1-140122103013942-lp.jpg';
+
 const DetialInfo = () => {
   const classes = DetailStyles();
+
 
   return (
     <div >
@@ -69,8 +72,8 @@ const DetialInfo = () => {
           </div>
         </div>
         
-        <div style={{backgroundColor:'yellow',width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}> 
-        123
+        <div style={{backgroundColor:'',width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}> 
+        <img src={DetailImg} alt="detailimg"></img>
         </div>
         
         <div style={{backgroundColor:'yellow',width:'18%',marginTop:'80px',marginLeft:'10px',float:'left'}}> 
