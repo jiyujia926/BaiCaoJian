@@ -10,10 +10,10 @@ import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 
 const actions = [
-  { icon: <StarIcon />, name: 'Star' },
-  { icon: <SaveIcon />, name: 'Save' },
-  { icon: <PrintIcon />, name: 'Print' },
-  { icon: <ShareIcon />, name: 'Share' },
+  { icon: <StarIcon />, name: '收藏' },
+  { icon: <SaveIcon />, name: '保存页面' },
+  { icon: <PrintIcon />, name: '打印' },
+  { icon: <ShareIcon />, name: '分享' },
 ];
 
 export default function ControlledOpenSpeedDial() {

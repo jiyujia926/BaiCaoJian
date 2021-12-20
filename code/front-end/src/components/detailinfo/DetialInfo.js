@@ -77,7 +77,7 @@ const DetialInfo = () => {
         <img src={DetailImg} alt="detailimg"></img>
         </div>
         
-        <div style={{position:'fixed',right:'15%',width:'18%',bottom:'80px',marginRight:'20px'}}> 
+        <div style={{position:'fixed',right:'10%',width:'18%',bottom:'80px',marginRight:'20px'}}> 
         <ControlledOpenSpeedDial />
         </div>
       </div>  
