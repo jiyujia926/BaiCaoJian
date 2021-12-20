@@ -76,10 +76,10 @@ const Navbar = () => {
   };
   const handleClickDialog = () => {
     setOpenDialog(true);
+    setOp("login");
   };
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setOp("login");
     setFormData(initialFormState);
   };
   const handleInputChange = (event) => {
@@ -250,6 +250,9 @@ const Navbar = () => {
       setFormData({ ...formData, password: "" });
       setAccount({ ...account, email: "", username: "" });
       cookie.remove("username");
+      if (cookie.load("password")) {
+        cookie.remove("password");
+      }
       alert("密码修改成功，请重新进行登录");
     } else {
       if (res.data === "密码错误") {
@@ -555,7 +558,6 @@ const Navbar = () => {
                 label="用户名"
                 name="username"
                 autoComplete="username"
-                autoFocus
                 value={formData.username}
                 helperText={formData.username_check}
                 onChange={handleInputChange}
