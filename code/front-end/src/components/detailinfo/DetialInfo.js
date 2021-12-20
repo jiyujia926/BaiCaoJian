@@ -5,6 +5,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import ControlledOpenSpeedDial from "../../components/Detailbar/ControlledOpenSpeedDial";
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -72,12 +73,12 @@ const DetialInfo = () => {
           </div>
         </div>
         
-        <div style={{backgroundColor:'',width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}> 
+        <div style={{width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}> 
         <img src={DetailImg} alt="detailimg"></img>
         </div>
         
-        <div style={{backgroundColor:'yellow',width:'18%',marginTop:'80px',marginLeft:'10px',float:'left'}}> 
-        123123
+        <div style={{position:'fixed',right:'15%',width:'18%',bottom:'80px',marginRight:'20px'}}> 
+        <ControlledOpenSpeedDial />
         </div>
       </div>  
     </div>
