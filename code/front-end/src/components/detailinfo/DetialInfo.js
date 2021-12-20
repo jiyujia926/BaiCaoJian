@@ -45,7 +45,7 @@ const DetialInfo = () => {
   return (
     <div >
       <div style={{width:'85%',margin:'0 auto'}}>
-        <div style={{width:'80%',margin:'0 auto',float:'left'}}>
+        <div style={{width:'80%',margin:'0 auto',float:'left'}} id={'detailinfomain'}>
           <div style={{fontSize:'29px',paddingBottom:'20px',textAlign:'center'}}>路路通</div>
           <div style={{paddingBottom:'60px'}}>
           <TableContainer component={Paper}>
