@@ -22,17 +22,17 @@ export default function ControlledOpenSpeedDial() {
   const handleClose = () => setOpen(false);
 
   return (
-    <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1, }}>
+    <Box sx={{ height: 300, transform: 'translateZ(0px)', flexGrow: 1 }}>
       <SpeedDial
         ariaLabel="SpeedDial uncontrolled open example"
-        sx={{ position: 'absolute', bottom: 2, right: 15 }}
+        sx={{ position: 'absolute', bottom: 2, right: 15}}
         icon={<SpeedDialIcon />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
       >
         {actions.map((action) => (
-          <SpeedDialAction
+          <SpeedDialAction 
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
