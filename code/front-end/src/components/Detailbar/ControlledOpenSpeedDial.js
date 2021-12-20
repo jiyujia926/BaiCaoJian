@@ -4,9 +4,9 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import StarIcon from '@mui/icons-material/Star';
-import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
+import Feedback from '@mui/icons-material/Feedback';
 import {theme} from "../../style";
 import {ThemeProvider} from "@emotion/react";
 
@@ -16,12 +16,34 @@ export default function ControlledOpenSpeedDial() {
   const handleClose = () => setOpen(false);
 
   const clStar = () =>{
-    alert('收藏功能');
+    var url = window.location;
+    var title = document.title;
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf("360se") > -1) {
+        alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
+    }
+    else if (ua.indexOf("msie 8") > -1) {
+        window.external.AddToFavoritesBar(url, title); //IE8
+    } 
+    else if (document.all) {
+        try{
+            window.external.addFavorite(url, title);
+        }catch(e){
+            alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+        }
+    }
+    else if (window.sidebar) {
+        window.sidebar.addPanel(title, url);
+    } 
+    else { 
+       alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+    }
   }
 
-  const clSave = () =>{
-    alert('保存功能');
-  }
+  const clFeedback = () =>{
+    window.open("mailto:1223752784@qq.com"); 
+}
+
 
   const clPrint = () =>{
     window.document.body.innerHTML = window.document.getElementById('detailinfomain').innerHTML;  
@@ -30,7 +52,8 @@ export default function ControlledOpenSpeedDial() {
   }
 
   const clShare = () =>{
-    alert('分享功能');
+    var sinaurl='https://service.weibo.com/share/share.php?url='+window.location+'&title=【百草笺——中药搜索引擎】这是好友分享给你的来自的神秘药材，快来看看吧！';
+    window.open(sinaurl); 
   }
 
   return (
@@ -52,10 +75,10 @@ export default function ControlledOpenSpeedDial() {
               onClick={clStar}
             />
             <SpeedDialAction
-              key={'保存页面'}
-              icon={<SaveIcon />}
-              tooltipTitle={'保存页面'}
-              onClick={clSave}
+              key={'反馈问题'}
+              icon={<Feedback />}
+              tooltipTitle={'反馈问题'}
+              onClick={clFeedback}
             />
             <SpeedDialAction
               key={'打印'}
@@ -64,9 +87,9 @@ export default function ControlledOpenSpeedDial() {
               onClick={clPrint}
             />
             <SpeedDialAction
-              key={'分享'}
+              key={'微博分享'}
               icon={<ShareIcon />}
-              tooltipTitle={'分享'}
+              tooltipTitle={'微博分享'}
               onClick={clShare}
             />
         </SpeedDial>
