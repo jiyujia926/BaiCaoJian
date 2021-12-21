@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import User
 
 # Create your models here.
 class Herbs(models.Model):
@@ -31,3 +32,8 @@ class Books(models.Model):
     Book_author = models.TextField(null=True)
     Book_publishdate = models.TextField(null=True)
     Book_publish = models.TextField(null=True)
+
+class Favor(models.Model):
+    User = models.ManyToManyField(User)
+    Herb = models.ManyToManyField(Herbs)
+    Info = models.TextField(null=True)
