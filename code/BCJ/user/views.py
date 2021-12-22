@@ -8,7 +8,10 @@ import uuid
 import random
 import datetime
 import pytz
+
+from code.BCJ.search.models import Herbs
 from . import models
+from search import models as search_models
 # Create your views here.
 def register(request):
     
@@ -112,3 +115,51 @@ def Verifycode(request):
     else:
         return HttpResponse("邮箱未注册")
     
+def addFavor(request):
+    data = json.loads(request.body)
+    user = models.User.objects.filter(Email=data['Email']).first()
+    info = data['Description']
+    herb = search_models.Herbs.objects.filter(Herb_id=data['Id']).first()
+    check = search_models.Favor.objects.filter(User=user,Herb=herb).first()
+    if check:
+        return HttpResponse("你已收藏")
+    favor = search_models.Favor.objects.create(Info=info)
+    favor.User.add(user)
+    favor.Herb.add(herb)
+    return HttpResponse("收藏成功")
+
+def checkFavor(request):
+    data = json.loads(request.body)
+    user = models.User.objects.filter(Email=data['Email']).first()
+    herb = search_models.Herbs.objects.filter(Herb_id=data['Id']).first()
+    favor = search_models.Favor.objects.filter(User=user,Herb=herb).first()
+    if favor:
+        return HttpResponse("已收藏")
+    else:
+        return HttpResponse("未收藏")
+
+def returnFavor(request):
+    data = json.loads(request.body)
+    user = models.User.objects.filter(Email=data['Email']).first()
+    project_list = list(search_models.Favor.objects.values('Herb','Info').filter(User=user))
+    list1=[]
+    for item in project_list:
+        herbs={}
+        herb = search_models.Herbs.objects.values().filter(Herb_id=item['Herb']).first()
+        herbs['Id'] = herb['Herb_id']
+        herbs['Detail_page'] = herb['Detail_page']
+        herbs['Name'] = herb['Name']
+        herbs['Description'] = item['Info']
+        list1.append(herbs)
+    return HttpResponse(json.dumps(list1))
+
+def deleteFavor(request):
+    data = json.loads(request.body)
+    user = models.User.objects.filter(Email=data['Email']).first()
+    herb = search_models.Herbs.objects.filter(Herb_id=data['Id']).first()
+    favor = search_models.Favor.objects.filter(User=user,Herb=herb).first()
+    if favor:
+        favor.delete()
+        return HttpResponse("删除成功")
+    else:
+        return HttpResponse("删除失败")

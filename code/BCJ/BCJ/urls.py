@@ -28,5 +28,9 @@ urlpatterns = [
     path('modifypassword/',user_view.modifyPassword),
     path('find_pwd/', user_view.findPassword),
     path('verify_code/', user_view.Verifycode),
+    path('addfavor/',user_view.addFavor),
+    path('checkfavor/',user_view.checkFavor),
+    path('returnfavor/',user_view.returnFavor),
+    path('deletefavor/',user_view.deleteFavor),
     # path('addbooks/',search_view.addbooks)
 ]
