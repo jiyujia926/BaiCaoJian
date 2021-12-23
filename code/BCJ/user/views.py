@@ -92,7 +92,7 @@ def Verifycode(request):
     if user:
         user_code = list(models.IdentifyingCode.objects.filter(User=user))
         if user_code:
-            now_time = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
+            now_time = datetime.datetime.now()
             code = data['Checksum']                     #获取传递过来的验证码
             msg = ""
             for item in user_code:
