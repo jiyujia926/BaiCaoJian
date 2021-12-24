@@ -37,3 +37,7 @@ class Favor(models.Model):
     User = models.ManyToManyField(User)
     Herb = models.ManyToManyField(Herbs)
     Info = models.TextField(null=True)
+
+class Frequency(models.Model):
+    key = models.CharField(max_length=50)
+    value = models.IntegerField(default=0)

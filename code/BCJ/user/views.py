@@ -9,7 +9,6 @@ import random
 import datetime
 import pytz
 
-from code.BCJ.search.models import Herbs
 from . import models
 from search import models as search_models
 # Create your views here.

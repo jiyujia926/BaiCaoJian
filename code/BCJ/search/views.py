@@ -17,6 +17,11 @@ def search(request):
     data = json.loads(request.body)
     keyword = data['Keyword']
     print(keyword)
+    frequency = models.Frequency.objects.filter(key=keyword).first()
+    print(frequency)
+    if frequency:
+        frequency.value = frequency.value+1
+        frequency.save()
     s = HerbsDocument.search().query("match",Name=keyword)
     qs = s.to_queryset()
     herblist = []
