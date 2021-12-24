@@ -1,7 +1,7 @@
 from django.db import models
 from django.shortcuts import render
 from elasticsearch_dsl.search import MultiSearch
-from .models import Herbs,Books
+from .models import Herbs,Books,Frequency
 from .herbspide import main as herbmain
 from .bookspider import main as bookmain
 from django.http import HttpResponse
@@ -17,11 +17,13 @@ def search(request):
     data = json.loads(request.body)
     keyword = data['Keyword']
     print(keyword)
-    frequency = models.Frequency.objects.filter(key=keyword).first()
-    print(frequency)
+    frequency = Frequency.objects.filter(key=keyword).first()
+    # print(frequency)
     if frequency:
         frequency.value = frequency.value+1
         frequency.save()
+    else:
+        frequency = Frequency.objects.create(key=keyword,value=1)
     s = HerbsDocument.search().query("match",Name=keyword)
     qs = s.to_queryset()
     herblist = []
@@ -92,6 +94,17 @@ def search(request):
         'shuben': booklist
     }
     return HttpResponse(json.dumps(res))
+
+def mostsearching(request):
+    frequencylist = list(Frequency.objects.values('key').order_by('-value'))
+    length=len(frequencylist)
+    if len(frequencylist) > 10:
+        length = 10
+    result=[]
+    for item in frequencylist:
+        result.append(item)
+    print(result)
+    return HttpResponse(json.dumps(result))
 
 # def addbooks(request):
 #     result = bookmain()

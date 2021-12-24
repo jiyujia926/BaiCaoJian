@@ -39,5 +39,5 @@ class Favor(models.Model):
     Info = models.TextField(null=True)
 
 class Frequency(models.Model):
-    key = models.CharField(max_length=50)
+    key = models.CharField(max_length=50,primary_key=True)
     value = models.IntegerField(default=0)
