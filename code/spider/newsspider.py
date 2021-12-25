@@ -1,8 +1,10 @@
 import time
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains  # 引入 ActionChains 类
 from bs4 import BeautifulSoup  # 网页解析 获取数据
+from selenium.webdriver.common.by import By
 import re
 
 '''
@@ -23,12 +25,12 @@ findSummary = re.compile(r'style="margin-top:8px;-webkit-line-clamp:3">(.*?)</di
 def main():
     option = webdriver.ChromeOptions()
     option.add_argument("headless")
-    driver = webdriver.Chrome(executable_path='./chromedriver.exe',
-                              options=option)  # chromedriver不是python自带的库 这个地方必须要有包含这个可执行文件的路径
+    s = Service('./chromedriver.exe')
+    driver = webdriver.Chrome(service=s, options=option)  # chromedriver不是python自带的库 这个地方必须要有包含这个可执行文件的路径
     # driver.maximize_window()
     driver.implicitly_wait(6)
     url = 'https://www.google.com/'
-    herb = '金龟子'  # 这个草药名字是需要传入的参数！！！！！
+    herb = '冬虫夏草 新闻'  # 这个草药名字是需要传入的参数！！！！！
     page = browserOperation(driver, url, herb)
     result = pageProcess(page)
     for item in result:
