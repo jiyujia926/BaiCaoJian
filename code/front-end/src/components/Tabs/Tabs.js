@@ -57,15 +57,17 @@ export default function BasicTabs(props) {
   const [numOfPage_citiao, setNumOfPage_citiao] = useState(
     Math.ceil(items_citiao.length / itemsPerPage)
   );
-  useEffect(()=>{
-    setNumOfPage_citiao(Math.ceil(items_citiao.length / itemsPerPage))
-  })
 
   const [numOfPage_shuben, setNumOfPage_shuben] = useState(
     Math.ceil(items_shuben.length / itemsPerPage)
   );
+
   const [value, setValue] = React.useState(0);
 
+  useEffect(()=>{
+    setNumOfPage_citiao(Math.ceil(items_citiao.length / itemsPerPage));
+    setNumOfPage_shuben(Math.ceil(items_shuben.length / itemsPerPage));
+  })
   
   console.log(numOfPage_citiao);
   console.log(numOfPage_shuben);
@@ -95,6 +97,7 @@ export default function BasicTabs(props) {
           <Tab label="新闻" {...a11yProps(1)} />
           <Tab label="书籍" {...a11yProps(2)} />
           <Tab label="图片" {...a11yProps(3)} />
+          <Tab label="网页" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -148,6 +151,9 @@ export default function BasicTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={3}>
         图片
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        网页
       </TabPanel>
     </Box>
   );
