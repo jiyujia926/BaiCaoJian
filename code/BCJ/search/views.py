@@ -130,7 +130,7 @@ def mostsearching(request):
     for item in frequencylist:
         result.append(item)
     print(result)
-    return HttpResponse(json.dumps(result))
+    return HttpResponse(json.dumps(result[:length]))
 
 # def addbooks(request):
 #     result = bookmain()
