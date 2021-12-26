@@ -16,9 +16,9 @@ from .forbing import main as bingspider
 # def search_test(keyword):
 #     return "success: "+keyword
 def search(request):
-    # data = json.loads(request.body)
-    # keyword = data['Keyword']
-    keyword = "肾亏"
+    data = json.loads(request.body)
+    keyword = data['Keyword']
+    # keyword = "肾亏"
     print(keyword)
     frequency = Frequency.objects.filter(key=keyword).first()
     # print(frequency)
