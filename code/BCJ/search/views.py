@@ -122,7 +122,7 @@ def search(request):
     return HttpResponse(json.dumps(res))
 
 def mostsearching(request):
-    frequencylist = list(Frequency.objects.values('key').order_by('-value'))
+    frequencylist = list(Frequency.objects.values('key','value').order_by('-value'))
     length=len(frequencylist)
     if len(frequencylist) > 10:
         length = 10
