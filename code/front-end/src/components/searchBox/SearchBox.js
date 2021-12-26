@@ -10,7 +10,8 @@ import { ContactSupportOutlined } from "@material-ui/icons";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-const server = "http://127.0.0.1:8000";
+// const server = "http://127.0.0.1:8000";
+const server = "http://1.15.97.64:6636"
 const SearchForm = () => {
   const classes = searchBoxStyles();
   const { register, handleSubmit } = useForm();

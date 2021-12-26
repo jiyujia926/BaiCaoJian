@@ -36,6 +36,7 @@ def search(request):
     binglist = []
     for herb in qs:
         herbs = {}
+        herbs['id']=herb.Herb_id
         herbs['title']=herb.Name
         herbs['url']=herb.Picture_url
         herbs['abstract']=herb.Herb_info
@@ -45,6 +46,7 @@ def search(request):
     qs = s.to_queryset()
     for herb in qs:
         herbs = {}
+        herbs['id']=herb.Herb_id
         herbs['title']=herb.Name
         herbs['url']=herb.Picture_url
         herbs['abstract']=herb.Herb_info
@@ -103,19 +105,19 @@ def search(request):
             pass
         else:
             picturelist.append(picture)
-    newsresult = newspider(keyword)
-    binglist = bingspider(keyword)
+    # newsresult = newspider(keyword)
+    # binglist = bingspider(keyword)
     print(len(herblist))
     print(len(booklist))
     print(len(picturelist))
-    print(len(newsresult))
-    print(len(binglist))
+    # print(len(newsresult))
+    # print(len(binglist))
     res = {
         'citiao': herblist,
         'shuben': booklist,
         'tupian': picturelist,
-        'xinwen': newsresult,
-        'bing': binglist
+        # 'xinwen': newsresult,
+        # 'bing': binglist
     }
     return HttpResponse(json.dumps(res))
 
