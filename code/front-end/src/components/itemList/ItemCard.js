@@ -8,12 +8,13 @@ const ItemCard = (props) => {
     const classes = useStyles();
     const { data } = props;
     const raw_url = "http://localhost:3000/detail/";
+    let url = (raw_url+data.id).replace(/ /, '');
     return (
       <Card className={classes.root}>
         <CardContent >
-            <a className={classes.title} href={raw_url+data.title}>{data.title}</a>
+            <a className={classes.title} href={url}>{data.title}</a>
             <Typography className={classes.url}>
-              {raw_url+data.title}
+              {url}
             </Typography>
             <div className={classes.content}>
               <img className={classes.image} src={data.url} alt={data.title+"图片"}></img>

@@ -14,5 +14,12 @@ const useStyles = makeStyles(() => ({
     display: "flex",  
     display: "-webkit-flex",
   },
+  wordCloud: {
+    margin: "30px 0 0 40%",
+    width: "200px",
+    height: "200px",
+    justifyContent: "center", 
+    alignItems: "center",
+  },
 }));
 export default useStyles;

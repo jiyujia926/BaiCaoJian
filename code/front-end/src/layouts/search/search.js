@@ -22,18 +22,12 @@ const Search = () => {
 
   async function mostSearch() {
     let res = await axios.post(`${server}/mostsearching/`);
-    let keyword_list = [];
-    // for (let i = 0; i < res.length; i++) {
-
-    // }
     setMostKeywords(res.data);
   }
 
   useEffect(()=>{
-    console.log(results);
-    // request for most search keywords
     mostSearch();
-  })
+  }, [])
   
   return (
     <div className={classes.root}>
