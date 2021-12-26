@@ -10,8 +10,8 @@ from .documents import HerbsDocument, PicturesDocument
 from .documents import BooksDocument
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
-from .newsspider import main as newspider
-from .forbing import main as bingspider
+# from .newsspider import main as newspider
+# from .forbing import main as bingspider
 # Create your views here.
 # def search_test(keyword):
 #     return "success: "+keyword
@@ -36,6 +36,7 @@ def search(request):
     binglist = []
     for herb in qs:
         herbs = {}
+        herbs['id']=herb.Herb_id
         herbs['title']=herb.Name
         herbs['url']=herb.Picture_url
         herbs['abstract']=herb.Herb_info
@@ -45,6 +46,7 @@ def search(request):
     qs = s.to_queryset()
     for herb in qs:
         herbs = {}
+        herbs['id']=herb.Herb_id
         herbs['title']=herb.Name
         herbs['url']=herb.Picture_url
         herbs['abstract']=herb.Herb_info
@@ -103,27 +105,36 @@ def search(request):
             pass
         else:
             picturelist.append(picture)
-    newsresult = newspider(keyword)
-    binglist = bingspider(keyword)
+    # newsresult = newspider(keyword)
+    # binglist = bingspider(keyword)
     print(len(herblist))
     print(len(booklist))
     print(len(picturelist))
-    print(len(newsresult))
-    print(len(binglist))
+    # print(len(newsresult))
+    # print(len(binglist))
     res = {
         'citiao': herblist,
         'shuben': booklist,
         'tupian': picturelist,
-        'xinwen': newsresult,
-        'bing': binglist
+        # 'xinwen': newsresult,
+        # 'bing': binglist
     }
     return HttpResponse(json.dumps(res))
 
 def mostsearching(request):
-    frequencylist = list(Frequency.objects.values('key').order_by('-value'))
+    frequencylist = list(Frequency.objects.values('key','value').order_by('-value'))
     length=len(frequencylist)
     if len(frequencylist) > 10:
         length = 10
+    result=[]
+    for item in frequencylist:
+        result.append(item)
+    print(result)
+    return HttpResponse(json.dumps(result[:length]))
+
+def cloud(request):
+    frequencylist = list(Frequency.objects.values('key','value').order_by('-value'))
+    length=len(frequencylist)
     result=[]
     for item in frequencylist:
         result.append(item)

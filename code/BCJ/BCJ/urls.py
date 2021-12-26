@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.core.serializers.json import Serializer
 from django.urls import path
 from user import views as user_view
 from search import views as search_view
@@ -33,6 +34,7 @@ urlpatterns = [
     path('returnfavor/',user_view.returnFavor),
     path('deletefavor/',user_view.deleteFavor),
     path('mostsearching/',search_view.mostsearching),
+    path('cloud/',search_view.cloud)
     # path('addbooks/',search_view.addbooks),
     # path('addpictures/',search_view.addpictures)
 ]
