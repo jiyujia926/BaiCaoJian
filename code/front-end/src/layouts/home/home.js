@@ -44,9 +44,9 @@ const Home = () => {
 
   return (
     <div className={classes.root}>
-      <Button variant="contained" color="primary" onClick={handleClick}>
+      {/* <Button variant="contained" color="primary" onClick={handleClick}>
         button for jaja
-      </Button>
+      </Button> */}
       <div className={classes.img}>
         <img src={LogoImg} alt="Logo"></img>
       </div> 
