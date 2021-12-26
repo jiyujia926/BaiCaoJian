@@ -13,7 +13,7 @@ chromewebdriver这个可执行文件需要跟这个爬虫放在同一级目录�
 '''
 
 
-standardtitle = ['来源', '标题', '简介', '时间', '链接']
+standardtitle = ['source', 'title', 'info', 'time', 'url']
 
 findlink = re.compile(r'<a class="WlydOe".*?href="(.*?)".*?>')
 findSourceAndTime = re.compile(r'<span>(.*?)</span>')
@@ -32,8 +32,8 @@ def main(keyword:str):
     herb = '肾亏'  # 这个草药名字是需要传入的参数！！！！！
     page = browserOperation(driver, url, keyword)
     result = pageProcess(page)
-    for item in result:
-        print(item)
+    # for item in result:
+    #     print(item)
     return result
 
 def browserOperation(driver, url, herbname):

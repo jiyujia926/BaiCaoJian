@@ -10,13 +10,15 @@ from .documents import HerbsDocument, PicturesDocument
 from .documents import BooksDocument
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
+from .newsspider import main as newspider
+from .forbing import main as bingspider
 # Create your views here.
 # def search_test(keyword):
 #     return "success: "+keyword
 def search(request):
-    data = json.loads(request.body)
-    keyword = data['Keyword']
-    # keyword = "肾亏"
+    # data = json.loads(request.body)
+    # keyword = data['Keyword']
+    keyword = "肾亏"
     print(keyword)
     frequency = Frequency.objects.filter(key=keyword).first()
     # print(frequency)
@@ -30,6 +32,8 @@ def search(request):
     herblist = []
     booklist = []
     picturelist = []
+    newslist = []
+    binglist = []
     for herb in qs:
         herbs = {}
         herbs['title']=herb.Name
@@ -99,13 +103,19 @@ def search(request):
             pass
         else:
             picturelist.append(picture)
+    newsresult = newspider(keyword)
+    binglist = bingspider(keyword)
     print(len(herblist))
     print(len(booklist))
     print(len(picturelist))
+    print(len(newsresult))
+    print(len(binglist))
     res = {
         'citiao': herblist,
         'shuben': booklist,
-        'tupian':picturelist
+        'tupian': picturelist,
+        'xinwen': newsresult,
+        'bing': binglist
     }
     return HttpResponse(json.dumps(res))
 
