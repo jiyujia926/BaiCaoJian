@@ -1,12 +1,12 @@
 from django.db import models
 from django.shortcuts import render
 from elasticsearch_dsl.search import MultiSearch
-from .models import Herbs,Books,Frequency
+from .models import Herbs,Books,Frequency, Picture
 from .herbspide import main as herbmain
 from .bookspider import main as bookmain
 from django.http import HttpResponse
 import json
-from .documents import HerbsDocument
+from .documents import HerbsDocument, PicturesDocument
 from .documents import BooksDocument
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
@@ -16,6 +16,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 def search(request):
     data = json.loads(request.body)
     keyword = data['Keyword']
+    # keyword = "肾亏"
     print(keyword)
     frequency = Frequency.objects.filter(key=keyword).first()
     # print(frequency)
@@ -28,6 +29,7 @@ def search(request):
     qs = s.to_queryset()
     herblist = []
     booklist = []
+    picturelist = []
     for herb in qs:
         herbs = {}
         herbs['title']=herb.Name
@@ -87,11 +89,23 @@ def search(request):
             pass
         else:
             booklist.append(books)
+    s = PicturesDocument.search().query("match",Name=keyword)
+    qs = s.to_queryset()
+    for pic in qs:
+        picture = {}
+        picture['name']=pic.Name
+        picture['url']=pic.Url
+        if picture in picturelist:
+            pass
+        else:
+            picturelist.append(picture)
     print(len(herblist))
     print(len(booklist))
+    print(len(picturelist))
     res = {
         'citiao': herblist,
-        'shuben': booklist
+        'shuben': booklist,
+        'tupian':picturelist
     }
     return HttpResponse(json.dumps(res))
 
@@ -175,3 +189,13 @@ def mostsearching(request):
 #         print(i)
 #         i = i+1
 #     return HttpResponse("yes!")
+
+# def addpictures(request):
+#     i = 1
+#     for picture in picturelist:
+#         pic = Picture.objects.create(Name=picture['name'],Url=picture['url'])
+#         pic.save()
+#         print(i)
+#         i += 1
+        
+#     return HttpResponse("add")

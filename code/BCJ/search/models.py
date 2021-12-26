@@ -41,3 +41,9 @@ class Favor(models.Model):
 class Frequency(models.Model):
     key = models.CharField(max_length=50,primary_key=True)
     value = models.IntegerField(default=0)
+
+
+class Picture(models.Model):
+    Name = models.TextField()
+    Url = models.TextField()
+

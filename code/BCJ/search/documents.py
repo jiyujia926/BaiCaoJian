@@ -4,7 +4,7 @@ from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from .models import Herbs
 from .models import Books
-
+from .models import Picture
 @registry.register_document
 class HerbsDocument(Document):
     class Index:
@@ -53,4 +53,18 @@ class BooksDocument(Document):
            'Book_author',
            'Book_publishdate',
            'Book_publish'
+        ]
+
+@registry.register_document
+class PicturesDocument(Document):
+    class Index:
+        name = "pictures"
+        settings = {'number_of_shards': 1,
+                    'number_of_replicas': 0}
+    class Django:
+        model = Picture
+        
+        fields = [
+            'Name',
+            'Url'
         ]
