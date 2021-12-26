@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme)=>({
     margin: "0 0 0 25px",
     padding: "12px 0 0 0",
   },
+  searchBody: {
+    display: "flex",
+    flexDirection: "row",
+  },
 }));
 
 export default useStyles;

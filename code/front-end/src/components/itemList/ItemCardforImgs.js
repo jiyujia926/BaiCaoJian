@@ -8,9 +8,9 @@ const ItemCardforImgs = (props) => {
   const { data } = props;
   return (
     <div>
-      <Card>
+      <Card >
         <CardHeader ></CardHeader>
-        <CardContent>
+        <CardContent classesName={classes.content}>
           <p className={classes.imgName}>{data.name}</p>
           <img
             className={classes.imgs}
@@ -23,7 +23,7 @@ const ItemCardforImgs = (props) => {
   )
 };
 
-ItemCardforBook.propTypes = {
+ItemCardforImgs.propTypes = {
   data: PropTypes.object,
 };
 

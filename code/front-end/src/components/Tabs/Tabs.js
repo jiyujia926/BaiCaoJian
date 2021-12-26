@@ -9,7 +9,7 @@ import { Divider } from '@material-ui/core';
 import useStyles from "./styles";
 import ItemCard from '../itemList/ItemCard';
 import ItemCardforBook from '../itemList/ItemCardforBook';
-
+import ItemCardforImgs from "../itemList/ItemCardforImgs";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -44,15 +44,16 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs(props) {
-  const { items_citiao, items_shuben, items_news, items_imgs } = props;
+  const { items_citiao, items_shuben, items_tupian, items_news } = props;
   const classes = useStyles();
   const itemsPerPage = 10;
   const [page_citiao, setPage_citiao] = useState(1); // init page num
   const [page_shuben, setPage_shuben] = useState(1); // init page num
-  const [page_imgs, setPage_imgs] = useState(1); // init page num
+  const [page_tupian, setPage_tupian] = useState(1); // init page num
   const [page_news, setPage_news] = useState(1); // init page num
   // set default value for page(const)
-  console.log("citiao");
+  console.log(items_citiao);
+  console.log(items_tupian);
   console.log(Math.ceil(items_citiao.length / itemsPerPage));
   const [numOfPage_citiao, setNumOfPage_citiao] = useState(
     Math.ceil(items_citiao.length / itemsPerPage)
@@ -62,11 +63,16 @@ export default function BasicTabs(props) {
     Math.ceil(items_shuben.length / itemsPerPage)
   );
 
+  const [numOfPage_tupian, setNumOfPage_tupian] = useState(
+    Math.ceil(items_tupian.length / itemsPerPage)
+  );
+
   const [value, setValue] = React.useState(0);
 
   useEffect(()=>{
     setNumOfPage_citiao(Math.ceil(items_citiao.length / itemsPerPage));
     setNumOfPage_shuben(Math.ceil(items_shuben.length / itemsPerPage));
+    setNumOfPage_tupian(Math.ceil(items_tupian.length / itemsPerPage))
   })
   
   console.log(numOfPage_citiao);
@@ -88,6 +94,7 @@ export default function BasicTabs(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  console.log(items_tupian)
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -151,6 +158,10 @@ export default function BasicTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={3}>
         图片
+        {items_tupian
+        .slice((page_tupian-1) * itemsPerPage, page_tupian * itemsPerPage)
+        .map(item => <ItemCardforImgs data={item}></ItemCardforImgs>)
+        }
       </TabPanel>
       <TabPanel value={value} index={4}>
         网页
@@ -163,5 +174,5 @@ BasicTabs.propTypes = {
   items_citiao: PropTypes.array,
   items_shuben: PropTypes.array,
   items_news: PropTypes.array,
-  items_imgs: PropTypes,
+  items_tupian: PropTypes,
 };

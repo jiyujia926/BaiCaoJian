@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import { Typography } from "@material-ui/core";
 
 const RecommendList = (props) => {
-  const classes = {useStyles};
+  const classes = useStyles();
   const { data } = props;
 
   return (
-    <div>
-      <Typography>相关内容推荐: </Typography>
+    <div className={classes.root}>
+      <Typography className={classes.title}>大家都在搜: </Typography>
       <ul>
-        {data.map(item => <li>{item.content}</li>)}
+        {data.map(item => <li>{item.key}</li>)}
       </ul>
     </div>
     
