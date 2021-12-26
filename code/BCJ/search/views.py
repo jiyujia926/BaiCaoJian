@@ -10,8 +10,8 @@ from .documents import HerbsDocument, PicturesDocument
 from .documents import BooksDocument
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
-from .newsspider import main as newspider
-from .forbing import main as bingspider
+# from .newsspider import main as newspider
+# from .forbing import main as bingspider
 # Create your views here.
 # def search_test(keyword):
 #     return "success: "+keyword
