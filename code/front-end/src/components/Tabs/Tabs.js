@@ -10,6 +10,7 @@ import useStyles from "./styles";
 import ItemCard from '../itemList/ItemCard';
 import ItemCardforBook from '../itemList/ItemCardforBook';
 import ItemCardforImgs from "../itemList/ItemCardforImgs";
+import ItemCardforWeb from '../itemList/ItemCardforWeb';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,7 +46,7 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs(props) {
-  const { items_citiao, items_shuben, items_tupian, items_xinwen } = props;
+  const { items_citiao, items_shuben, items_tupian, items_xinwen, keyword } = props;
   const classes = useStyles();
   const itemsPerPage = 10;
   const [page_citiao, setPage_citiao] = useState(1); // init page num
@@ -65,9 +66,9 @@ export default function BasicTabs(props) {
     Math.ceil(items_tupian.length / itemsPerPage)
   );
 
-  // const [numOfPage_xinwen, setNumOfPage_xinwen] = useState(
-  //   Math.ceil(items_xinwen.length / itemsPerPage)
-  // )
+  const [numOfPage_xinwen, setNumOfPage_xinwen] = useState(
+    Math.ceil(items_xinwen.length / itemsPerPage)
+  )
 
   const [value, setValue] = React.useState(0);
 
@@ -75,15 +76,9 @@ export default function BasicTabs(props) {
     setNumOfPage_citiao(Math.ceil(items_citiao.length / itemsPerPage));
     setNumOfPage_shuben(Math.ceil(items_shuben.length / itemsPerPage));
     setNumOfPage_tupian(Math.ceil(items_tupian.length / itemsPerPage));
- //   setNumOfPage_xinwen(Math.ceil(items_xinwen.length / itemsPerPage));
+    setNumOfPage_xinwen(Math.ceil(items_xinwen.length / itemsPerPage));
   })
   
-//   const [numOfPage_news, setNumOfPage_news] = useState(
-//     Math.ceil(items_news.length / itemsPerPage)
-//   );
-//   const [numOfPage_imgs, setNumOfPage_imgs] = useState(
-//     Math.ceil(items_imgs.length / itemsPerPage)
-//   );
   
   const handleChangeCitiao = (event, value) => {
     setPage_citiao(value);
@@ -114,11 +109,10 @@ export default function BasicTabs(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        词条
         <div>
           {items_citiao
           .slice((page_citiao-1) * itemsPerPage, page_citiao * itemsPerPage)
-          .map(item => <ItemCard data={item} />)
+          .map(item => <ItemCard data={item} keyword={keyword}/>)
           }
         </div>
         <Divider />
@@ -137,14 +131,35 @@ export default function BasicTabs(props) {
           </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        新闻
+        <div>
+          {items_xinwen.length == 0 ? "暂时没有内容噢" : 
+            items_xinwen
+            .slice((page_xinwen-1) * itemsPerPage, page_xinwen * itemsPerPage)
+            .map(item => <ItemCardforWeb data={item} />)
+          }
+        </div>
+        <Divider />
+          <Box component="span">
+            <Pagination
+            count={numOfPage_xinwen}
+            page={page_xinwen}
+            onChange={handleChangeXinwen}
+            defaultPage={1}
+            color="standard"
+            size="large"
+            showFirstButton
+            showLastButton
+            classes={{ ul: classes.paginator }}
+            />
+          </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        书籍
         <div>
-          {items_shuben
-          .slice((page_shuben-1) * itemsPerPage, page_shuben * itemsPerPage)
-          .map(item => <ItemCardforBook data={item} />)
+          {
+            (items_shuben.length == 0) ? "暂时没有内容噢" :
+              items_shuben
+              .slice((page_shuben-1) * itemsPerPage, page_shuben * itemsPerPage)
+              .map(item => <ItemCardforBook data={item} />)
           }
         </div>
         <Divider />
@@ -163,7 +178,6 @@ export default function BasicTabs(props) {
           </Box>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        图片
         <div className={classes.tupian}>
           {items_tupian
           .slice((page_tupian-1) * itemsPerPage, page_tupian * itemsPerPage)
@@ -197,5 +211,6 @@ BasicTabs.propTypes = {
   items_citiao: PropTypes.array,
   items_shuben: PropTypes.array,
   items_news: PropTypes.array,
-  items_tupian: PropTypes,
+  items_tupian: PropTypes.array,
+  keyword: PropTypes.string
 };

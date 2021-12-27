@@ -11,25 +11,27 @@ import PropTypes from "prop-types";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://1.15.97.64:6636";
-// TODO: page
+
 const RealSearch = (props) => {
   const classes = searchBoxStyles();
   // define states
   const { register, handleSubmit } = useForm();
   const [ kw , setKw ] = useState("");
   // define props
-  const { shResult } = props;
+  const { shResult, shKeyword } = props;
 
   // handle onchange: update keyword
   const handleOnChange = (event) => {
     let { name, value } = event.target;
     setKw(value);
+    shKeyword(value);
   }
   // hanlde onclick: request for search
   const handleOnClick = () => {
     // get input and request search
     let { name, value } = document.getElementById("real-search");
     setKw(value);
+    shKeyword(value);
     let data = {
       Keyword: decodeURI(value),
     };
@@ -48,6 +50,7 @@ const RealSearch = (props) => {
       let data = {
         Keyword: decodeURI(kw),
       };
+      shKeyword(data.Keyword);
       searchForKeyword(data);
     }
     
@@ -57,7 +60,6 @@ const RealSearch = (props) => {
   async function searchForKeyword(data) {
     console.log(data);
     let res = await axios.post(`${server}/search/`, data);
-    console.log(res.data);
     shResult(res);
   }
   
@@ -90,6 +92,7 @@ const RealSearch = (props) => {
 
 RealSearch.propTypes = {
   shResult: PropTypes.func,
+  shKeyword: PropTypes.func,
 };
 
 export default RealSearch;

@@ -34,7 +34,6 @@ const ItemCardforBook = (props) =>{
               <p>出版社: {data.publish}</p>
             </div>
           </div>
-          
         </div>
          
       </CardContent>
