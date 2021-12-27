@@ -38,20 +38,20 @@ def search(request):
     for herb in qs:
         herbs = {}
         herbs['id']=herb.Herb_id
-        herbs['title']=herb.Name
+        herbs['title']=str(herb.Name).replace(keyword,"<strong>"+keyword+"</strong>")
         herbs['url']=herb.Picture_url
-        herbs['abstract']=herb.Herb_info
-        herbs['Medical_function']=herb.Medical_function
+        herbs['abstract']=str(herb.Herb_info).replace(keyword,"<strong>"+keyword+"</strong>")
+        herbs['Medical_function']=str(herb.Medical_function).replace(keyword,"<strong>"+keyword+"</strong>")
         herblist.append(herbs)
     s = HerbsDocument.search().query("match",Medical_function=keyword)
     qs = s.to_queryset()
     for herb in qs:
         herbs = {}
         herbs['id']=herb.Herb_id
-        herbs['title']=herb.Name
+        herbs['title']=str(herb.Name).replace(keyword,"<strong>"+keyword+"</strong>")
         herbs['url']=herb.Picture_url
-        herbs['abstract']=herb.Herb_info
-        herbs['Medical_function']=herb.Medical_function
+        herbs['abstract']=str(herb.Herb_info).replace(keyword,"<strong>"+keyword+"</strong>")
+        herbs['Medical_function']=str(herb.Medical_function).replace(keyword,"<strong>"+keyword+"</strong>")
         if herbs in herblist:
             pass
         else:
@@ -62,15 +62,15 @@ def search(request):
     qs = s.to_queryset()
     for book in qs:
         books = {}
-        books['title']=book.Book_name
+        books['title']=str(book.Book_name).replace(keyword,"<strong>"+keyword+"</strong>")
         books['url']=book.Picture_url
         booktag = str(book.Book_tag)
         if booktag.find("团购")>=0:
             startindex = booktag.find("团购")
             booktag=booktag[:startindex]
-        books['tag']=booktag
-        books['info']=book.Book_info
-        books['author']=book.Book_author
+        books['tag']=booktag.replace(keyword,"<strong>"+keyword+"</strong>")
+        books['info']=str(book.Book_info).replace(keyword,"<strong>"+keyword+"</strong>")
+        books['author']=str(book.Book_author).replace(keyword,"<strong>"+keyword+"</strong>")
         books['publishdate']=book.Book_publishdate
         books['publish']=book.Book_publish
         if books in booklist:
@@ -81,15 +81,15 @@ def search(request):
     qs = s.to_queryset()
     for book in qs:
         books = {}
-        books['title']=book.Book_name
+        books['title']=str(book.Book_name).replace(keyword,"<strong>"+keyword+"</strong>")
         books['url']=book.Picture_url
         booktag = str(book.Book_tag)
         if booktag.find("团购")>=0:
             startindex = booktag.find("团购")
             booktag=booktag[:startindex]
-        books['tag']=booktag
-        books['info']=book.Book_info
-        books['author']=book.Book_author
+        books['tag']=booktag.replace(keyword,"<strong>"+keyword+"</strong>")
+        books['info']=str(book.Book_info).replace(keyword,"<strong>"+keyword+"</strong>")
+        books['author']=str(book.Book_author).replace(keyword,"<strong>"+keyword+"</strong>")
         books['publishdate']=book.Book_publishdate
         books['publish']=book.Book_publish
         if books in booklist:
@@ -100,7 +100,7 @@ def search(request):
     qs = s.to_queryset()
     for pic in qs:
         picture = {}
-        picture['name']=pic.Name
+        picture['name']=str(pic.Name).replace(keyword,"<strong>"+keyword+"</strong>")
         picture['url']=pic.Url
         if picture in picturelist:
             pass
@@ -112,9 +112,9 @@ def search(request):
     qs = s.to_queryset()
     for news in qs:
         newss = {}
-        newss['source']=news.Source
-        newss['title']=news.Title
-        newss['info']=news.Info
+        newss['source']=str(news.Source).replace(keyword,"<strong>"+keyword+"</strong>")
+        newss['title']=str(news.Title).replace(keyword,"<strong>"+keyword+"</strong>")
+        newss['info']=str(news.Info).replace(keyword,"<strong>"+keyword+"</strong>")
         newss['time']=news.Time
         newss['url']=news.Url
         if newss in  newslist:
