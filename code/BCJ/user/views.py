@@ -117,38 +117,27 @@ def Verifycode(request):
 def addFavor(request):
     data = json.loads(request.body)
     user = models.User.objects.filter(Email=data['Email']).first()
-    info = data['Description']
     herb = search_models.Herbs.objects.filter(Herb_id=data['Id']).first()
     check = search_models.Favor.objects.filter(User=user,Herb=herb).first()
     if check:
         return HttpResponse("你已收藏")
-    favor = search_models.Favor.objects.create(Info=info)
+    favor = search_models.Favor.objects.create()
     favor.User.add(user)
     favor.Herb.add(herb)
     return HttpResponse("收藏成功")
 
-def checkFavor(request):
-    data = json.loads(request.body)
-    user = models.User.objects.filter(Email=data['Email']).first()
-    herb = search_models.Herbs.objects.filter(Herb_id=data['Id']).first()
-    favor = search_models.Favor.objects.filter(User=user,Herb=herb).first()
-    if favor:
-        return HttpResponse("已收藏")
-    else:
-        return HttpResponse("未收藏")
-
 def returnFavor(request):
     data = json.loads(request.body)
     user = models.User.objects.filter(Email=data['Email']).first()
-    project_list = list(search_models.Favor.objects.values('Herb','Info').filter(User=user))
+    herb_list = list(search_models.Favor.objects.values('Herb','Info').filter(User=user))
     list1=[]
-    for item in project_list:
+    for item in herb_list:
         herbs={}
         herb = search_models.Herbs.objects.values().filter(Herb_id=item['Herb']).first()
         herbs['Id'] = herb['Herb_id']
         herbs['Detail_page'] = herb['Detail_page']
         herbs['Name'] = herb['Name']
-        herbs['Description'] = item['Info']
+        herbs['Description'] = [{'key':"别名", 'info':herb['Subname']},{'key':"英文名", 'info':herb['English_name']},{'key':"药材性状", 'info':herb['Herb_info']},{'key':"性味归经", 'info':herb['Taste']},{'key':"功效与作用", 'info':herb['Function']},{'key':"使用禁忌", 'info':herb['Taboo']}]
         list1.append(herbs)
     return HttpResponse(json.dumps(list1))
 
