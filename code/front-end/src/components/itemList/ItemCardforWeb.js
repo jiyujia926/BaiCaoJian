@@ -9,14 +9,13 @@ const ItemCardforWeb = (props) => {
   const { data } = props;
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardContent>
         <div calssName={classes.newsName}>
           <a className={classes.newsName} href={data.url}>{data.title}</a>
-          <p className={classes.addition}>{data.time}】 来源: {data.source}</p>
+          <p className={classes.addition}>{data.time} 来源: {data.source}</p>
         </div>
         <div className={classes.newsBody}>
-          <div className={classes.bookContent}>
             <Typography
               className={classes.abstract}
               variant="body2"
@@ -24,7 +23,6 @@ const ItemCardforWeb = (props) => {
             >
               {data.info === "" ? "暂时没有内容噢" : data.info}
             </Typography>
-          </div>
         </div>
       </CardContent>
     </Card>
