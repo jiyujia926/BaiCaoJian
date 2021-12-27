@@ -10,6 +10,7 @@ import useStyles from "./styles";
 import ItemCard from '../itemList/ItemCard';
 import ItemCardforBook from '../itemList/ItemCardforBook';
 import ItemCardforImgs from "../itemList/ItemCardforImgs";
+import ItemCardforWeb from '../itemList/ItemCardforWeb';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,9 +66,9 @@ export default function BasicTabs(props) {
     Math.ceil(items_tupian.length / itemsPerPage)
   );
 
-  // const [numOfPage_xinwen, setNumOfPage_xinwen] = useState(
-  //   Math.ceil(items_xinwen.length / itemsPerPage)
-  // )
+  const [numOfPage_xinwen, setNumOfPage_xinwen] = useState(
+    Math.ceil(items_xinwen.length / itemsPerPage)
+  )
 
   const [value, setValue] = React.useState(0);
 
@@ -75,15 +76,9 @@ export default function BasicTabs(props) {
     setNumOfPage_citiao(Math.ceil(items_citiao.length / itemsPerPage));
     setNumOfPage_shuben(Math.ceil(items_shuben.length / itemsPerPage));
     setNumOfPage_tupian(Math.ceil(items_tupian.length / itemsPerPage));
- //   setNumOfPage_xinwen(Math.ceil(items_xinwen.length / itemsPerPage));
+    setNumOfPage_xinwen(Math.ceil(items_xinwen.length / itemsPerPage));
   })
   
-//   const [numOfPage_news, setNumOfPage_news] = useState(
-//     Math.ceil(items_news.length / itemsPerPage)
-//   );
-//   const [numOfPage_imgs, setNumOfPage_imgs] = useState(
-//     Math.ceil(items_imgs.length / itemsPerPage)
-//   );
   
   const handleChangeCitiao = (event, value) => {
     setPage_citiao(value);
@@ -138,6 +133,12 @@ export default function BasicTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         新闻
+        <div>
+          {items_xinwen
+          .slice((page_xinwen-1) * itemsPerPage, page_xinwen * itemsPerPage)
+          .map(item => <ItemCardforWeb data={item} />)
+          }
+        </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
         书籍
