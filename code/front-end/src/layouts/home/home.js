@@ -11,7 +11,8 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 // const server = "http://1.15.97.64:1241/:6636";  
-const server = "http://1.15.97.64:6636";
+//const server = "http://1.15.97.64:6636";
+const server = "https://baicao.zjuers.com:6636"
 
 const Home = () => {
   const [ mostKeywords, setMostKeywords ] = useState([]);
@@ -48,7 +49,7 @@ const Home = () => {
         button for jaja
       </Button> */}
       <div className={classes.img}>
-        <img src={LogoImg} alt="Logo"></img>
+        <img src={LogoImg} alt="Logo" />
       </div> 
       <div className={classes.searchform}>
         <SearchForm />

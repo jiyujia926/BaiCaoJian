@@ -10,8 +10,10 @@ const useStyles = makeStyles((theme)=>({
     maxHeight: "90px",
     margin: "-10px 10px 0 0",
   },
+  main: {
+    marginLeft: "25px",
+  },
   searchBox: {
-    margin: "0 0 0 25px",
     padding: "12px 0 0 0",
   },
   searchBody: {

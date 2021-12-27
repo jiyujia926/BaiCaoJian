@@ -10,7 +10,8 @@ import RecommendList from "../../components/recommendedList/RecommendList";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-const server = "http://1.15.97.64:6636";
+//const server = "http://1.15.97.64:6636";
+const server = "https://baicao.zjuers.com:6636";
 
 const Search = () => {
   const [ results, setResults ] = useState({citiao: [], shuben: [], tupian: [], xinwen: [], wangye: []});
@@ -38,26 +39,26 @@ const Search = () => {
   return (
     <div className={classes.root}>
       <img className={classes.logo} src={LogoImg} alt="百草笺 Logo" />
-      <div >
+      <div className={classes.main}>
         <div className={classes.searchBox}>
           <RealSearch
             shResult={getResults}
             shKeyword={getKeyword}/>
         </div>
         <div className={classes.searchBody}>
-        <Tabs
-          keyword = {keyword}
-          items_citiao={results.citiao}
-          items_shuben={results.shuben}
-          items_tupian={results.tupian}
-          items_xinwen={results.xinwen}
-          items_wangye={results.wangye}
-          />
-        <RecommendList 
-          data = {mostKeywords}
-        />
+          <Tabs
+            keyword = {keyword}
+            items_citiao={results.citiao}
+            items_shuben={results.shuben}
+            items_tupian={results.tupian}
+            items_xinwen={results.xinwen}
+            items_wangye={results.wangye}
+            />
         </div>
       </div>
+      <RecommendList
+        data = {mostKeywords}
+      />
     </div>
   );
 }
