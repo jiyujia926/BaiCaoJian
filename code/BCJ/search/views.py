@@ -184,29 +184,29 @@ def detailpage(request):
         if this['Subname']:
             infolist.append({'detailitem':'别名','detailcontent':this['Subname']})
         if this['English_name']:
-            infolist.append({'detailitem':'别名','detailcontent':this['English_name']})
+            infolist.append({'detailitem':'英文名','detailcontent':this['English_name']})
         if this['Medical_part']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Medical_part']})
+            infolist.append({'detailitem':'药用部位','detailcontent':this['Medical_part']})
         if this['Plant_pose']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Plant_pose']})
+            infolist.append({'detailitem':'植物形态','detailcontent':this['Plant_pose']})
         if this['Produce_place']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Produce_place']})
+            infolist.append({'detailitem':'产地分布','detailcontent':this['Produce_place']})
         if this['Pick_reproduce']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Pick_reproduce']})
+            infolist.append({'detailitem':'采收加工','detailcontent':this['Pick_reproduce']})
         if this['Herb_info']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Herb_info']})
+            infolist.append({'detailitem':'药材性状','detailcontent':this['Herb_info']})
         if this['Taste']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Taste']})
+            infolist.append({'detailitem':'性味归经','detailcontent':this['Taste']})
         if this['Function']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Function']})
+            infolist.append({'detailitem':'功效与作用','detailcontent':this['Function']})
         if this['Medical_function']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Medical_function']})
+            infolist.append({'detailitem':'临床应用','detailcontent':this['Medical_function']})
         if this['Medical_search']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Medical_search']})
+            infolist.append({'detailitem':'药理研究','detailcontent':this['Medical_search']})
         if this['Chemistry_component']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Chemistry_component']})
+            infolist.append({'detailitem':'化学成分','detailcontent':this['Chemistry_component']})
         if this['Taboo']:
-            infolist.append({'detailitem':'别名','detailcontent':this['Taboo']})
+            infolist.append({'detailitem':'使用禁忌','detailcontent':this['Taboo']})
         herb['detailinfo']=infolist
     return HttpResponse(json.dumps(herb))
 # def addbooks(request):
