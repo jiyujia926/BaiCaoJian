@@ -109,7 +109,7 @@ export default function BasicTabs(props) {
   };
 
   useEffect(()=>{
-    
+
   });
 
   return (
@@ -125,7 +125,7 @@ export default function BasicTabs(props) {
       </Box>
       <TabPanel value={value} index={0}>
         <div>
-          {items_citiao
+          {items_citiao.length !== 0 && items_citiao
             .slice((page_citiao - 1) * itemsPerPage, page_citiao * itemsPerPage)
             .map(item => <ItemCard data={item} keyword={keyword} />)
           }
