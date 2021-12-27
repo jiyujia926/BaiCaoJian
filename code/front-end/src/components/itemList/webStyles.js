@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core";
 const webStyles = makeStyles(()=>({
   root: {
     width: "800px",
+    margin: "10px 0 40px 0",
   },
   newsName: {
     fontSize: 20,

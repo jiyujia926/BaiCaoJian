@@ -139,6 +139,20 @@ export default function BasicTabs(props) {
           .map(item => <ItemCardforWeb data={item} />)
           }
         </div>
+        <Divider />
+          <Box component="span">
+            <Pagination
+            count={numOfPage_xinwen}
+            page={page_xinwen}
+            onChange={handleChangeXinwen}
+            defaultPage={1}
+            color="standard"
+            size="large"
+            showFirstButton
+            showLastButton
+            classes={{ ul: classes.paginator }}
+            />
+          </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
         书籍
