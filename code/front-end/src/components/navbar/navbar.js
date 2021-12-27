@@ -27,8 +27,8 @@ import useStyles from "./styles";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-//const server = "http://1.15.97.64:6636";
-const server = "http://127.0.0.1:8000";
+const server = "http://1.15.97.64:6636";
+//const server = "http://127.0.0.1:8000";
 
 const Navbar = () => {
   const classes = useStyles(); 
@@ -378,6 +378,7 @@ const Navbar = () => {
     setOp("forgetpassword");
   };
   const handleToChangePassword = () => {
+    setOpenProfile(false);
     setFormData(initialFormState);
     setOp("changepassword");
     setOpenDialog(true);
@@ -415,7 +416,17 @@ const Navbar = () => {
                     <MenuList role="menu">
                       <MenuItem
                         onClick={() => {
-                          navigate('user');
+                          setOpenProfile(false);
+                          navigate('/');
+                        }}
+                        className={classes.dropdownItem}
+                      >
+                        继续搜索
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          setOpenProfile(false);
+                          navigate('/user');
                         }}
                         className={classes.dropdownItem}
                       >

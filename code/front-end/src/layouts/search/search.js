@@ -32,7 +32,7 @@ const Search = () => {
   
   return (
     <div className={classes.root}>
-      <img className={classes.logo} src={LogoImg} alt="百草笺 Logo"></img>
+      <img className={classes.logo} src={LogoImg} alt="百草笺 Logo" />
       <div >
         <div className={classes.searchBox}>
           <RealSearch shResult={getResults}/>
