@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.core.serializers.json import Serializer
 from django.urls import path
+
 from user import views as user_view
 from search import views as search_view
 
@@ -35,8 +36,8 @@ urlpatterns = [
     path('deletefavor/',user_view.deleteFavor),
     path('mostsearching/',search_view.mostsearching),
     path('cloud/',search_view.cloud),
-    path('detailpage/',search_view.detailpage)
-    # path('addnewsandbing/',search_view.addnewsandbings)
+    path('detailpage/',search_view.detailpage),
+    path('addnewsandbing/',search_view.addnewsandbings)
     # path('addbooks/',search_view.addbooks),
     # path('addpictures/',search_view.addpictures)
 ]

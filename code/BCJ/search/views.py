@@ -278,25 +278,24 @@ def detailpage(request):
         
 #     return HttpResponse("add")
 
-# def addnewsandbings(request):
-#     herblist = list(Herbs.objects.values().order_by('Herb_id'))[173:]
-#     for herb in herblist:
-#         keyword = herb['Name']
-#         if keyword.find(' ')>=0:
-#             index = keyword.find(' ')
-#             keyword = keyword[:index]
-#         keyword += " 新闻"
-#         print(keyword)
-#         i = herb['Herb_id']
-#         print(i)
-#         newslist=newspider(keyword)
-#         for news in newslist:
-#             News.objects.create(**news)
-#         # sleep(20)
-#         # binglist=bingspider(keyword)
-#         # for bing in binglist:
-#         #     Bing.objects.create(**bing)
-#         print(i)
-#         print("ok")
-#     return HttpResponse("yes!")
+def addnewsandbings(request):
+    herblist = list(Herbs.objects.values().order_by('Herb_id'))[173:]
+    for herb in herblist:
+        keyword = herb['Name']
+        if keyword.find(' ')>=0:
+            index = keyword.find(' ')
+            keyword = keyword[:index]
+        print(keyword)
+        i = herb['Herb_id']
+        print(i)
+        binglist=bingspider(keyword)
+        for bing in binglist:
+            Bing.objects.create(**bing)
+        # sleep(20)
+        # binglist=bingspider(keyword)
+        # for bing in binglist:
+        #     Bing.objects.create(**bing)
+        print(i)
+        print("ok")
+    return HttpResponse("yes!")
             
