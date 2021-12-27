@@ -50,6 +50,7 @@ const RealSearch = (props) => {
       let data = {
         Keyword: decodeURI(kw),
       };
+      setKw(data.Keyword);
       shKeyword(data.Keyword);
       searchForKeyword(data);
     }
