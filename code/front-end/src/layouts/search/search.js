@@ -13,11 +13,12 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://1.15.97.64:6636";
 
 const Search = () => {
-  const [ results, setResults ] = useState({citiao: [], shuben: [], tupian: []});
+  const [ results, setResults ] = useState({citiao: [], shuben: [], tupian: [], xinwen: []});
   const [ mostKeywords, setMostKeywords ] = useState([]);
   const classes = useStyles();
   const getResults = (res) => {
     setResults(res.data);
+    console.log(res.data);
   }
 
   async function mostSearch() {
@@ -41,7 +42,7 @@ const Search = () => {
           items_citiao={results.citiao}
           items_shuben={results.shuben}
           items_tupian={results.tupian}
-          items_news={results.news}
+          items_xinwen={results.xinwen}
           />
         <RecommendList 
           data = {mostKeywords}

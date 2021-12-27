@@ -1,18 +1,23 @@
 import { makeStyles } from "@material-ui/core";
 
 const imgStyles = makeStyles(()=>({
+  root: {
+    width: "280px",
+    height: "430px",
+    margin: "10px",
+  },
   content: {
     display: "flex",
-    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   },
   imgName: {
-    
+    textAlign: "center",
   },
   imgs: {
-    maxWidth: "220px",
-    maxHeight: "200px",
-    width: "200px",
-    height: "200px",
+    maxWidth: "260px",
+    maxHeight: "340px",
   },
 }));
 

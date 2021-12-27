@@ -12,8 +12,8 @@ const ItemCardforBook = (props) =>{
     console.log(data)
   })
   return (
-    <Card>
-      <CardContent className={classes.root}>
+    <Card className={classes.root}>
+      <CardContent >
         <div calssName={classes.bookName}>
           <p className={classes.bookName}>{data.title}</p>
           <p className={classes.addition}>【{data.publishdate}】 标签: {data.tag}</p>
