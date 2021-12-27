@@ -46,7 +46,7 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs(props) {
-  const { items_citiao, items_shuben, items_tupian, items_xinwen } = props;
+  const { items_citiao, items_shuben, items_tupian, items_xinwen, keyword } = props;
   const classes = useStyles();
   const itemsPerPage = 10;
   const [page_citiao, setPage_citiao] = useState(1); // init page num
@@ -113,7 +113,7 @@ export default function BasicTabs(props) {
         <div>
           {items_citiao
           .slice((page_citiao-1) * itemsPerPage, page_citiao * itemsPerPage)
-          .map(item => <ItemCard data={item} />)
+          .map(item => <ItemCard data={item} keyword={keyword}/>)
           }
         </div>
         <Divider />
@@ -212,5 +212,6 @@ BasicTabs.propTypes = {
   items_citiao: PropTypes.array,
   items_shuben: PropTypes.array,
   items_news: PropTypes.array,
-  items_tupian: PropTypes,
+  items_tupian: PropTypes.array,
+  keyword: PropTypes.string
 };
