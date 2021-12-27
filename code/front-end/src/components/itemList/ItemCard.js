@@ -4,17 +4,11 @@ import useStyles from "./styles";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 // TODO: 点击title链接到详情页
-/*
-
-        
-        highlight("textbox","关键词1,关键词2");
-
-*/
 
 const ItemCard = (props) => {
   const classes = useStyles();
   const { data, keyword } = props;
-  const raw_url = "http://localhost:3000/detail/";
+  const raw_url = "https://baicao.zjuers.com/detail/";
   let id = nanoid();
   let url = (raw_url + data.id).replace(/ /, '');
   const highlight = (idvalue, keyword) => {
