@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 // const server = "http://127.0.0.1:8000";
-const server = "https://baicao.zjuers.com:6636"
+const server = "http://baicao.zjuers.com:6636"
 
 /*function createData(item, detialtext) {
   return {item, detialtext};

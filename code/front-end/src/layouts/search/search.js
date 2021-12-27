@@ -10,7 +10,7 @@ import RecommendList from "../../components/recommendedList/RecommendList";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-const server = "https://baicao.zjuers.com:6636"
+const server = "http://baicao.zjuers.com:6636"
 
 const Search = () => {
   const [ results, setResults ] = useState({citiao: [], shuben: [], tupian: [], xinwen: [], wangye: []});
