@@ -5,6 +5,8 @@ from django_elasticsearch_dsl.registries import registry
 from .models import Herbs
 from .models import Books
 from .models import Picture
+from .models import News
+from .models import Bing
 @registry.register_document
 class HerbsDocument(Document):
     class Index:
@@ -67,4 +69,35 @@ class PicturesDocument(Document):
         fields = [
             'Name',
             'Url'
+        ]
+@registry.register_document
+class NewsDocument(Document):
+    class Index:
+        name = "news"
+        settings = {'number_of_shards': 1,
+                    'number_of_replicas': 0}
+    class Django:
+        model = News
+        
+        fields = [
+            'Source',
+            'Title',
+            'Info',
+            'Time',
+            'Url'
+        ]
+
+@registry.register_document
+class BingDocument(Document):
+    class Index:
+        name = "bing"
+        settings = {'number_of_shards': 1,
+                    'number_of_replicas': 0}
+    class Django:
+        model = Bing
+        
+        fields = [
+            'Title',
+            'Url',
+            'Abstract'
         ]

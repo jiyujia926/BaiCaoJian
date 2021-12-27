@@ -13,7 +13,7 @@ chromewebdriver这个可执行文件需要跟这个爬虫放在同一级目录�
 '''
 
 
-standardtitle = ['source', 'title', 'info', 'time', 'url']
+standardtitle = ['Source', 'Title', 'Info', 'Time', 'Url']
 
 findlink = re.compile(r'<a class="WlydOe".*?href="(.*?)".*?>')
 findSourceAndTime = re.compile(r'<span>(.*?)</span>')
@@ -24,8 +24,8 @@ findSummary = re.compile(r'style="margin-top:8px;-webkit-line-clamp:3">(.*?)</di
 def main(keyword:str):
     option = webdriver.ChromeOptions()
     option.add_argument("headless")
-    driver = webdriver.Chrome(
-                              options=option)  # chromedriver不是python自带的库 这个地方必须要有包含这个可执行文件的路径
+    option.add_argument('--ignore-certificate-errors')
+    driver = webdriver.Chrome(options=option)  # chromedriver不是python自带的库 这个地方必须要有包含这个可执行文件的路径
     # driver.maximize_window()
     driver.implicitly_wait(6)
     url = 'https://www.google.com/'
@@ -106,4 +106,4 @@ def pageProcess(html):
 
 
 if __name__ == "__main__":
-    main("金龟子")
+    print(main("党参"))

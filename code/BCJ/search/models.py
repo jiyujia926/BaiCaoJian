@@ -47,3 +47,15 @@ class Picture(models.Model):
     Name = models.TextField()
     Url = models.TextField()
 
+class News(models.Model):
+    Source = models.TextField()
+    Title = models.TextField()
+    Info = models.TextField()
+    Time = models.TextField()
+    Url = models.TextField()
+
+class Bing(models.Model):
+    Title = models.TextField()
+    Url = models.TextField()
+    Abstract = models.TextField()
+    

@@ -26,23 +26,23 @@ def parseHtml(result, doc):
         url = a_elements[1]['href'] # get link
         p_element = item.find('p')
         abstract = p_element.text.replace('\u2002', '').replace('\n', '').replace('\t', '').replace('\r', '')
-        info = {'title': title, 'url': url, 'abstract': abstract}
+        info = {'Title': title, 'Url': url, 'Abstract': abstract}
         result.append(info)
 
-# def printResult(result):
-#     for item in result:
-#         print(item)
+def printResult(result):
+    for item in result:
+        print(item)
 
 def main(keyword:str):
     rawurl = "http://cn.bing.com/search?"
     # keyword = input("Please enter keyword: ")
     result = []
     # changing the number in range can edit page number
-    for page in range(1,5):
+    for page in range(1,2):
         doc = getHtml(rawurl, keyword, page)
         parseHtml(result, doc)
     # printResult(result)
     return result
 
 if __name__ == "__main__":
-    main()
+    main("胆木")

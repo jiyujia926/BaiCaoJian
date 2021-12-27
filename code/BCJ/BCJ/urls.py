@@ -34,7 +34,8 @@ urlpatterns = [
     path('returnfavor/',user_view.returnFavor),
     path('deletefavor/',user_view.deleteFavor),
     path('mostsearching/',search_view.mostsearching),
-    path('cloud/',search_view.cloud)
+    path('cloud/',search_view.cloud),
+    path('addnewsandbing/',search_view.addnewsandbings)
     # path('addbooks/',search_view.addbooks),
     # path('addpictures/',search_view.addpictures)
 ]

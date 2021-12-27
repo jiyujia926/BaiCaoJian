@@ -1,17 +1,18 @@
+from time import sleep
 from django.db import models
 from django.shortcuts import render
 from elasticsearch_dsl.search import MultiSearch
-from .models import Herbs,Books,Frequency, Picture
+from .models import Bing, Herbs,Books,Frequency, News, Picture
 from .herbspide import main as herbmain
 from .bookspider import main as bookmain
 from django.http import HttpResponse
 import json
-from .documents import HerbsDocument, PicturesDocument
+from .documents import HerbsDocument, NewsDocument, PicturesDocument
 from .documents import BooksDocument
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
-# from .newsspider import main as newspider
-# from .forbing import main as bingspider
+from .newsspider import main as newspider
+from .forbing import main as bingspider
 # Create your views here.
 # def search_test(keyword):
 #     return "success: "+keyword
@@ -107,16 +108,29 @@ def search(request):
             picturelist.append(picture)
     # newsresult = newspider(keyword)
     # binglist = bingspider(keyword)
+    s = NewsDocument.search().query("match",Title=keyword)
+    qs = s.to_queryset()
+    for news in qs:
+        newss = {}
+        newss['source']=news.Source
+        newss['title']=news.Title
+        newss['info']=news.Info
+        newss['time']=news.Time
+        newss['url']=news.Url
+        if newss in  newslist:
+            pass
+        else:
+            newslist.append(newss)
     print(len(herblist))
     print(len(booklist))
     print(len(picturelist))
-    # print(len(newsresult))
+    print(len(newslist))
     # print(len(binglist))
     res = {
         'citiao': herblist,
         'shuben': booklist,
         'tupian': picturelist,
-        # 'xinwen': newsresult,
+        'xinwen': newslist,
         # 'bing': binglist
     }
     return HttpResponse(json.dumps(res))
@@ -220,3 +234,26 @@ def cloud(request):
 #         i += 1
         
 #     return HttpResponse("add")
+
+# def addnewsandbings(request):
+#     herblist = list(Herbs.objects.values().order_by('Herb_id'))[173:]
+#     for herb in herblist:
+#         keyword = herb['Name']
+#         if keyword.find(' ')>=0:
+#             index = keyword.find(' ')
+#             keyword = keyword[:index]
+#         keyword += " 新闻"
+#         print(keyword)
+#         i = herb['Herb_id']
+#         print(i)
+#         newslist=newspider(keyword)
+#         for news in newslist:
+#             News.objects.create(**news)
+#         # sleep(20)
+#         # binglist=bingspider(keyword)
+#         # for bing in binglist:
+#         #     Bing.objects.create(**bing)
+#         print(i)
+#         print("ok")
+#     return HttpResponse("yes!")
+            
