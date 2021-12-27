@@ -46,71 +46,70 @@ const server = "https://baicao.zjuers.com:6636"
 
 
 
-const DetialInfo = () => {
+const DetailInfo = () => {
 
   const classes = DetailStyles();
-  const [herb_id,setHerbid] = useState()
-  const [ rows, setRows ] = useState({});
+  const url = window.location.href;
+  const [ herb_id, setHerbid ] = useState(Number(url.substring(url.search("detail/")+7)));
+  const [ data, setData ] = useState({});
 
   async function getdata(herb_id) {
-    console.log(herb_id)
-    let data = {herb_id:herb_id}
+    let data = {
+      herb_id: herb_id,
+    };
     let res = await axios.post(`${server}/detailpage/`,data)
-    console.log(res.data)
-    setRows(res.data)
-      //给前端的话,数据在res.data里，不是直接的res
+    console.log(res.data);
+    setData(res.data);
 }
 
 
 useEffect(() => {
   // set default value
-  setHerbid(123);
-  console.log("123");
   getdata(herb_id);  
 }, [])
 
 
   return (
     <div >
-      <div style={{width:'85%',margin:'0 auto'}}>
+      <div>
         <div style={{width:'80%',margin:'0 auto',float:'left'}} id={'detailinfomain'}>
-          <div style={{fontSize:'29px',paddingBottom:'20px',textAlign:'center'}}>{rows.name}</div>
-          <div style={{paddingBottom:'60px'}}>
-          <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 400}} aria-label="simple table">
-          {/*
-            <TableHead>
 
-                <TableRow>
-                <TableCell width="80px">项目名</TableCell>
-                <TableCell align="left">具体信息</TableCell>
-              </TableRow>
-            </TableHead>
-              */
-          }
-            <TableBody> 
-              {rows.detailinfo.map((row) => (
-                <TableRow  key={row.detailitem}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell style={{width:'80px',align:"left"}} component="th" scope="row">{row.detailitem} </TableCell>
-                  <TableCell align="left">{row.detailcontent}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          </TableContainer>
+          <div style={{fontSize:'29px',paddingBottom:'20px',textAlign:'center'}}>
+            {data.name}
+          </div>
+          <div style={{paddingBottom:'60px'}}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 400}} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                    <TableCell width="80px">项目名</TableCell>
+                    <TableCell align="left">具体信息</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {data.name !== undefined && data.detailinfo.map((row) => (
+                    <TableRow  key={row.detailitem} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell style={{width:'80px',align:"left"}} component="th" scope="row">{row.detailitem} </TableCell>
+                      <TableCell align="left">{row.detailcontent}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
         </div>
-        
-        <div style={{width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}> 
-        <img src={rows.img_url} alt="detailimg"></img>
+
+        <div style={{width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}>
+          <img src={data.img_url} alt="detailImg" />
         </div>
-        
-        <div style={{position:'fixed',right:'10%',width:'18%',bottom:'80px',marginRight:'20px'}}> 
-        <ControlledOpenSpeedDial />
+
+        <div style={{position:'fixed',right:'10%',width:'18%',bottom:'80px',marginRight:'20px'}}>
+          <ControlledOpenSpeedDial />
         </div>
-      </div>  
+      </div>
     </div>
   );
 }
 
-export default DetialInfo;
+export default DetailInfo;

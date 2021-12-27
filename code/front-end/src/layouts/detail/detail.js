@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../../components/footer/Footer";
-import DetialInfo from "../../components/detailinfo/DetialInfo";
+import DetailInfo from "../../components/detailinfo/DetailInfo";
 import SearchForm from "../../components/searchBox/SearchBox";
 import LogoImg from "../../images/LOGO.png";
 import useStyles from "./styles";
@@ -13,10 +13,10 @@ const Detail = () => {
   return (
     <div>
       <div className={classes.searchform}>
-        <img className={classes.searchformimg} src={LogoImg} alt="Logo"></img>
+        <img className={classes.searchformimg} src={LogoImg} alt="Logo"/>
         <SearchForm />
       </div>
-      <DetialInfo />
+      <DetailInfo />
       <Footer />
     </div>
   );

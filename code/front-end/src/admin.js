@@ -22,7 +22,7 @@ const Admin = () => {
         <Routes>     
           <Route path="/" element={<Home />} />
           <Route path="/search/:kw" element={<Search />} />
-          <Route path="/detail" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route path="/user" element={<User />} />
         </Routes>
       </BrowserRouter>
