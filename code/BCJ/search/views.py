@@ -1,4 +1,5 @@
 from time import sleep
+from django.apps.config import MODELS_MODULE_NAME
 from django.db import models
 from django.shortcuts import render
 from elasticsearch_dsl.search import MultiSearch
@@ -155,6 +156,48 @@ def cloud(request):
     print(result)
     return HttpResponse(json.dumps(result))
 
+def detailpage(request):
+    data = json.loads(request.body)
+    herbid = data['herb_id']
+    # herbid=255
+    herblist = list(Herbs.objects.values().filter(Herb_id=herbid))
+    herb={}
+    infolist=[]
+    if herblist:
+        this = herblist[0]
+        herb['herb_id']=herbid
+        herb['img_url']=this['Picture_url']
+        herb['name']=this['Name']
+        if this['Name']:
+            infolist.append({'detailitem':'中药名','detailcontent':this['Name']})
+        if this['Subname']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Subname']})
+        if this['English_name']:
+            infolist.append({'detailitem':'别名','detailcontent':this['English_name']})
+        if this['Medical_part']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Medical_part']})
+        if this['Plant_pose']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Plant_pose']})
+        if this['Produce_place']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Produce_place']})
+        if this['Pick_reproduce']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Pick_reproduce']})
+        if this['Herb_info']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Herb_info']})
+        if this['Taste']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Taste']})
+        if this['Function']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Function']})
+        if this['Medical_function']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Medical_function']})
+        if this['Medical_search']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Medical_search']})
+        if this['Chemistry_component']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Chemistry_component']})
+        if this['Taboo']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Taboo']})
+        herb['detailinfo']=infolist
+    return HttpResponse(json.dumps(herb))
 # def addbooks(request):
 #     result = bookmain()
 #     i=1
