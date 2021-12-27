@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://1.15.97.64:6636";
-// TODO: page
+
 const RealSearch = (props) => {
   const classes = searchBoxStyles();
   // define states

@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme)=>({
     fontSize: 15,
     display: "box",
     maxWidth: "100%",
-    color: "#255d00",
     padding: "0 0 0 10px",
     height: 15*1.4*3,
     lineHight: 1.4,
@@ -59,7 +58,6 @@ const useStyles = makeStyles((theme)=>({
   },
   medical_func: {
     fontSize: 15,
-    color: "#255d00",
     padding: "0 0 0 10px",
   },
   image: {

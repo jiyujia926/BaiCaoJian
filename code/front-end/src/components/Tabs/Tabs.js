@@ -109,7 +109,6 @@ export default function BasicTabs(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        词条
         <div>
           {items_citiao
           .slice((page_citiao-1) * itemsPerPage, page_citiao * itemsPerPage)
@@ -132,11 +131,11 @@ export default function BasicTabs(props) {
           </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        新闻
         <div>
-          {items_xinwen
-          .slice((page_xinwen-1) * itemsPerPage, page_xinwen * itemsPerPage)
-          .map(item => <ItemCardforWeb data={item} />)
+          {items_xinwen.length == 0 ? "暂时没有内容噢" : 
+            items_xinwen
+            .slice((page_xinwen-1) * itemsPerPage, page_xinwen * itemsPerPage)
+            .map(item => <ItemCardforWeb data={item} />)
           }
         </div>
         <Divider />
@@ -155,11 +154,12 @@ export default function BasicTabs(props) {
           </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        书籍
         <div>
-          {items_shuben
-          .slice((page_shuben-1) * itemsPerPage, page_shuben * itemsPerPage)
-          .map(item => <ItemCardforBook data={item} />)
+          {
+            (items_shuben.length == 0) ? "暂时没有内容噢" :
+              items_shuben
+              .slice((page_shuben-1) * itemsPerPage, page_shuben * itemsPerPage)
+              .map(item => <ItemCardforBook data={item} />)
           }
         </div>
         <Divider />
@@ -178,7 +178,6 @@ export default function BasicTabs(props) {
           </Box>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        图片
         <div className={classes.tupian}>
           {items_tupian
           .slice((page_tupian-1) * itemsPerPage, page_tupian * itemsPerPage)
