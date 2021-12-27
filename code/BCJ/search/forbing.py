@@ -16,18 +16,20 @@ def getHtml(url, keyword, page):
         return strhtml.text
     except:
         print('爬取失败')
+        return ""
 
 def parseHtml(result, doc):
-    soup = BeautifulSoup(doc, 'lxml')
-    data = soup.find_all(name='li', attrs={"class": "b_algo"})
-    for item in data:
-        a_elements = item.find_all('a')
-        title = a_elements[1].text  # get title
-        url = a_elements[1]['href'] # get link
-        p_element = item.find('p')
-        abstract = p_element.text.replace('\u2002', '').replace('\n', '').replace('\t', '').replace('\r', '')
-        info = {'Title': title, 'Url': url, 'Abstract': abstract}
-        result.append(info)
+    if doc:
+        soup = BeautifulSoup(doc, 'lxml')
+        data = soup.find_all(name='li', attrs={"class": "b_algo"})
+        for item in data:
+            a_elements = item.find_all('a')
+            title = a_elements[1].text  # get title
+            url = a_elements[1]['href'] # get link
+            p_element = item.find('p')
+            abstract = p_element.text.replace('\u2002', '').replace('\n', '').replace('\t', '').replace('\r', '')
+            info = {'Title': title, 'Url': url, 'Abstract': abstract}
+            result.append(info)
 
 def printResult(result):
     for item in result:

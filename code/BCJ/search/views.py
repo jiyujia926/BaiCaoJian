@@ -1,4 +1,5 @@
 from time import sleep
+from django.apps.config import MODELS_MODULE_NAME
 from django.db import models
 from django.shortcuts import render
 from elasticsearch_dsl.search import MultiSearch
@@ -7,7 +8,7 @@ from .herbspide import main as herbmain
 from .bookspider import main as bookmain
 from django.http import HttpResponse
 import json
-from .documents import HerbsDocument, NewsDocument, PicturesDocument
+from .documents import BingDocument, HerbsDocument, NewsDocument, PicturesDocument
 from .documents import BooksDocument
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
@@ -38,20 +39,20 @@ def search(request):
     for herb in qs:
         herbs = {}
         herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name).replace(keyword,"<strong>"+keyword+"</strong>")
+        herbs['title']=str(herb.Name)
         herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info).replace(keyword,"<strong>"+keyword+"</strong>")
-        herbs['Medical_function']=str(herb.Medical_function).replace(keyword,"<strong>"+keyword+"</strong>")
+        herbs['abstract']=str(herb.Herb_info)
+        herbs['Medical_function']=str(herb.Medical_function)
         herblist.append(herbs)
     s = HerbsDocument.search().query("match",Medical_function=keyword)
     qs = s.to_queryset()
     for herb in qs:
         herbs = {}
         herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name).replace(keyword,"<strong>"+keyword+"</strong>")
+        herbs['title']=str(herb.Name)
         herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info).replace(keyword,"<strong>"+keyword+"</strong>")
-        herbs['Medical_function']=str(herb.Medical_function).replace(keyword,"<strong>"+keyword+"</strong>")
+        herbs['abstract']=str(herb.Herb_info)
+        herbs['Medical_function']=str(herb.Medical_function)
         if herbs in herblist:
             pass
         else:
@@ -62,15 +63,15 @@ def search(request):
     qs = s.to_queryset()
     for book in qs:
         books = {}
-        books['title']=str(book.Book_name).replace(keyword,"<strong>"+keyword+"</strong>")
+        books['title']=str(book.Book_name)
         books['url']=book.Picture_url
         booktag = str(book.Book_tag)
         if booktag.find("团购")>=0:
             startindex = booktag.find("团购")
             booktag=booktag[:startindex]
-        books['tag']=booktag.replace(keyword,"<strong>"+keyword+"</strong>")
-        books['info']=str(book.Book_info).replace(keyword,"<strong>"+keyword+"</strong>")
-        books['author']=str(book.Book_author).replace(keyword,"<strong>"+keyword+"</strong>")
+        books['tag']=booktag
+        books['info']=str(book.Book_info)
+        books['author']=str(book.Book_author)
         books['publishdate']=book.Book_publishdate
         books['publish']=book.Book_publish
         if books in booklist:
@@ -81,15 +82,15 @@ def search(request):
     qs = s.to_queryset()
     for book in qs:
         books = {}
-        books['title']=str(book.Book_name).replace(keyword,"<strong>"+keyword+"</strong>")
+        books['title']=str(book.Book_name)
         books['url']=book.Picture_url
         booktag = str(book.Book_tag)
         if booktag.find("团购")>=0:
             startindex = booktag.find("团购")
             booktag=booktag[:startindex]
-        books['tag']=booktag.replace(keyword,"<strong>"+keyword+"</strong>")
-        books['info']=str(book.Book_info).replace(keyword,"<strong>"+keyword+"</strong>")
-        books['author']=str(book.Book_author).replace(keyword,"<strong>"+keyword+"</strong>")
+        books['tag']=booktag
+        books['info']=str(book.Book_info)
+        books['author']=str(book.Book_author)
         books['publishdate']=book.Book_publishdate
         books['publish']=book.Book_publish
         if books in booklist:
@@ -100,7 +101,7 @@ def search(request):
     qs = s.to_queryset()
     for pic in qs:
         picture = {}
-        picture['name']=str(pic.Name).replace(keyword,"<strong>"+keyword+"</strong>")
+        picture['name']=str(pic.Name)
         picture['url']=pic.Url
         if picture in picturelist:
             pass
@@ -112,26 +113,37 @@ def search(request):
     qs = s.to_queryset()
     for news in qs:
         newss = {}
-        newss['source']=str(news.Source).replace(keyword,"<strong>"+keyword+"</strong>")
-        newss['title']=str(news.Title).replace(keyword,"<strong>"+keyword+"</strong>")
-        newss['info']=str(news.Info).replace(keyword,"<strong>"+keyword+"</strong>")
+        newss['source']=str(news.Source)
+        newss['title']=str(news.Title)
+        newss['info']=str(news.Info)
         newss['time']=news.Time
         newss['url']=news.Url
         if newss in  newslist:
             pass
         else:
             newslist.append(newss)
+    s = BingDocument.search().query("match",Title=keyword)
+    qs = s.to_queryset()
+    for bings in qs:
+        bing ={}
+        bing['title']=bings.Title
+        bing['url']=bings.Url
+        bing['abstract']=bings.Abstract
+        if bing in binglist:
+            pass
+        else:
+            binglist.append(bing)
     print(len(herblist))
     print(len(booklist))
     print(len(picturelist))
     print(len(newslist))
-    # print(len(binglist))
+    print(len(binglist))
     res = {
         'citiao': herblist,
         'shuben': booklist,
         'tupian': picturelist,
         'xinwen': newslist,
-        # 'bing': binglist
+        'wangye': binglist
     }
     return HttpResponse(json.dumps(res))
 
@@ -155,6 +167,48 @@ def cloud(request):
     print(result)
     return HttpResponse(json.dumps(result))
 
+def detailpage(request):
+    data = json.loads(request.body)
+    herbid = data['herb_id']
+    # herbid=255
+    herblist = list(Herbs.objects.values().filter(Herb_id=herbid))
+    herb={}
+    infolist=[]
+    if herblist:
+        this = herblist[0]
+        herb['herb_id']=herbid
+        herb['img_url']=this['Picture_url']
+        herb['name']=this['Name']
+        if this['Name']:
+            infolist.append({'detailitem':'中药名','detailcontent':this['Name']})
+        if this['Subname']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Subname']})
+        if this['English_name']:
+            infolist.append({'detailitem':'别名','detailcontent':this['English_name']})
+        if this['Medical_part']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Medical_part']})
+        if this['Plant_pose']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Plant_pose']})
+        if this['Produce_place']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Produce_place']})
+        if this['Pick_reproduce']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Pick_reproduce']})
+        if this['Herb_info']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Herb_info']})
+        if this['Taste']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Taste']})
+        if this['Function']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Function']})
+        if this['Medical_function']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Medical_function']})
+        if this['Medical_search']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Medical_search']})
+        if this['Chemistry_component']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Chemistry_component']})
+        if this['Taboo']:
+            infolist.append({'detailitem':'别名','detailcontent':this['Taboo']})
+        herb['detailinfo']=infolist
+    return HttpResponse(json.dumps(herb))
 # def addbooks(request):
 #     result = bookmain()
 #     i=1
@@ -236,19 +290,18 @@ def cloud(request):
 #     return HttpResponse("add")
 
 # def addnewsandbings(request):
-#     herblist = list(Herbs.objects.values().order_by('Herb_id'))[173:]
+#     herblist = list(Herbs.objects.values().order_by('Herb_id'))[85:173]
 #     for herb in herblist:
 #         keyword = herb['Name']
 #         if keyword.find(' ')>=0:
 #             index = keyword.find(' ')
 #             keyword = keyword[:index]
-#         keyword += " 新闻"
 #         print(keyword)
 #         i = herb['Herb_id']
 #         print(i)
-#         newslist=newspider(keyword)
-#         for news in newslist:
-#             News.objects.create(**news)
+#         binglist=bingspider(keyword)
+#         for bing in binglist:
+#             Bing.objects.create(**bing)
 #         # sleep(20)
 #         # binglist=bingspider(keyword)
 #         # for bing in binglist:

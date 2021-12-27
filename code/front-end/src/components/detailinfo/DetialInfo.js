@@ -13,12 +13,20 @@ import { useForm } from "react-hook-form";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-const server = "http://127.0.0.1:8000";
-
+// const server = "http://127.0.0.1:8000";
+const server = "http://1.15.97.64:8000"
+// const [herb_id,setHerbid] = useState()
+// const [rows,setRow] = useState({})
 /*function createData(item, detialtext) {
   return {item, detialtext};
 }*/
-
+// async function getdata() {
+//   let data = {herb_id:herb_id}
+//   let res = axios.post(`${server}/detailpage/`,data)
+//   console.log(res.data)
+//   // setRow(res.data)
+//   //给前端的话,数据在res.data里，不是直接的res
+// }
 
 const rows ={
   "herb_id":213,
