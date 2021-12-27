@@ -13,7 +13,7 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://1.15.97.64:6636";
 
 const Search = () => {
-  const [ results, setResults ] = useState({citiao: [], shuben: [], tupian: [], xinwen: []});
+  const [ results, setResults ] = useState({citiao: [], shuben: [], tupian: [], xinwen: [], wangye: []});
   const [ keyword, setKeyword ] = useState("");
   const [ mostKeywords, setMostKeywords ] = useState([]);
   const classes = useStyles();
@@ -51,6 +51,7 @@ const Search = () => {
           items_shuben={results.shuben}
           items_tupian={results.tupian}
           items_xinwen={results.xinwen}
+          items_wangye={results.wangye}
           />
         <RecommendList 
           data = {mostKeywords}
