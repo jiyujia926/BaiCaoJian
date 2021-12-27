@@ -7,9 +7,7 @@ const ItemCardforImgs = (props) => {
   const classes = imgStyles();
   const { data } = props;
   return (
-    <div>
-      <Card >
-        <CardHeader ></CardHeader>
+      <Card className={classes.root}>
         <CardContent classesName={classes.content}>
           <p className={classes.imgName}>{data.name}</p>
           <img
@@ -19,7 +17,6 @@ const ItemCardforImgs = (props) => {
           />
         </CardContent>
       </Card>
-    </div>
   )
 };
 

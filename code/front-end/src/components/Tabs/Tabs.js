@@ -10,6 +10,7 @@ import useStyles from "./styles";
 import ItemCard from '../itemList/ItemCard';
 import ItemCardforBook from '../itemList/ItemCardforBook';
 import ItemCardforImgs from "../itemList/ItemCardforImgs";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -44,17 +45,14 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs(props) {
-  const { items_citiao, items_shuben, items_tupian, items_news } = props;
+  const { items_citiao, items_shuben, items_tupian, items_xinwen } = props;
   const classes = useStyles();
   const itemsPerPage = 10;
   const [page_citiao, setPage_citiao] = useState(1); // init page num
   const [page_shuben, setPage_shuben] = useState(1); // init page num
   const [page_tupian, setPage_tupian] = useState(1); // init page num
-  const [page_news, setPage_news] = useState(1); // init page num
+  const [page_xinwen, setPage_xinwen] = useState(1); // init page num
   // set default value for page(const)
-  console.log(items_citiao);
-  console.log(items_tupian);
-  console.log(Math.ceil(items_citiao.length / itemsPerPage));
   const [numOfPage_citiao, setNumOfPage_citiao] = useState(
     Math.ceil(items_citiao.length / itemsPerPage)
   );
@@ -67,16 +65,19 @@ export default function BasicTabs(props) {
     Math.ceil(items_tupian.length / itemsPerPage)
   );
 
+  // const [numOfPage_xinwen, setNumOfPage_xinwen] = useState(
+  //   Math.ceil(items_xinwen.length / itemsPerPage)
+  // )
+
   const [value, setValue] = React.useState(0);
 
   useEffect(()=>{
     setNumOfPage_citiao(Math.ceil(items_citiao.length / itemsPerPage));
     setNumOfPage_shuben(Math.ceil(items_shuben.length / itemsPerPage));
-    setNumOfPage_tupian(Math.ceil(items_tupian.length / itemsPerPage))
+    setNumOfPage_tupian(Math.ceil(items_tupian.length / itemsPerPage));
+ //   setNumOfPage_xinwen(Math.ceil(items_xinwen.length / itemsPerPage));
   })
   
-  console.log(numOfPage_citiao);
-  console.log(numOfPage_shuben);
 //   const [numOfPage_news, setNumOfPage_news] = useState(
 //     Math.ceil(items_news.length / itemsPerPage)
 //   );
@@ -90,11 +91,16 @@ export default function BasicTabs(props) {
   const handleChangeShuben = (event, value) => {
     setPage_shuben(value);
   }
+  const handleChangeTupian = (event, value) => {
+    setPage_tupian(value);
+  }
+  const handleChangeXinwen = (event, value) => {
+    setPage_xinwen(value);
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(items_tupian)
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -158,10 +164,27 @@ export default function BasicTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={3}>
         图片
-        {items_tupian
-        .slice((page_tupian-1) * itemsPerPage, page_tupian * itemsPerPage)
-        .map(item => <ItemCardforImgs data={item}></ItemCardforImgs>)
-        }
+        <div className={classes.tupian}>
+          {items_tupian
+          .slice((page_tupian-1) * itemsPerPage, page_tupian * itemsPerPage)
+          .map(item => <ItemCardforImgs data={item}></ItemCardforImgs>)
+          }
+        </div>
+        <Divider />
+          <Box component="span">
+            <Pagination
+            count={numOfPage_tupian}
+            page={page_tupian}
+            onChange={handleChangeTupian}
+            defaultPage={1}
+            color="standard"
+            size="large"
+            showFirstButton
+            showLastButton
+            classes={{ ul: classes.paginator }}
+            />
+          </Box>
+
       </TabPanel>
       <TabPanel value={value} index={4}>
         网页
