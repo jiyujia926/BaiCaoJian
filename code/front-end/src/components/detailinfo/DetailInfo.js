@@ -105,7 +105,7 @@ useEffect(() => {
         </div>
 
         <div style={{position:'fixed',right:'10%',width:'18%',bottom:'80px',marginRight:'20px'}}>
-          <ControlledOpenSpeedDial />
+          <ControlledOpenSpeedDial id={herb_id}/>
         </div>
       </div>
     </div>
