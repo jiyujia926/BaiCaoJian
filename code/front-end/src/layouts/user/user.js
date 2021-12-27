@@ -20,7 +20,7 @@ import {List} from "@material-ui/core";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-const server = "http://1.15.97.64:6636";
+const server = "https://baicao.zjuers.com:6636"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

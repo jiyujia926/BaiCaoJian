@@ -1,37 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 // TODO: 点击title链接到详情页
-let i = 0;
 
 const ItemCard = (props) => {
   const classes = useStyles();
   const { data, keyword } = props;
-  const [ content, setContent ] = useState({});
-  if (content !== data) {
-    setContent(data);
-  }
-  
-  const raw_url = "https://baicao.zjuers.com/detail/";
+  const raw_url = "http://localhost:3000/detail/";
   let id = nanoid();
   let url = (raw_url + data.id).replace(/ /, '');
   const highlight = (idvalue, keyword) => {
-    let textbox = document.getElementById(idvalue);
-    console.log(textbox);
+    var textbox = document.getElementById(idvalue);
     if ("" == keyword) 
       return;
     // get text content
-    let temp = textbox.innerHTML;
+    var temp = textbox.innerHTML;
     // console.log(temp);
-    let htmlReg = new RegExp("\<.*?\>", "i");
-    let arr = new Array();
+    var htmlReg = new RegExp("\<.*?\>", "i");
+    var arr = new Array();
 
     // replace html tags
-    for (let i = 0; true; i++) {
+    for (var i = 0; true; i++) {
       // match html tags 
-      let tag = htmlReg.exec(temp);
+      var tag = htmlReg.exec(temp);
       if (tag) {
         arr[i] = tag;
       } else {
@@ -45,11 +38,11 @@ const ItemCard = (props) => {
 
     // replace keywords
     for (let w = 0; w < words.length; w++) {
-      let r = new RegExp("(" + words[w].replace(/[(){}.+*?^$|\\\[\]]/g, "\\$&") + ")", "ig");
+      var r = new RegExp("(" + words[w].replace(/[(){}.+*?^$|\\\[\]]/g, "\\$&") + ")", "ig");
       temp = temp.replace(r, "<b style='color:Green;'>$1</b>");
     }
 
-    for (let i = 0; i < arr.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
       temp = temp.replace("{[(" + i + ")]}", arr[i]);
     }
 
@@ -57,12 +50,12 @@ const ItemCard = (props) => {
   }
 
   useEffect(()=>{
-    highlight(id, keyword);
+    highlight(id, keyword)
   }, []);
-  
+
   return (
     <Card id={id} className={classes.root}>
-      <CardContent>
+      <CardContent >
         <a className={classes.title} href={url}>{data.title}</a>
         <Typography className={classes.url}>
           {url}

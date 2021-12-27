@@ -9,34 +9,36 @@ import ShareIcon from '@mui/icons-material/Share';
 import Feedback from '@mui/icons-material/Feedback';
 import {theme} from "../../style";
 import {ThemeProvider} from "@emotion/react";
+import cookie from "react-cookies";
+import axios from "axios";
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post["Content-Type"] = "application/json";
+const server = "https://baicao.zjuers.com:6636"
 
-export default function ControlledOpenSpeedDial() {
+
+export default function ControlledOpenSpeedDial(props) {
+  const id = props.id;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  async function addFavor() {
+    let data = {
+      Email: cookie.load("account"),
+      Id: id,
+    };
+    let res = await axios.post(`${server}/addfavor/`, data);
+    if (res.data === "收藏成功") {
+      alert("收藏成功");
+    } else {
+      alert("您已收藏");
+    }
+  }
   const clStar = () =>{
-    var url = window.location;
-    var title = document.title;
-    var ua = navigator.userAgent.toLowerCase();
-    if (ua.indexOf("360se") > -1) {
-        alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
-    }
-    else if (ua.indexOf("msie 8") > -1) {
-        window.external.AddToFavoritesBar(url, title); //IE8
-    } 
-    else if (document.all) {
-        try{
-            window.external.addFavorite(url, title);
-        }catch(e){
-            alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
-        }
-    }
-    else if (window.sidebar) {
-        window.sidebar.addPanel(title, url);
-    } 
-    else { 
-       alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+    if (cookie.load("account")) {
+      addFavor();
+    } else {
+      alert("请先登录！");
     }
   }
 
