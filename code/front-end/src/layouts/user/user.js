@@ -62,15 +62,12 @@ const User = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const remove = (i) => () => {
-    // let data = {
-    //   Email: cookie.load("account"),
-    //   Id: i,
-    // };
-    //let res = await axios.post(`${server}/deletefavor/`, data);
-    let res = {
-      data: "删除成功",
+  const remove = (i) => async () => {
+    let data = {
+      Email: cookie.load("account"),
+      Id: i,
     };
+    let res = await axios.post(`${server}/deletefavor/`, data);
     if (res.data === "删除成功") {
       alert("取消收藏成功");
       fetch();
