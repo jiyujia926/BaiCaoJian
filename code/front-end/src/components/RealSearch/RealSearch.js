@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField } from "@material-ui/core";
+import {InputBase, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import searchBoxStyles from "../searchBox/styles";
 import SearchIcon from '@material-ui/icons/Search';
@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import PropTypes from "prop-types";
+import Paper from "@mui/material/Paper";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -66,13 +67,15 @@ const RealSearch = (props) => {
   
   return (
     <form id="search" className={classes.root}>
-      <TextField
-        id="real-search"
-        {...register("keyword", {required: true,})}
-        className={classes.textField}
-        label="请输入关键词"
-        onChange={handleOnChange}
-      />
+      <Paper component="form" className={classes.textField}>
+        <InputBase
+          id="real-search"
+          {...register("keyword", { required: true, })}
+          placeholder="请输入关键词"
+          onChange={handleOnChange}
+          className={classes.input}
+        />
+      </Paper>
       <Button 
         className={classes.searchBtn}
         variant="contained"

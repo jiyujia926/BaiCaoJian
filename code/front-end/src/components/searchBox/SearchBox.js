@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { TextField } from "@material-ui/core";
+import {InputBase, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import searchBoxStyles from "./styles";
 import SearchIcon from '@material-ui/icons/Search';
 import { useForm } from "react-hook-form";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import { ContactSupportOutlined } from "@material-ui/icons";
+import Paper from "@mui/material/Paper";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -31,12 +31,15 @@ const SearchForm = () => {
 
   return (
     <form className={classes.root}>
-      <TextField
-        {...register("keyword", { required: true, })}
-        className={classes.textField}
-        label="请输入关键词"
-        onChange={handleOnChange}
-      />
+      <Paper component="form" className={classes.textField}>
+        <InputBase
+          {...register("keyword", { required: true, })}
+          placeholder="请输入关键词"
+          onChange={handleOnChange}
+          className={classes.input}
+          inputProps={{ 'aria-label': 'key' }}
+        />
+      </Paper>
       <Button
         className={classes.searchBtn}
         variant="contained"
@@ -48,6 +51,11 @@ const SearchForm = () => {
       >
         搜索
       </Button>
+      {/*<TextField
+        {...register("keyword", { required: true, })}
+        className={classes.textField}
+        onChange={handleOnChange}
+      />*/}
     </form>
   );
 }
