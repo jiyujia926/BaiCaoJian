@@ -43,7 +43,7 @@ const RealSearch = (props) => {
     let url = window.location.href;
     let pos = url.search("search/");
     let kw = url.substring(pos+7);
-    if (kw != "undefined") {
+    if (kw !== "undefined") {
       let searchText = document.getElementById("real-search");
       searchText.value = decodeURI(kw);
       // request for search
@@ -65,7 +65,7 @@ const RealSearch = (props) => {
   }
   
   return (
-    <form id="search">
+    <form id="search" className={classes.root}>
       <TextField
         id="real-search"
         {...register("keyword", {required: true,})}

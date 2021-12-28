@@ -9,8 +9,8 @@ const RecommendList = (props) => {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.title}>大家都在搜: </Typography>
-      <ul>
+      <Typography className={classes.title}>大家都在搜</Typography>
+      <ul className={classes.list}>
         {data.map(item => <li>{item.key}</li>)}
       </ul>
     </div>

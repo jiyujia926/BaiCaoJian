@@ -30,7 +30,7 @@ const SearchForm = () => {
   }
 
   return (
-    <form >
+    <form className={classes.root}>
       <TextField
         {...register("keyword", { required: true, })}
         className={classes.textField}

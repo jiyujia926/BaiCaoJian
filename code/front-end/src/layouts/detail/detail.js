@@ -12,19 +12,21 @@ const Detail = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <div className={classes.searchform}>
-        <img
-          className={classes.searchformimg}
-          src={LogoImg}
-          alt="Logo"
-          onClick={() => {
-            navigate('/');
-          }}
-        />
-        <SearchForm />
+    <div className={classes.root}>
+      <img
+        className={classes.logo}
+        src={LogoImg}
+        alt="Logo"
+        onClick={() => {
+          navigate('/');
+        }}
+      />
+      <div className={classes.main}>
+        <div className={classes.searchForm}>
+          <SearchForm />
+        </div>
+        <DetailInfo />
       </div>
-      <DetailInfo />
       <Footer />
     </div>
   );

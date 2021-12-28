@@ -1,15 +1,19 @@
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: "200px",
-    margin: "200px 0 0 200px",
+    margin: "145px 0 0 80px",
   },
   title: {
     fontSize: "18px",
+    color: "rgba(0,121,107,0.86)",
   },
-  item: {
-    
+  list: {
+    listStyleType: "none",
+    padding: "0",
+    margin: "8px 0",
+    fontWeight: "200",
   },
 }));
 

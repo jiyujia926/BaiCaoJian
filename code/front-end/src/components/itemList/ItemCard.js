@@ -13,7 +13,7 @@ const ItemCard = (props) => {
   let url = (raw_url + data.id).replace(/ /, '');
   const highlight = (idvalue, keyword) => {
     var textbox = document.getElementById(idvalue);
-    if ("" == keyword) 
+    if ("" === keyword)
       return;
     // get text content
     var temp = textbox.innerHTML;
@@ -55,7 +55,7 @@ const ItemCard = (props) => {
 
   return (
     <Card id={id} className={classes.root}>
-      <CardContent >
+      <CardContent className={classes.cardContent}>
         <a
           target="_blank"
           className={classes.title}
@@ -66,7 +66,7 @@ const ItemCard = (props) => {
           {url}
         </Typography>
         <div className={classes.content}>
-          <img className={classes.image} src={data.url} alt={data.title + "图片"}></img>
+          <img className={classes.image} src={data.url} alt={data.title + "图片"} />
           <div>
             <Typography
               className={classes.abstract}

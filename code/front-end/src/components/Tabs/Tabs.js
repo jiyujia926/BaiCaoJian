@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Pagination } from '@mui/material';
+import {Pagination, ThemeProvider} from '@mui/material';
 import { Divider } from '@material-ui/core';
 import useStyles from "./styles";
 import ItemCard from '../itemList/ItemCard';
@@ -12,6 +12,7 @@ import ItemCardforBook from '../itemList/ItemCardforBook';
 import ItemCardforImgs from "../itemList/ItemCardforImgs";
 import ItemCardforWeb from '../itemList/ItemCardforWeb';
 import ItemCardforBing from "../itemList/ItemCardforBing";
+import { theme } from "../../style";
 
 
 function TabPanel(props) {
@@ -118,17 +119,25 @@ export default function BasicTabs(props) {
 
   return (
     <Box sx={{ width: '100%' }} onChange={resetCitiaoPage}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="词条" {...a11yProps(0)} />
-          <Tab label="新闻" {...a11yProps(1)} />
-          <Tab label="书籍" {...a11yProps(2)} />
-          <Tab label="图片" {...a11yProps(3)} />
-          <Tab label="网页" {...a11yProps(4)} />
-        </Tabs>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className={classes.tabContainer}>
+        <ThemeProvider theme={theme}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="basic tabs example"
+          >
+            <Tab label="词条" {...a11yProps(0)} />
+            <Tab label="新闻" {...a11yProps(1)} />
+            <Tab label="书籍" {...a11yProps(2)} />
+            <Tab label="图片" {...a11yProps(3)} />
+            <Tab label="网页" {...a11yProps(4)} />
+          </Tabs>
+        </ThemeProvider>
       </Box>
-      <TabPanel value={value} index={0} >
-        <div>
+      <TabPanel value={value} index={0}>
+        <div className={classes.cardContainer}>
           {items_citiao.length !== 0 && items_citiao
             .slice((page_citiao - 1) * itemsPerPage, page_citiao * itemsPerPage)
             .map(item => <ItemCard data={item} keyword={keyword} />)
@@ -151,7 +160,7 @@ export default function BasicTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <div>
-          {items_xinwen.length == 0 ? "暂时没有内容噢" :
+          {items_xinwen.length === 0 ? "暂时没有内容噢" :
             items_xinwen
               .slice((page_xinwen - 1) * itemsPerPage, page_xinwen * itemsPerPage)
               .map(item => <ItemCardforWeb data={item} />)
@@ -175,7 +184,7 @@ export default function BasicTabs(props) {
       <TabPanel value={value} index={2}>
         <div>
           {
-            (items_shuben.length == 0) ? "暂时没有内容噢" :
+            (items_shuben.length === 0) ? "暂时没有内容噢" :
               items_shuben
                 .slice((page_shuben - 1) * itemsPerPage, page_shuben * itemsPerPage)
                 .map(item => <ItemCardforBook data={item} />)
@@ -200,7 +209,7 @@ export default function BasicTabs(props) {
         <div className={classes.tupian}>
           {items_tupian
             .slice((page_tupian - 1) * itemsPerPage, page_tupian * itemsPerPage)
-            .map(item => <ItemCardforImgs data={item}></ItemCardforImgs>)
+            .map(item => <ItemCardforImgs data={item} />)
           }
         </div>
         <Divider />
@@ -222,10 +231,10 @@ export default function BasicTabs(props) {
       <TabPanel value={value} index={4}>
         <div>
           {
-            items_wangye.length == 0 ? "暂时没有内容噢" :
+            items_wangye.length === 0 ? "暂时没有内容噢" :
               items_wangye
                 .slice((page_wangye - 1) * itemsPerPage, page_wangye * itemsPerPage)
-                .map(item => <ItemCardforBing data={item}></ItemCardforBing>)
+                .map(item => <ItemCardforBing data={item} />)
           }
         </div>
         <Divider />

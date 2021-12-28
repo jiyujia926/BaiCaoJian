@@ -1,6 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles(()=>({
+  cardContainer: {
+    margin: "-24px",
+  },
+  tabContainer: {
+    marginTop: "8px",
+    marginRight: "16px",
+  },
   paginator: {
     justifyContent: "center",
     padding: "10px",

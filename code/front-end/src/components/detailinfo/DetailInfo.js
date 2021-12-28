@@ -4,12 +4,13 @@ import axios from "axios";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
+//import TableContainer from '@mui/material/TableContainer';
 import ControlledOpenSpeedDial from "../../components/Detailbar/ControlledOpenSpeedDial";
-import TableHead from '@mui/material/TableHead';
+//import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useForm } from "react-hook-form";
+//import { useForm } from "react-hook-form";
+import Typography from "@mui/material/Typography";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -70,43 +71,38 @@ useEffect(() => {
 
 
   return (
-    <div >
-      <div>
-        <div style={{width:'80%',margin:'0 auto',float:'left'}} id={'detailinfomain'}>
-
-          <div style={{fontSize:'29px',paddingBottom:'20px',textAlign:'center'}}>
+    <div className={classes.root}>
+      <Paper variant="outlined" className={classes.paperList}>
+        <Table aria-label="simple table">
+          <TableBody>
+            {data.name !== undefined && data.detailinfo.map((row) => (
+              <TableRow  key={row.detailitem} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  align="right"
+                  className={classes.itemName}
+                >
+                  {row.detailitem}
+                </TableCell>
+                <TableCell>{row.detailcontent}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+      <div className={classes.right}>
+        <Paper variant="outlined" className={classes.paperName}>
+          <Typography variant="h4" component="div">
             {data.name}
-          </div>
-          <div style={{paddingBottom:'60px'}}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 400}} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                    <TableCell width="80px">项目名</TableCell>
-                    <TableCell align="left">具体信息</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {data.name !== undefined && data.detailinfo.map((row) => (
-                    <TableRow  key={row.detailitem} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                      <TableCell style={{width:'80px',align:"left"}} component="th" scope="row">{row.detailitem} </TableCell>
-                      <TableCell align="left">{row.detailcontent}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </div>
-
-        <div style={{width:'18%',marginTop:'60px',marginLeft:'10px',float:'left'}}>
+          </Typography>
+        </Paper>
+        <Paper variant="outlined" className={classes.paperImg}>
           <img src={data.img_url} alt="detailImg" />
-        </div>
-
-        <div style={{position:'fixed',right:'10%',width:'18%',bottom:'80px',marginRight:'20px'}}>
-          <ControlledOpenSpeedDial id={herb_id}/>
-        </div>
+        </Paper>
+      </div>
+      <div style={{position:'fixed',right:'10%',width:'18%',bottom:'80px',marginRight:'20px'}}>
+        <ControlledOpenSpeedDial id={herb_id}/>
       </div>
     </div>
   );

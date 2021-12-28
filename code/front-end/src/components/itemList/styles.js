@@ -4,7 +4,11 @@ const useStyles = makeStyles((theme)=>({
   root: {
     width: 800,
     margin: theme.spacing(1),
+    marginLeft: "0px",
     boxShadow: "0 0px 0px #fff",
+  },
+  cardContent: {
+    paddingLeft: "0px",
   },
   bookName: {
     fontSize: 20,
