@@ -20,6 +20,7 @@ const SearchForm = () => {
   const handleOnChange = (event) => {
     let { name, value } = event.target;
     setKw(value);
+    checkKeyword();
   }
   const checkKeyword = () => {
     if (kw !== undefined) {
@@ -44,7 +45,6 @@ const SearchForm = () => {
           value="Search"
           type="button"
           startIcon={<SearchIcon />}
-          onClick={checkKeyword}
         >
           搜索
         </Button>
