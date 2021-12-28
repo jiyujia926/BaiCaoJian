@@ -50,7 +50,7 @@ const ItemCard = (props) => {
   }
 
   useEffect(()=>{
-    highlight(id, keyword)
+  //  highlight(id, keyword)
   }, []);
 
   return (
