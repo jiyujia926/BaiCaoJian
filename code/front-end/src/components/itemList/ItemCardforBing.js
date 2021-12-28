@@ -9,7 +9,7 @@ const ItemCardforBing = (props) => {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.cardContent}>
-        <a className={classes.title} href={data.url}>{data.title}</a>
+        <a target="_blank" className={classes.title} href={data.url}>{data.title}</a>
         <Typography className={classes.url}>
           {data.url}
         </Typography>

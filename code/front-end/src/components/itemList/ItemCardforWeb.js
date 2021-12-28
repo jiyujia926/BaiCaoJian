@@ -11,7 +11,7 @@ const ItemCardforWeb = (props) => {
     <Card className={classes.root}>
       <CardContent className={classes.cardContent}>
         <div className={classes.newsName}>
-          <a className={classes.newsName} href={data.url}>{data.title}</a>
+          <a target="_blank" className={classes.newsName} href={data.url}>{data.title}</a>
           <p className={classes.addition}>{data.time} 来源: {data.source}</p>
         </div>
         <div className={classes.newsBody}>
