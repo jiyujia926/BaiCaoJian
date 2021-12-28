@@ -137,7 +137,9 @@ def returnFavor(request):
         herbs['Id'] = herb['Herb_id']
         herbs['Detail_page'] = herb['Detail_page']
         herbs['Name'] = herb['Name']
-        herbs['Description'] = [{'key':"别名", 'info':herb['Subname']},{'key':"英文名", 'info':herb['English_name']},{'key':"药材性状", 'info':herb['Herb_info']},{'key':"性味归经", 'info':herb['Taste']},{'key':"功效与作用", 'info':herb['Function']},{'key':"使用禁忌", 'info':herb['Taboo']}]
+        description = "别名: "+herb['Subname']+"    英文名: "+herb['English_name']+"\n药材性状: "+herb['Herb_info']+"\n性味归经: "+herb['Taste']+"\n功效与作用: "+herb['Function']+"\n使用禁忌: "+herb['Taboo']
+        # herbs['Description'] = [{'key':"别名", 'info':herb['Subname']},{'key':"英文名", 'info':herb['English_name']},{'key':"药材性状", 'info':herb['Herb_info']},{'key':"性味归经", 'info':herb['Taste']},{'key':"功效与作用", 'info':herb['Function']},{'key':"使用禁忌", 'info':herb['Taboo']}]
+        herbs['Description'] = description
         list1.append(herbs)
     return HttpResponse(json.dumps(list1))
 
