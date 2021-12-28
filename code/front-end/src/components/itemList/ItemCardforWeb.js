@@ -10,7 +10,7 @@ const ItemCardforWeb = (props) => {
 
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <div calssName={classes.newsName}>
           <a className={classes.newsName} href={data.url}>{data.title}</a>
           <p className={classes.addition}>{data.time} 来源: {data.source}</p>

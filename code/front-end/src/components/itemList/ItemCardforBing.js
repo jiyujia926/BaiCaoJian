@@ -8,7 +8,7 @@ const ItemCardforBing = (props) => {
   const { data } = props;
   return (
     <Card className={classes.root}>
-      <CardContent >
+      <CardContent className={classes.cardContent}>
         <a className={classes.title} href={data.url}>{data.title}</a>
         <Typography className={classes.url}>
           {data.url}

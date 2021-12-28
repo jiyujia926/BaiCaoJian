@@ -1,9 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 
-const webStyles = makeStyles(()=>({
+const webStyles = makeStyles((theme)=>({
   root: {
     width: "800px",
-    margin: "10px 0 40px 0",
+    margin: theme.spacing(1),
+    marginLeft: "0px",
+    boxShadow: "0 0px 0px #fff",
+  },
+  cardContent: {
+    paddingLeft: "0px",
   },
   newsName: {
     fontSize: 20,

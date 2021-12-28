@@ -159,7 +159,7 @@ export default function BasicTabs(props) {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div>
+        <div className={classes.cardContainer}>
           {items_xinwen.length === 0 ? "暂时没有内容噢" :
             items_xinwen
               .slice((page_xinwen - 1) * itemsPerPage, page_xinwen * itemsPerPage)
@@ -182,7 +182,7 @@ export default function BasicTabs(props) {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <div>
+        <div className={classes.cardContainer}>
           {
             (items_shuben.length === 0) ? "暂时没有内容噢" :
               items_shuben
@@ -229,7 +229,7 @@ export default function BasicTabs(props) {
 
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <div>
+        <div className={classes.cardContainer}>
           {
             items_wangye.length === 0 ? "暂时没有内容噢" :
               items_wangye
