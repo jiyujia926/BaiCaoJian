@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, CardContent, CardHeader } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import webStyles from "./webStyles";
-import { Typography } from "@mui/material";
 
 const ItemCardforWeb = (props) => {
   const classes = webStyles();
@@ -11,7 +10,7 @@ const ItemCardforWeb = (props) => {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.cardContent}>
-        <div calssName={classes.newsName}>
+        <div className={classes.newsName}>
           <a className={classes.newsName} href={data.url}>{data.title}</a>
           <p className={classes.addition}>{data.time} 来源: {data.source}</p>
         </div>

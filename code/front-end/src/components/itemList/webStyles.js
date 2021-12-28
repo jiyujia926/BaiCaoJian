@@ -22,7 +22,19 @@ const webStyles = makeStyles((theme)=>({
   },
   newsBody: {
     margin: "10px 0 0 0",
-  }
+  },
+  abstract: {
+    fontSize: 15,
+    display: "box",
+    maxWidth: "100%",
+    padding: "0 0 0 0px",
+    //height: 15*1.4*3,
+    lineHight: 1.4,
+    overflow: "hidden",
+    textOverflow: "clip",
+    boxOrient: "vertical",
+    lineClamp: 3
+  },
 }));
 
 export default webStyles;

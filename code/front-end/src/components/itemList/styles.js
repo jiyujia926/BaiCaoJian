@@ -3,12 +3,12 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme)=>({
   root: {
     width: 800,
-    margin: theme.spacing(1),
+    marginTop: theme.spacing(1),
     marginLeft: "0px",
     boxShadow: "0 0px 0px #fff",
   },
   cardContent: {
-    paddingLeft: "0px",
+    padding: "16px 16px 0 0px",
   },
   bookName: {
     fontSize: 20,
@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme)=>({
     fontSize: 15,
     display: "box",
     maxWidth: "100%",
-    padding: "0 0 0 10px",
-    height: 15*1.4*3,
+    padding: "0 0 0 0px",
+    //height: 15*1.4*3,
     lineHight: 1.4,
     overflow: "hidden",
     textOverflow: "clip",
