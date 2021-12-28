@@ -7,12 +7,14 @@ import LogoImg from "../../images/LOGO.png";
 import Tabs from "../../components/Tabs/Tabs";
 import axios from "axios";
 import RecommendList from "../../components/recommendedList/RecommendList";
+import {useNavigate} from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://baicao.zjuers.com:6636"
 
 const Search = () => {
+  const navigate = useNavigate();
   const [ results, setResults ] = useState({citiao: [], shuben: [], tupian: [], xinwen: [], wangye: []});
   const [ keyword, setKeyword ] = useState("");
   const [ mostKeywords, setMostKeywords ] = useState([]);
@@ -37,7 +39,14 @@ const Search = () => {
   
   return (
     <div className={classes.root}>
-      <img className={classes.logo} src={LogoImg} alt="百草笺 Logo" />
+      <img
+        className={classes.logo}
+        src={LogoImg}
+        alt="百草笺 Logo"
+        onClick={() => {
+          navigate('/');
+        }}
+      />
       <div className={classes.main}>
         <div className={classes.searchBox}>
           <RealSearch

@@ -16,9 +16,10 @@ const useStyles = makeStyles(() => ({
   },
   wordCloud: {
     margin: "30px 0 0 40%",
-    width: "200px",
-    height: "200px",
+    width: "300px",
+    height: "300px",
     justifyContent: "center", 
+    alignContent: "center",
     alignItems: "center",
   },
 }));
