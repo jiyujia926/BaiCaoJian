@@ -8,7 +8,7 @@ import { nanoid } from "nanoid";
 const ItemCard = (props) => {
   const classes = useStyles();
   const { data, keyword } = props;
-  const raw_url = "http://localhost:3000/detail/";
+  const raw_url = "http://baicao.zjuers.com/detail/";
   let id = nanoid();
   let url = (raw_url + data.id).replace(/ /, '');
   const highlight = (idvalue, keyword) => {
