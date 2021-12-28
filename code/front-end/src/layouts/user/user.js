@@ -73,44 +73,22 @@ const User = () => {
     };
     if (res.data === "删除成功") {
       alert("取消收藏成功");
+      fetch();
     } else {
       alert("您已取消收藏");
     }
   };
   async function fetch() {
-    // let data = {
-    //   Email: cookie.load("account"),
-    // };
-    //let res = await axios.post(`${server}/returnfavor/`, data);
-    let res = {
-      data: [
-        {
-          Id: 1,
-          Name: "路路通",
-          Description: "聚花果，由多数小蒴果集合而成，球形，直径2～3厘米。基部有总果梗。表面灰棕色或棕褐色，有多数尖刺及喙状小钝刺，长0.5~1厘米，常折断，小蒴果顶部开裂，呈蜂窝状小孔。体轻，质硬，不易破开。气微，味淡。",
-        },
-        {
-          Id: 2,
-          Name: "路路通2",
-          Description: "聚花果，由多数小蒴果集合而成，球形，直径2～3厘米。基部有总果梗。表面灰棕色或棕褐色，有多数尖刺及喙状小钝刺，长0.5~1厘米，常折断，小蒴果顶部开裂，呈蜂窝状小孔。体轻，质硬，不易破开。气微，味淡。",
-        },
-        {
-          Id: 3,
-          Name: "路路通3",
-          Description: "聚花果，由多数小蒴果集合而成，球形，直径2～3厘米。基部有总果梗。表面灰棕色或棕褐色，有多数尖刺及喙状小钝刺，长0.5~1厘米，常折断，小蒴果顶部开裂，呈蜂窝状小孔。体轻，质硬，不易破开。气微，味淡。",
-        },
-        {
-          Id: 4,
-          Name: "路路通4",
-          Description: "聚花果，由多数小蒴果集合而成，球形，直径2～3厘米。基部有总果梗。表面灰棕色或棕褐色，有多数尖刺及喙状小钝刺，长0.5~1厘米，常折断，小蒴果顶部开裂，呈蜂窝状小孔。体轻，质硬，不易破开。气微，味淡。",
-        },
-      ],
-    }
+    let data = {
+      Email: cookie.load("account"),
+    };
+    let res = await axios.post(`${server}/returnfavor/`, data);
+    console.log(res.data);
     setFavorList(res.data);
   }
   React.useEffect(() => {
     fetch();
-  }, [remove]);
+  }, []);
   return (
     <div>
       <div className={classes.block}>
