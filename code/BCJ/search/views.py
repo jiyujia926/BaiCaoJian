@@ -1,8 +1,10 @@
 from time import sleep
 from django.apps.config import MODELS_MODULE_NAME
 from django.db import models
+from django.db.models import fields, query
 from django.shortcuts import render
-from elasticsearch_dsl.search import MultiSearch
+from elasticsearch_dsl.search import MultiSearch, Q, Search
+from six import indexbytes
 from .models import Bing, Herbs,Books,Frequency, News, Picture
 from .herbspide import main as herbmain
 from .bookspider import main as bookmain
@@ -20,7 +22,7 @@ from .forbing import main as bingspider
 def search(request):
     data = json.loads(request.body)
     keyword = data['Keyword']
-    # keyword = "肾亏"
+    # keyword = "路路通"
     print(keyword)
     frequency = Frequency.objects.filter(key=keyword).first()
     # print(frequency)
@@ -36,8 +38,9 @@ def search(request):
     newslist = []
     binglist = []  
     
-    s = HerbsDocument.search().query("match",Name=keyword)
-    qs = s.to_queryset()
+    q = Q('multi_match',query=keyword,fields=['Name^1.5','Subname','English_name','Medical_part','Plant_pose','Produce_place','Pick_reproduce','Herb_info','Taste','Function','Medical_function','Medical_search','Chemistry_component','Taboo'])
+    s = Search(index='herbs').query(q)[:50]
+    qs = s.execute()
     for herb in qs:
         herbs = {}
         herbs['id']=herb.Herb_id
@@ -46,211 +49,15 @@ def search(request):
         herbs['abstract']=str(herb.Herb_info)
         herbs['Medical_function']=str(herb.Medical_function)
         herblist.append(herbs)
+    # return HttpResponse(json.dumps(herblist))
+    # # return HttpResponse(herblist)
+    # # data = serializers.serialize('python',qs)
+    q = Q('multi_match',query=keyword,fields=['Book_name','Book_tag'])
+    s = Search(index='books').query(q)[:50]
+    qs = s.execute()
 
-    s = HerbsDocument.search().query("match",Medical_function=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-    
-    s = HerbsDocument.search().query("match",Subname=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",English_name=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-    
-    s = HerbsDocument.search().query("match",Medical_part=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-    
-    s = HerbsDocument.search().query("match",Plant_pose=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-    
-    s = HerbsDocument.search().query("match",Produce_place=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",Pick_reproduce=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",Herb_info=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",Taste=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",Function=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",Medical_search=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",Chemistry_component=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-            
-    s = HerbsDocument.search().query("match",Taboo=keyword)
-    qs = s.to_queryset()
-    for herb in qs:
-        herbs = {}
-        herbs['id']=herb.Herb_id
-        herbs['title']=str(herb.Name)
-        herbs['url']=herb.Picture_url
-        herbs['abstract']=str(herb.Herb_info)
-        herbs['Medical_function']=str(herb.Medical_function)
-        if herbs in herblist:
-            pass
-        else:
-            herblist.append(herbs)
-    # return HttpResponse(herblist)
-    # data = serializers.serialize('python',qs)
-    s = BooksDocument.search().query("match",Book_name=keyword)
-    qs = s.to_queryset()
-    for book in qs:
-        books = {}
-        books['title']=str(book.Book_name)
-        books['url']=book.Picture_url
-        booktag = str(book.Book_tag)
-        if booktag.find("团购")>=0:
-            startindex = booktag.find("团购")
-            booktag=booktag[:startindex]
-        books['tag']=booktag
-        books['info']=str(book.Book_info)
-        books['author']=str(book.Book_author)
-        books['publishdate']=book.Book_publishdate
-        books['publish']=book.Book_publish
-        if books in booklist:
-            pass
-        else:
-            booklist.append(books)
-    s = BooksDocument.search().query("match",Book_tag=keyword)
-    qs = s.to_queryset()
+    # s = BooksDocument.search().query("match",Book_name=keyword)
+    # qs = s.to_queryset()
     for book in qs:
         books = {}
         books['title']=str(book.Book_name)
@@ -278,8 +85,8 @@ def search(request):
             pass
         else:
             picturelist.append(picture)
-    # newsresult = newspider(keyword)
-    # binglist = bingspider(keyword)
+    # # newsresult = newspider(keyword)
+    # # binglist = bingspider(keyword)
     s = NewsDocument.search().query("match",Title=keyword)
     qs = s.to_queryset()
     for news in qs:
