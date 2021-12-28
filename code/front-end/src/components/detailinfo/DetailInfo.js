@@ -72,7 +72,7 @@ useEffect(() => {
 
   return (
     <div className={classes.root}>
-      <Paper variant="outlined" className={classes.paperList}>
+      <Paper variant="outlined"  id="detailinfomain" className={classes.paperList}>
         <Table aria-label="simple table">
           <TableBody>
             {data.name !== undefined && data.detailinfo.map((row) => (
