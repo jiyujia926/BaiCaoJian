@@ -89,7 +89,14 @@ const User = () => {
   return (
     <div>
       <div className={classes.block}>
-        <img src={img} alt="logo" className={classes.logo}/>
+        <img
+          src={img}
+          alt="logo"
+          onClick={() => {
+            navigate("/");
+          }}
+          className={classes.logo}
+        />
       </div>
       <Paper variant="outlined" className={classes.paper}>
         <Typography variant="h5" className={classes.username}>

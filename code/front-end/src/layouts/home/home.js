@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Button from "@material-ui/core/Button";
 
 import Footer from "../../components/footer/Footer";
 import SearchForm from "../../components/searchBox/SearchBox";
@@ -47,8 +46,8 @@ const Home = () => {
       {/* <Button variant="contained" color="primary" onClick={handleClick}>
         button for jaja
       </Button> */}
-      <div className={classes.img}>
-        <img src={LogoImg} alt="Logo" />
+      <div className={classes.imgBlock}>
+        <img src={LogoImg} alt="Logo" className={classes.img}/>
       </div> 
       <div className={classes.searchform}>
         <SearchForm />
