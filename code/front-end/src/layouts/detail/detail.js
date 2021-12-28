@@ -13,7 +13,8 @@ const Detail = () => {
   return (
     <div>
       <div className={classes.searchform}>
-        <img className={classes.searchformimg} src={LogoImg} alt="Logo"/>
+      <a href="http://baicao.zjuers.com">
+        <img className={classes.searchformimg} src={LogoImg} alt="Logo"/></a>
         <SearchForm />
       </div>
       <DetailInfo />
