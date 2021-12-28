@@ -39,13 +39,13 @@ const useStyles = makeStyles((theme)=>({
     display: "flex",
     flexDirection: "column",
     marginTop: "10px",
+    padding: "0 0 0 5px",
   },
   basicInfo: {
     display: "box",
     maxWidth: "100%",
     color: "#aaa",
     fontSize: 14,
-    padding: "0 0 0 10px",
     margin: "-10px 0 0 0",
   },
   abstract: {
@@ -62,6 +62,8 @@ const useStyles = makeStyles((theme)=>({
   },
   medical_func: {
     fontSize: 15,
+  },
+  text: {
     padding: "0 0 0 10px",
   },
   image: {

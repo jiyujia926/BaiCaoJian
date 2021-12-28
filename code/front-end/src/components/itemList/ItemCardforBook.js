@@ -14,12 +14,12 @@ const ItemCardforBook = (props) =>{
   return (
     <Card className={classes.root}>
       <CardContent className={classes.cardContent}>
-        <div calssName={classes.bookName}>
+        <div className={classes.bookName}>
           <p className={classes.bookName}>{data.title}</p>
           <p className={classes.addition}>【{data.publishdate}】 标签: {data.tag}</p>
         </div>
         <div className={classes.bookBody}>
-          <img className={classes.image} src={data.url} alt={data.title+"图片"}></img>
+          <img className={classes.image} src={data.url} alt={data.title+"图片"} />
           <div className={classes.bookContent}>
             <Typography
               className={classes.abstract}

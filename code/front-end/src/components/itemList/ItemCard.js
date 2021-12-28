@@ -67,7 +67,7 @@ const ItemCard = (props) => {
         </Typography>
         <div className={classes.content}>
           <img className={classes.image} src={data.url} alt={data.title + "图片"} />
-          <div>
+          <div className={classes.text}>
             <Typography
               className={classes.abstract}
               variant="body2"
