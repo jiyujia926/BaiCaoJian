@@ -71,11 +71,11 @@ def findPassword(request):
     Email = data['Email']
     user = models.User.objects.filter(Email=data['Email']).first()
     if user:
-        email_title = "找回密码"
+        email_title = "电子邮箱验证码"
         code = random_str()             #随机生成的验证码
         IdentifyingCode = models.IdentifyingCode.objects.create(Code=code)
         IdentifyingCode.User.add(user)
-        email_body = "验证码为: {0}".format(code)
+        email_body = "尊敬的百草笺用户，您好！\n您的百草笺账号正在找回密码，验证码为: {0}， 请在30分钟内输入。百草笺不会向您索取验证信息，请勿泄露。\n感谢您对百草笺的支持！".format(code)
         t1 = Thread( target = send_mail, args = (email_title, email_body, settings.EMAIL_HOST_USER,[Email]) ) 
         t1.start()
         return HttpResponse("验证码已发送，请查收邮件")
