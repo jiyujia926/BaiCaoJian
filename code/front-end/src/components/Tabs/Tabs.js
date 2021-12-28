@@ -108,12 +108,16 @@ export default function BasicTabs(props) {
     setValue(newValue);
   };
 
-  useEffect(()=>{
+  const resetCitiaoPage = () => {
+    console.log(page_citiao)
+    setNumOfPage_citiao(1);
+  };
 
-  });
+  useEffect(()=>{
+  }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%' }} onChange={resetCitiaoPage}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="词条" {...a11yProps(0)} />
@@ -123,7 +127,7 @@ export default function BasicTabs(props) {
           <Tab label="网页" {...a11yProps(4)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} >
         <div>
           {items_citiao.length !== 0 && items_citiao
             .slice((page_citiao - 1) * itemsPerPage, page_citiao * itemsPerPage)

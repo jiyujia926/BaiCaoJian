@@ -56,7 +56,12 @@ const ItemCard = (props) => {
   return (
     <Card id={id} className={classes.root}>
       <CardContent >
-        <a className={classes.title} href={url}>{data.title}</a>
+        <a
+          target="_blank"
+          className={classes.title}
+          href={url}
+          >{data.title}
+        </a>
         <Typography className={classes.url}>
           {url}
         </Typography>
