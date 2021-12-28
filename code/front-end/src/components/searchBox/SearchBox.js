@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import searchBoxStyles from "./styles";
 import SearchIcon from '@material-ui/icons/Search';
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import { ContactSupportOutlined } from "@material-ui/icons";
 
@@ -14,17 +14,18 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const server = "http://baicao.zjuers.com:6636"
 const SearchForm = () => {
   const classes = searchBoxStyles();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [kw, setKw] = useState();
-  const [nextUrl, setNextUrl] = useState("");
+  //const [nextUrl, setNextUrl] = useState("");
   const handleOnChange = (event) => {
     let { name, value } = event.target;
     setKw(value);
-    checkKeyword();
   }
   const checkKeyword = () => {
     if (kw !== undefined) {
-      setNextUrl("/search/" + kw);
+      //setNextUrl("/search/" + kw);
+      navigate("/search/" + kw);
     }
   }
 
@@ -36,19 +37,17 @@ const SearchForm = () => {
         label="请输入关键词"
         onChange={handleOnChange}
       />
-      <Link className={classes.textBtn}
-        to={nextUrl}>
-        <Button
-          className={classes.searchBtn}
-          variant="contained"
-          color="secondary"
-          value="Search"
-          type="button"
-          startIcon={<SearchIcon />}
-        >
-          搜索
-        </Button>
-      </Link>
+      <Button
+        className={classes.searchBtn}
+        variant="contained"
+        color="secondary"
+        value="Search"
+        type="button"
+        startIcon={<SearchIcon />}
+        onClick={checkKeyword}
+      >
+        搜索
+      </Button>
     </form>
   );
 }
