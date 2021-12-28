@@ -15,33 +15,40 @@ const server = "http://baicao.zjuers.com:6636"
 const SearchForm = () => {
   const classes = searchBoxStyles();
   const { register, handleSubmit } = useForm();
-  const [ kw , setKw ] = useState();
+  const [kw, setKw] = useState();
+  const [nextUrl, setNextUrl] = useState("");
   const handleOnChange = (event) => {
     let { name, value } = event.target;
     setKw(value);
+  }
+  const checkKeyword = () => {
+    if (kw !== undefined) {
+      setNextUrl("/search/" + kw);
+    }
   }
 
   return (
     <form >
       <TextField
-        {...register("keyword", {required: true,})}
+        {...register("keyword", { required: true, })}
         className={classes.textField}
         label="请输入关键词"
         onChange={handleOnChange}
       />
-      <Button 
-        className={classes.searchBtn}
-        variant="contained"
-        color="secondary"
-        value="Search"
-        type="button"
-        startIcon={<SearchIcon/>}
-      >
-        <Link
-          className={classes.textBtn}
-          to={"/search/" + kw}
-        >搜索</Link>
-      </Button>
+      <Link className={classes.textBtn}
+        to={nextUrl}>
+        <Button
+          className={classes.searchBtn}
+          variant="contained"
+          color="secondary"
+          value="Search"
+          type="button"
+          startIcon={<SearchIcon />}
+          onClick={checkKeyword}
+        >
+          搜索
+        </Button>
+      </Link>
     </form>
   );
 }
