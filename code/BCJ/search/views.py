@@ -128,8 +128,8 @@ def search(request):
 def mostsearching(request):
     frequencylist = list(Frequency.objects.values('key','value').order_by('-value'))
     length=len(frequencylist)
-    if len(frequencylist) > 10:
-        length = 10
+    if len(frequencylist) > 18:
+        length = 18
     result=[]
     for item in frequencylist:
         result.append(item)
