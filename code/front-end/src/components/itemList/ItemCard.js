@@ -62,9 +62,9 @@ const ItemCard = (props) => {
           href={url}
           >{data.title}
         </a>
-        <Typography className={classes.url}>
+        {/* <Typography className={classes.url}>
           {url}
-        </Typography>
+        </Typography> */}
         <div className={classes.content}>
           <img className={classes.image} src={data.url} alt={data.title + "图片"} />
           <div className={classes.text}>
