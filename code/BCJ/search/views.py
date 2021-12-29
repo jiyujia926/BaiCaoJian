@@ -80,7 +80,7 @@ def search(request):
     for pic in qs:
         picture = {}
         picture['name']=str(pic.Name)
-        picture['url']=pic.Url
+        picture['url']=str(pic.Url).replace("https://upload.wikimedia.org","http://img.z1.world")
         if picture in picturelist:
             pass
         else:
