@@ -26,6 +26,11 @@ const searchBoxStyles = makeStyles(()=>({
   paperImg: {
     textAlign: "center",
   },
+  dial: {
+    position: "absolute",
+    bottom: "0px",
+    right: "0px",
+  },
 }))
 
 export default searchBoxStyles;

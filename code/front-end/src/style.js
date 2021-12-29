@@ -15,6 +15,9 @@ export const theme = createTheme({
     error: {
       main: "#7f0000",
     },
+    success: {
+      main: "#004c40",
+    },
   },
   components: {
     SpeedDial: {

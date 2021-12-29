@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 //import { useForm } from "react-hook-form";
 import Typography from "@mui/material/Typography";
+import CustomizedSnackbars from "../Alert/Alert";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -53,6 +54,17 @@ const DetailInfo = () => {
   const url = window.location.href;
   const [ herb_id, setHerbid ] = useState(Number(url.substring(url.search("detail/")+7)));
   const [ data, setData ] = useState({});
+  const [snackbar, setSnackbar] = React.useState({
+    favorDone: false,
+    favorError: false,
+    noAccount: false,
+  });
+  function closeSnackbar(name) {
+    setSnackbar({ ...snackbar, [name]: false });
+  }
+  function set(name) {
+    setSnackbar({ ...snackbar, [name]: true });
+  }
 
   async function getdata(herb_id) {
     let data = {
@@ -102,8 +114,29 @@ useEffect(() => {
         </Paper>
       </div>
       <div style={{position:'fixed',right:'10%',width:'18%',bottom:'80px',marginRight:'20px'}}>
-        <ControlledOpenSpeedDial id={herb_id}/>
+        <ControlledOpenSpeedDial id={herb_id} func={set}/>
       </div>
+      <CustomizedSnackbars
+        name="favorDone"
+        message="收藏成功！"
+        type="success"
+        open={snackbar.favorDone}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="favorError"
+        message="您已收藏！"
+        type="error"
+        open={snackbar.favorError}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="noAccount"
+        message="请您先登录！"
+        type="error"
+        open={snackbar.noAccount}
+        close={closeSnackbar}
+      />
     </div>
   );
 }

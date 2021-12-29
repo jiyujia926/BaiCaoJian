@@ -16,13 +16,13 @@ const Home = () => {
   const [ mostKeywords, setMostKeywords ] = useState([]);
   const classes = useStyles();
   const handleClick = () => {
-    alert("hello!");
+    //alert("hello!");
     add()
   };
 
   async function add() {
     let res = await axios.post(`${server}/add/`)
-    alert(res.data)
+    //alert(res.data)
   }
 
   async function mostSearch() {

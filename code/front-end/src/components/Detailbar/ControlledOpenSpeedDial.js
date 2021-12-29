@@ -7,6 +7,7 @@ import StarIcon from '@mui/icons-material/Star';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import Feedback from '@mui/icons-material/Feedback';
+import CustomizedSnackbars from "../Alert/Alert";
 import {theme} from "../../style";
 import {ThemeProvider} from "@emotion/react";
 import cookie from "react-cookies";
@@ -18,6 +19,7 @@ const server = "http://baicao.zjuers.com:6636"
 
 export default function ControlledOpenSpeedDial(props) {
   const id = props.id;
+  const set = props.func;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -29,16 +31,16 @@ export default function ControlledOpenSpeedDial(props) {
     };
     let res = await axios.post(`${server}/addfavor/`, data);
     if (res.data === "收藏成功") {
-      alert("收藏成功");
+      set("favorDone");
     } else {
-      alert("您已收藏");
+      set("favorError");
     }
   }
   const clStar = () =>{
-    if (cookie.load("account")) {
+    if (cookie.load("username")) {
       addFavor();
     } else {
-      alert("请先登录！");
+      set("noAccount");
     }
   }
 
@@ -61,7 +63,6 @@ export default function ControlledOpenSpeedDial(props) {
   return (
     <Box sx={{ height: 300, transform: 'translateZ(0px)', flexGrow: 1 }}>
       <ThemeProvider theme={theme}>
-      {/*<div id={'detailinfomain'}>123</div>*/}
         <SpeedDial
           ariaLabel="SpeedDial uncontrolled open example"
           sx={{ position: 'absolute', bottom: 2, right: 15}}

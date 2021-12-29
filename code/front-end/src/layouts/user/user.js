@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
+import CustomizedSnackbars from "../../components/Alert/Alert";
 import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from "./styles";
@@ -59,6 +60,13 @@ const User = () => {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const [favorList, setFavorList] = React.useState([]);
+  const [snackbar, setSnackbar] = React.useState({
+    rmvDone: false,
+    rmvError: false,
+  });
+  function closeSnackbar(name) {
+    setSnackbar({ ...snackbar, [name]: false });
+  }
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -69,10 +77,10 @@ const User = () => {
     };
     let res = await axios.post(`${server}/deletefavor/`, data);
     if (res.data === "删除成功") {
-      alert("取消收藏成功");
+      setSnackbar({ ...snackbar, rmvDone: true });
       fetch();
     } else {
-      alert("您已取消收藏");
+      setSnackbar({ ...snackbar, rmvError: true });
     }
   };
   async function fetch() {
@@ -149,6 +157,20 @@ const User = () => {
           </List>
         </TabPanel>
       </Paper>
+      <CustomizedSnackbars
+        name="rmvDone"
+        message="取消收藏成功！"
+        type="success"
+        open={snackbar.rmvDone}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="rmvError"
+        message="您已取消收藏！"
+        type="error"
+        open={snackbar.rmvError}
+        close={closeSnackbar}
+      />
     </div>
   );
 }

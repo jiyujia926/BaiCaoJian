@@ -19,6 +19,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import CustomizedSnackbars from "../Alert/Alert";
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
@@ -56,6 +57,18 @@ const Navbar = () => {
     checksum: "",
     checksum_check: "",
   };
+  const [snackbar, setSnackbar] = React.useState({
+    logDone: false,
+    regDone: false,
+    modDone: false,
+    emailDone: false,
+    noCode: false,
+    findDone: false,
+    logOut: false,
+  });
+  function closeSnackbar(name) {
+    setSnackbar({ ...snackbar, [name]: false });
+  }
   const [formData, setFormData] = React.useState(initialFormState);
   const handleClickButton = (event) => {
     if (account.email === "") {
@@ -88,8 +101,9 @@ const Navbar = () => {
   };
   const handleLogout = () => {
     handleCloseProfile();
+    cookie.remove("username", { path: "/" });
+    setSnackbar({ ...snackbar, logOut: true });
     setAccount({ ...account, email: "", username: "" });
-    cookie.remove("username");
   };
   const handleSubmitLogin = () => {
     let ec = "";
@@ -109,7 +123,6 @@ const Navbar = () => {
     setFormData({ ...formData, email_check: ec, password_check: pc });
     //初步验证完成，连接后端，尝试登录
     if (ec === "" && pc === "") {
-      //alert("try login");
       login();
     }
   };
@@ -125,12 +138,13 @@ const Navbar = () => {
       let name = await axios.post(`${server}/getusername/`, data);
       setAccount({ email: formData.email, username: name.data });
       handleCloseDialog();
-      cookie.save("account", formData.email);
-      cookie.save("username", name.data);
+      setSnackbar({ ...snackbar, logDone: true });
+      cookie.save("account", formData.email, { path: "/" });
+      cookie.save("username", name.data, { path: "/" });
       if (remember) {
-        cookie.save("password", formData.password);
+        cookie.save("password", formData.password, { path: "/" });
       } else {
-        cookie.remove("password");
+        cookie.remove("password", { path: "/" });
       }
     } else {
       if (res.data === "密码错误") {
@@ -176,7 +190,6 @@ const Navbar = () => {
     });
     //初步验证完成，连接后端，尝试注册
     if (ec === "正确。" && pc === "正确。" && uc === "正确。") {
-      //alert("try register");
       register();
     }
   };
@@ -190,7 +203,7 @@ const Navbar = () => {
     console.log(data);
     let res = await axios.post(`${server}/register/`, data);
     if (res.data === "注册成功！") {
-      alert("注册成功，请进行登录");
+      setSnackbar({ ...snackbar, regDone: true });
       handleToLogin();
     } else {
       ec = "该邮箱已被注册。";
@@ -249,11 +262,11 @@ const Navbar = () => {
       handleToLogin();
       setFormData({ ...formData, password: "" });
       setAccount({ ...account, email: "", username: "" });
-      cookie.remove("username");
+      cookie.remove("username", { path: "/" });
       if (cookie.load("password")) {
-        cookie.remove("password");
+        cookie.remove("password", { path: "/" });
       }
-      alert("密码修改成功，请重新进行登录");
+      setSnackbar({ ...snackbar, modDone: true });
     } else {
       if (res.data === "密码错误") {
         pc = "密码错误。";
@@ -269,7 +282,6 @@ const Navbar = () => {
     }
   }
   const handleSubmitSendEmail = () => {
-    //alert("email");
     if (formData.email === "") {
       setFormData({ ...formData, email_check: "邮箱不能为空。" });
     } else if (
@@ -290,7 +302,7 @@ const Navbar = () => {
     } else {
       setReady(true);
       setFormData({ ...formData, email_check: ""});
-      alert("邮件已发送！");
+      setSnackbar({ ...snackbar, emailDone: true });
     }  
   }
   const handleSubmitSetPassword = () => {
@@ -327,7 +339,7 @@ const Navbar = () => {
         setpassword();
       }
     } else {
-      alert("请先向邮箱发送验证码。");
+      setSnackbar({ ...snackbar, noCode: true });
     }
   };
   async function setpassword() {
@@ -343,7 +355,7 @@ const Navbar = () => {
     if (res.data === "设置成功") {
       handleToLogin();
       setFormData({ ...formData, email: "", password: "" });
-      alert("新密码设置成功，请重新进行登录");
+      setSnackbar({ ...snackbar, findDone: true });
     } else {
       if (res.data === "邮箱未注册") {
         ec = "该邮箱未注册。";
@@ -359,9 +371,9 @@ const Navbar = () => {
   const handleRemember = (e) => {
     let tmp = e.target.checked;
     setRemember(tmp);
-    cookie.save("remember", tmp);
+    cookie.save("remember", tmp, { path: "/" });
     if (!tmp && cookie.load("password")) {
-      cookie.remove("password");
+      cookie.remove("password", { path: "/" });
     }
   };
   const handleToLogin = () => {
@@ -772,6 +784,55 @@ const Navbar = () => {
           </div>
         )}
       </Dialog>
+      <CustomizedSnackbars
+        name="logDone"
+        message="登录成功。"
+        type="success"
+        open={snackbar.logDone}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="logOut"
+        message="登出成功。"
+        type="success"
+        open={snackbar.logOut}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="regDone"
+        message="账号注册成功！请进行登录。"
+        type="success"
+        open={snackbar.regDone}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="modDone"
+        message="密码修改成功！请进行登录。"
+        type="success"
+        open={snackbar.modDone}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="emailDone"
+        message="验证码已发送。"
+        type="success"
+        open={snackbar.emailDone}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="noCode"
+        message="请先向您的邮箱发送验证码。"
+        type="error"
+        open={snackbar.noCode}
+        close={closeSnackbar}
+      />
+      <CustomizedSnackbars
+        name="findDone"
+        message="新密码设置成功！请进行登录。"
+        type="success"
+        open={snackbar.findDone}
+        close={closeSnackbar}
+      />
     </div>
   );
 }
