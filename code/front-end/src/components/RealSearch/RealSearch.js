@@ -45,8 +45,9 @@ const RealSearch = (props) => {
   const handleEnterKey = (e) => {
     if(e.nativeEvent.keyCode === 13){
       if (kw !== undefined) {
-        var url0="http://baicao.zjuers.com/search/"+kw;
-        window.location.replace(url0);
+        // var url0="http://baicao.zjuers.com/search/"+kw;
+        // window.open(url0,"_blank");
+        handleOnClick();
       }
     }
   }
