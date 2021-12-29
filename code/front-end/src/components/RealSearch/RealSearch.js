@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import searchBoxStyles from "../searchBox/styles";
 import SearchIcon from '@material-ui/icons/Search';
 import { useForm } from "react-hook-form";
+import {useNavigate} from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -18,6 +19,7 @@ const RealSearch = (props) => {
   // define states
   const { register, handleSubmit } = useForm();
   const [ kw , setKw ] = useState("");
+  const navigate = useNavigate();
   // define props
   const { shResult, shKeyword } = props;
 
@@ -37,6 +39,18 @@ const RealSearch = (props) => {
       Keyword: decodeURI(value),
     };
     searchForKeyword(data);
+  }
+
+
+  const handleEnterKey = (e) => {
+    if(e.nativeEvent.keyCode === 13){
+      alert("handleEnterKey");
+      if (kw !== undefined) {
+        var url0="http://baicao.zjuers.com/search/"+kw;
+        window.location.replace(url0);
+      }
+      alert("handleEnterKeyed");
+    }
   }
 
   useEffect(() => {
@@ -74,6 +88,7 @@ const RealSearch = (props) => {
           placeholder="请输入关键词"
           onChange={handleOnChange}
           className={classes.input}
+          onKeyPress={handleEnterKey}
         />
       </Paper>
       <Button 

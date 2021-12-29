@@ -29,6 +29,12 @@ const SearchForm = () => {
     }
   }
 
+  const handleEnterKey = (e) => {
+    if(e.nativeEvent.keyCode === 13){
+        checkKeyword();
+    }
+  }
+
   return (
     <form className={classes.root}>
       <Paper component="form" className={classes.textField}>
@@ -38,6 +44,7 @@ const SearchForm = () => {
           onChange={handleOnChange}
           className={classes.input}
           inputProps={{ 'aria-label': 'key' }}
+          onKeyPress={handleEnterKey}
         />
       </Paper>
       <Button
