@@ -44,12 +44,10 @@ const RealSearch = (props) => {
 
   const handleEnterKey = (e) => {
     if(e.nativeEvent.keyCode === 13){
-      alert("handleEnterKey");
       if (kw !== undefined) {
         var url0="http://baicao.zjuers.com/search/"+kw;
         window.location.replace(url0);
       }
-      alert("handleEnterKeyed");
     }
   }
 
