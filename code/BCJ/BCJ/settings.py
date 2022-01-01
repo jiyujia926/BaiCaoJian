@@ -82,10 +82,10 @@ DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.mysql',
         'NAME':'baicaojian',
-        'HOST':'122.51.228.166',
+        'HOST':'localhost',
         'PORT':'3306',
         'USER':'root',
-        'PASSWORD':'926jiyujia',
+        'PASSWORD':'',
     }
 }
 
@@ -134,7 +134,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': '1.15.97.64:9200'
+        'hosts': 'localhost:9200'
     },
 }
 CORS_ORIGIN_ALLOW_ALL =True
@@ -164,8 +164,8 @@ CORS_ALLOW_HEADERS = (
 EMAIL_USE_TLS = True   #是否使用TLS安全传输协议
 EMAIL_HOST = 'smtp.qq.com' 
 EMAIL_PORT = 587
-EMAIL_HOST_USER = '2482892055@qq.com' # 帐号
-EMAIL_HOST_PASSWORD = 'nqkaaqdqqivmeaab' 
+EMAIL_HOST_USER = '*' # 帐号
+EMAIL_HOST_PASSWORD = '*' 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
